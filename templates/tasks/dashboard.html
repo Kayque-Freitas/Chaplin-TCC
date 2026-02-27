@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Chaplin{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
+
+    <!-- Cards de Estatísticas -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="card">
+            <div class="text-center">
+                <p class="text-gray-600 text-sm">Total de Tarefas</p>
+                <p class="text-3xl font-bold text-orange-500">{{ total_tasks }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="text-center">
+                <p class="text-gray-600 text-sm">Tarefas Abertas</p>
+                <p class="text-3xl font-bold text-blue-500">{{ open_tasks }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="text-center">
+                <p class="text-gray-600 text-sm">Tarefas Alocadas</p>
+                <p class="text-3xl font-bold text-yellow-500">{{ assigned_tasks }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="text-center">
+                <p class="text-gray-600 text-sm">Tarefas Concluídas</p>
+                <p class="text-3xl font-bold text-green-500">{{ completed_tasks }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão Criar Tarefa -->
+    {% if user.profile.role == 'gestor' %}
+    <div class="mb-6">
+        <a href="/tasks/create/" class="btn btn-primary">+ Criar Nova Tarefa</a>
+    </div>
+    {% endif %}
+
+    <!-- Tabela de Tarefas -->
+    <div class="card">
+        <h2 class="text-xl font-bold mb-4">Tarefas Recentes</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-gray-200">
+                        <th class="text-left py-3 px-4 font-semibold">Título</th>
+                        <th class="text-left py-3 px-4 font-semibold">Status</th>
+                        <th class="text-left py-3 px-4 font-semibold">Prioridade</th>
+                        <th class="text-left py-3 px-4 font-semibold">Criada em</th>
+                        <th class="text-left py-3 px-4 font-semibold">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                        <td class="py-3 px-4">{{ task.title }}</td>
+                        <td class="py-3 px-4">
+                            <span class="badge badge-{% if task.status == 'aberta' %}info{% elif task.status == 'alocada' %}warning{% elif task.status == 'concluida' %}success{% else %}success{% endif %}">
+                                {{ task.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="badge badge-{% if task.priority == 'urgente' %}danger{% elif task.priority == 'alta' %}warning{% else %}info{% endif %}">
+                                {{ task.get_priority_display }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-sm text-gray-600">{{ task.created_at|date:"d/m/Y H:i" }}</td>
+                        <td class="py-3 px-4">
+                            <a href="/tasks/{{ task.id }}/" class="text-orange-500 hover:text-orange-600">Ver</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="py-4 px-4 text-center text-gray-600">Nenhuma tarefa encontrada</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

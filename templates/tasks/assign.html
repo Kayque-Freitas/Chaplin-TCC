@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Atribuir Tarefa - Chaplin{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Atribuir Tarefa a Colaborador</h1>
+
+    <div class="card">
+        <h2 class="text-xl font-bold mb-4">{{ task.title }}</h2>
+        <p class="text-gray-600 mb-6">{{ task.description }}</p>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label for="user_id" class="block text-sm font-medium text-gray-700">Selecione o Colaborador *</label>
+                <select name="user_id" id="user_id" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
+                    <option value="">Escolha um colaborador</option>
+                    <!-- Aqui você adicionaria os colaboradores disponíveis -->
+                </select>
+            </div>
+
+            <div class="flex gap-4">
+                <button type="submit" class="btn btn-primary">Atribuir</button>
+                <a href="/tasks/{{ task.id }}/" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

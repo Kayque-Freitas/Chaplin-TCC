@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Tarefas - Chaplin{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Tarefas</h1>
+
+    <!-- Filtros -->
+    <div class="card mb-6">
+        <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                <select name="status" id="status" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <option value="">Todos</option>
+                    <option value="aberta">Aberta</option>
+                    <option value="alocada">Alocada</option>
+                    <option value="concluida">Concluída</option>
+                    <option value="finalizada">Finalizada</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="priority" class="block text-sm font-medium text-gray-700">Prioridade</label>
+                <select name="priority" id="priority" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <option value="">Todas</option>
+                    <option value="baixa">Baixa</option>
+                    <option value="normal">Normal</option>
+                    <option value="alta">Alta</option>
+                    <option value="urgente">Urgente</option>
+                </select>
+            </div>
+
+            <div class="flex items-end">
+                <button type="submit" class="w-full btn btn-primary">Filtrar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Grid de Tarefas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for task in tasks %}
+        <div class="card hover:shadow-lg transition">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-lg font-bold flex-1">{{ task.title }}</h3>
+                <span class="badge badge-{% if task.priority == 'urgente' %}danger{% elif task.priority == 'alta' %}warning{% else %}info{% endif %}">
+                    {{ task.get_priority_display }}
+                </span>
+            </div>
+
+            <p class="text-gray-600 text-sm mb-4">{{ task.description|truncatewords:15 }}</p>
+
+            <div class="mb-4">
+                <p class="text-sm text-gray-700"><strong>Localização:</strong> {{ task.location }}</p>
+                <p class="text-sm text-gray-700"><strong>Status:</strong> 
+                    <span class="badge badge-{% if task.status == 'aberta' %}info{% elif task.status == 'alocada' %}warning{% elif task.status == 'concluida' %}success{% else %}success{% endif %}">
+                        {{ task.get_status_display }}
+                    </span>
+                </p>
+            </div>
+
+            <a href="/tasks/{{ task.id }}/" class="btn btn-primary w-full text-center">Ver Detalhes</a>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12">
+            <p class="text-gray-600">Nenhuma tarefa encontrada</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

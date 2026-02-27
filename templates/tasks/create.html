@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Criar Tarefa - Chaplin{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Criar Nova Tarefa de Manutenção</h1>
+
+    <div class="card">
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Título da Tarefa *</label>
+                <input type="text" name="title" id="title" required placeholder="Ex: Reparo na lâmpada do quarto 101" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
+            </div>
+
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Descrição Detalhada *</label>
+                <textarea name="description" id="description" required rows="5" placeholder="Descreva o problema em detalhes..." class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="location" class="block text-sm font-medium text-gray-700">Localização (Quarto/Área) *</label>
+                    <input type="text" name="location" id="location" required placeholder="Ex: Quarto 101, Cozinha" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
+                </div>
+
+                <div>
+                    <label for="priority" class="block text-sm font-medium text-gray-700">Prioridade *</label>
+                    <select name="priority" id="priority" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
+                        <option value="">Selecione uma prioridade</option>
+                        <option value="baixa">Baixa</option>
+                        <option value="normal">Normal</option>
+                        <option value="alta">Alta</option>
+                        <option value="urgente">Urgente</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label for="due_date" class="block text-sm font-medium text-gray-700">Data de Conclusão Desejada</label>
+                <input type="date" name="due_date" id="due_date" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
+            </div>
+
+            <div class="flex gap-4">
+                <button type="submit" class="btn btn-primary">Criar Tarefa</button>
+                <a href="/tasks/dashboard/" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
