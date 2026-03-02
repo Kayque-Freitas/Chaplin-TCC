@@ -17,13 +17,15 @@
                 <label for="user_id" class="block text-sm font-medium text-gray-700">Selecione o Colaborador *</label>
                 <select name="user_id" id="user_id" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500">
                     <option value="">Escolha um colaborador</option>
-                    <!-- Aqui você adicionaria os colaboradores disponíveis -->
+                    {% for collaborator in collaborators %}
+                    <option value="{{ collaborator.id }}" {% if task.assigned_to_id == collaborator.id %}selected{% endif %}>{{ collaborator.get_full_name|default:collaborator.username }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
             <div class="flex gap-4">
                 <button type="submit" class="btn btn-primary">Atribuir</button>
-                <a href="/tasks/{{ task.id }}/" class="btn btn-secondary">Cancelar</a>
+                <a href="{% url 'tasks:detail' task.id %}" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>

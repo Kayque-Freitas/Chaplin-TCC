@@ -59,7 +59,7 @@
                 </p>
             </div>
 
-            <a href="/tasks/{{ task.id }}/" class="btn btn-primary w-full text-center">Ver Detalhes</a>
+            <a href="{% url 'tasks:detail' task.id %}" class="btn btn-primary w-full text-center">Ver Detalhes</a>
         </div>
         {% empty %}
         <div class="col-span-full text-center py-12">
