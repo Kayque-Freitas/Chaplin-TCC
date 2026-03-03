@@ -6,6 +6,7 @@ from .forms import TaskForm
 
 @login_required
 def dashboard_view(request):
+    """View do dashboard com estatísticas"""
     user_profile = request.user.profile
     
     if user_profile.role == 'gestor':
@@ -28,6 +29,7 @@ def dashboard_view(request):
 
 @login_required
 def tasks_list_view(request):
+    """View da lista de tarefas com filtros"""
     status = request.GET.get('status', '')
     priority = request.GET.get('priority', '')
     
@@ -42,6 +44,7 @@ def tasks_list_view(request):
 
 @login_required
 def create_task_view(request):
+    """View para criar nova tarefa"""
     if request.method == 'POST':
         form = TaskForm(request.POST, request.FILES)
         if form.is_valid():
@@ -56,6 +59,7 @@ def create_task_view(request):
 
 @login_required
 def task_detail_view(request, pk):
+    """View do detalhe da tarefa"""
     task = get_object_or_404(Task, pk=pk)
     messages = task.messages.all()
     evidences = task.evidences.all()
@@ -68,6 +72,7 @@ def task_detail_view(request, pk):
 
 @login_required
 def edit_task_view(request, pk):
+    """View para editar tarefa"""
     task = get_object_or_404(Task, pk=pk)
     
     if request.method == 'POST':
@@ -82,6 +87,7 @@ def edit_task_view(request, pk):
 
 @login_required
 def assign_task_view(request, pk):
+    """View para alocar tarefa a um usuário"""
     task = get_object_or_404(Task, pk=pk)
     
     if request.method == 'POST':
@@ -95,6 +101,7 @@ def assign_task_view(request, pk):
 
 @login_required
 def complete_task_view(request, pk):
+    """View para marcar tarefa como concluída"""
     task = get_object_or_404(Task, pk=pk)
     
     if request.method == 'POST':
@@ -112,6 +119,7 @@ def complete_task_view(request, pk):
 
 @login_required
 def add_message_view(request, pk):
+    """View para adicionar mensagem/comentário"""
     task = get_object_or_404(Task, pk=pk)
     
     if request.method == 'POST':
@@ -120,3 +128,23 @@ def add_message_view(request, pk):
         return redirect('tasks:detail', pk=task.pk)
     
     return render(request, 'tasks/message.html', {'task': task})
+
+@login_required
+def settings_view(request):
+    """View de configurações do usuário"""
+    user_profile = request.user.profile
+    
+    if request.method == 'POST':
+        # Atualizar configurações
+        user = request.user
+        user.first_name = request.POST.get('first_name', user.first_name)
+        user.last_name = request.POST.get('last_name', user.last_name)
+        user.email = request.POST.get('email', user.email)
+        user.save()
+        
+        return redirect('tasks:settings')
+    
+    context = {
+        'user_profile': user_profile,
+    }
+    return render(request, 'tasks/settings.html', context)

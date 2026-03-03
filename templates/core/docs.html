@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação - Chaplin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navegação -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="/" class="text-2xl font-bold text-orange-500">Chaplin</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-orange-500 transition">Home</a>
+                    <a href="/docs/" class="text-orange-500 font-semibold">Documentação</a>
+                    <a href="/users/login/" class="text-gray-700 hover:text-orange-500 transition">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar + Conteúdo -->
+    <div class="flex max-w-7xl mx-auto">
+        <!-- Sidebar -->
+        <aside class="hidden lg:block w-64 bg-white border-r border-gray-200 p-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
+            <h3 class="font-bold text-gray-900 mb-4">Índice</h3>
+            <ul class="space-y-2 text-sm">
+                <li><a href="#sobre" class="text-gray-700 hover:text-orange-500 transition">Sobre o Projeto</a></li>
+                <li><a href="#requisitos" class="text-gray-700 hover:text-orange-500 transition">Requisitos</a></li>
+                <li><a href="#instalacao" class="text-gray-700 hover:text-orange-500 transition">Como Rodar</a></li>
+                <li><a href="#estrutura" class="text-gray-700 hover:text-orange-500 transition">Estrutura</a></li>
+                <li><a href="#roles" class="text-gray-700 hover:text-orange-500 transition">Roles de Usuário</a></li>
+                <li><a href="#fluxo" class="text-gray-700 hover:text-orange-500 transition">Fluxo de Tarefas</a></li>
+                <li><a href="#comandos" class="text-gray-700 hover:text-orange-500 transition">Comandos Úteis</a></li>
+                <li><a href="#demo" class="text-gray-700 hover:text-orange-500 transition">Demonstração</a></li>
+            </ul>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-1 p-6 md:p-12">
+            <!-- Sobre -->
+            <section id="sobre" class="mb-16">
+                <h1 class="text-4xl font-bold mb-4 text-gray-900">Documentação Chaplin</h1>
+                <p class="text-lg text-gray-600 mb-4">Plataforma de Gestão de Tarefas de Manutenção para empresas terceirizadas</p>
+                
+                <div class="bg-orange-50 border-l-4 border-orange-500 p-6 rounded">
+                    <h2 class="text-2xl font-bold mb-3 text-gray-900">🎯 Sobre o Projeto</h2>
+                    <p class="text-gray-700">Chaplin é uma plataforma web desenvolvida como projeto de TCC para empresas terceirizadas de manutenção em hotéis e propriedades de aluguel. A aplicação centraliza a comunicação entre gestores de prédios e equipes de manutenção.</p>
+                </div>
+            </section>
+
+            <!-- Requisitos -->
+            <section id="requisitos" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">📋 Requisitos</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <p class="font-semibold text-gray-900">Python 3.8+</p>
+                        <p class="text-sm text-gray-600">Linguagem de programação</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <p class="font-semibold text-gray-900">MySQL 5.7+</p>
+                        <p class="text-sm text-gray-600">Banco de dados</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <p class="font-semibold text-gray-900">pip</p>
+                        <p class="text-sm text-gray-600">Gerenciador de pacotes</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <p class="font-semibold text-gray-900">Git</p>
+                        <p class="text-sm text-gray-600">Controle de versão</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Instalação -->
+            <section id="instalacao" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">🚀 Como Rodar Localmente</h2>
+                
+                <div class="space-y-6">
+                    <!-- Passo 1 -->
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">1️⃣ Clonar o Repositório</h3>
+                        <pre><code class="language-bash">git clone https://github.com/Kayque-Freitas/Chaplin-TCC.git
+cd Chaplin-TCC</code></pre>
+                    </div>
+
+                    <!-- Passo 2 -->
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">2️⃣ Criar Ambiente Virtual</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <p class="font-semibold text-gray-700 mb-2">Windows:</p>
+                                <pre><code class="language-bash">python -m venv venv
+venv\Scripts\activate</code></pre>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-700 mb-2">Linux/Mac:</p>
+                                <pre><code class="language-bash">python3 -m venv venv
+source venv/bin/activate</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Passo 3 -->
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">3️⃣ Instalar Dependências</h3>
+                        <pre><code class="language-bash">pip install -r requirements.txt</code></pre>
+                    </div>
+
+                    <!-- Passo 4 -->
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">4️⃣ Configurar Banco de Dados</h3>
+                        <p class="text-gray-600 mb-3">Criar banco MySQL:</p>
+                        <pre><code class="language-sql">CREATE DATABASE chaplin_db;
+CREATE USER 'chaplin_user'@'localhost' IDENTIFIED BY 'sua_senha';
+GRANT ALL PRIVILEGES ON chaplin_db.* TO 'chaplin_user'@'localhost';
+FLUSH PRIVILEGES;</code></pre>
+                        <p class="text-gray-600 mt-4 mb-3">Criar arquivo `.env`:</p>
+                        <pre><code class="language-bash">cp .env.example .env</code></pre>
+                    </div>
+
+                    <!-- Passo 5 -->
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">5️⃣ Executar Migrações</h3>
+                        <pre><code class="language-bash">python manage.py migrate</code></pre>
+                    </div>
+
+                    <!-- Passo 6 -->
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">6️⃣ Criar Superusuário</h3>
+                        <pre><code class="language-bash">python manage.py createsuperuser</code></pre>
+                    </div>
+
+                    <!-- Passo 7 -->
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold mb-3 text-gray-900">7️⃣ Rodar o Servidor</h3>
+                        <pre><code class="language-bash">python manage.py runserver</code></pre>
+                        <p class="text-gray-600 mt-3">Acesse: <a href="http://localhost:8000" class="text-orange-500 hover:text-orange-600">http://localhost:8000</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estrutura -->
+            <section id="estrutura" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">📊 Estrutura do Projeto</h2>
+                <div class="bg-white p-6 rounded-lg border border-gray-200">
+                    <pre><code class="language-text">Chaplin-TCC/
+├── chaplin_project/          # Configurações principais
+│   ├── settings.py           # Configurações do Django
+│   ├── urls.py               # URLs principais
+│   └── wsgi.py               # WSGI para deploy
+├── apps/
+│   ├── users/                # App de usuários
+│   │   ├── models.py         # Modelos (UserProfile)
+│   │   ├── views.py          # Views (login, registro)
+│   │   ├── urls.py           # URLs do app
+│   │   └── forms.py          # Formulários
+│   ├── tasks/                # App de tarefas
+│   │   ├── models.py         # Modelos (Task, Evidence, Message)
+│   │   ├── views.py          # Views (CRUD de tarefas)
+│   │   ├── urls.py           # URLs do app
+│   │   └── forms.py          # Formulários
+│   └── core/                 # App principal
+│       ├── views.py          # Views (home, about)
+│       └── urls.py           # URLs
+├── templates/                # Templates HTML
+├── static/                   # Arquivos estáticos (CSS, JS)
+├── manage.py                 # Gerenciador do Django
+└── requirements.txt          # Dependências</code></pre>
+                </div>
+            </section>
+
+            <!-- Roles -->
+            <section id="roles" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">🔐 Roles de Usuário</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
+                        <h3 class="font-bold text-blue-900 mb-2">👨‍💼 Admin</h3>
+                        <p class="text-blue-800 text-sm">Gerencia empresa, usuários e relatórios</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
+                        <h3 class="font-bold text-green-900 mb-2">🏢 Gestor do Prédio</h3>
+                        <p class="text-green-800 text-sm">Cria tarefas e valida conclusão</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg border border-orange-200">
+                        <h3 class="font-bold text-orange-900 mb-2">👥 Líder de Equipe</h3>
+                        <p class="text-orange-800 text-sm">Recebe tarefas e aloca a colaboradores</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200">
+                        <h3 class="font-bold text-purple-900 mb-2">🔧 Colaborador</h3>
+                        <p class="text-purple-800 text-sm">Executa tarefas e registra evidências</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fluxo -->
+            <section id="fluxo" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">📝 Fluxo de Tarefas</h2>
+                <div class="space-y-3">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">1</div>
+                        <p class="ml-4 text-gray-700">Gestor cria tarefa na plataforma</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">2</div>
+                        <p class="ml-4 text-gray-700">Tarefa é enviada para o Líder (o "tobogã")</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">3</div>
+                        <p class="ml-4 text-gray-700">Líder aloca tarefa ao Colaborador</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">4</div>
+                        <p class="ml-4 text-gray-700">Colaborador executa e registra evidências</p>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">5</div>
+                        <p class="ml-4 text-gray-700">Gestor valida e finaliza</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comandos -->
+            <section id="comandos" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">🛠️ Comandos Úteis</h2>
+                <div class="bg-white p-6 rounded-lg border border-gray-200">
+                    <pre><code class="language-bash"># Criar migrações
+python manage.py makemigrations
+
+# Aplicar migrações
+python manage.py migrate
+
+# Criar superusuário
+python manage.py createsuperuser
+
+# Coletar arquivos estáticos
+python manage.py collectstatic
+
+# Acessar shell do Django
+python manage.py shell
+
+# Rodar testes
+python manage.py test</code></pre>
+                </div>
+            </section>
+
+            <!-- Demonstração -->
+            <section id="demo" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">🎬 Demonstração ao Vivo</h2>
+                <div class="bg-white p-6 rounded-lg border border-gray-200">
+                    <p class="text-gray-600 mb-4">Veja o Chaplin em ação:</p>
+                    <a href="https://8000-i07u8zjxwkyfbosvtpysg-dc050520.us1.manus.computer/" target="_blank" class="inline-block bg-orange-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-orange-600 transition">
+                        🚀 Acessar Demonstração ao Vivo
+                    </a>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="mt-16 pt-8 border-t border-gray-200">
+                <p class="text-gray-600 text-center">Desenvolvido como Projeto de TCC - ETEC</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>

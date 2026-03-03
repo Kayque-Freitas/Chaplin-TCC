@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demonstração - Chaplin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navegação -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="/" class="text-2xl font-bold text-orange-500">Chaplin</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-orange-500 transition">Home</a>
+                    <a href="/docs/" class="text-gray-700 hover:text-orange-500 transition">Documentação</a>
+                    <a href="/demo/" class="text-orange-500 font-semibold">Demonstração</a>
+                    <a href="/users/login/" class="text-gray-700 hover:text-orange-500 transition">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Cabeçalho -->
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-4 text-gray-900">🎬 Demonstração ao Vivo</h1>
+            <p class="text-lg text-gray-600">Veja o Chaplin em ação com todas as funcionalidades do sistema</p>
+        </div>
+
+        <!-- Abas de Demonstração -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <!-- Tabs -->
+            <div class="flex border-b border-gray-200 bg-gray-50">
+                <button class="tab-btn flex-1 py-4 px-6 text-center font-semibold text-gray-700 hover:text-orange-500 transition border-b-2 border-transparent active:border-orange-500" data-tab="live">
+                    🌐 Aplicação ao Vivo
+                </button>
+                <button class="tab-btn flex-1 py-4 px-6 text-center font-semibold text-gray-700 hover:text-orange-500 transition border-b-2 border-transparent" data-tab="features">
+                    ✨ Funcionalidades
+                </button>
+                <button class="tab-btn flex-1 py-4 px-6 text-center font-semibold text-gray-700 hover:text-orange-500 transition border-b-2 border-transparent" data-tab="workflow">
+                    📊 Fluxo de Trabalho
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-6">
+                <!-- Tab: Live Demo -->
+                <div id="live" class="tab-content">
+                    <div class="mb-4">
+                        <p class="text-gray-600 mb-4">Acesse a aplicação completa em tempo real:</p>
+                        <a href="https://8000-i07u8zjxwkyfbosvtpysg-dc050520.us1.manus.computer/" target="_blank" class="inline-block bg-orange-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-orange-600 transition mb-4">
+                            🚀 Abrir Demonstração Completa
+                        </a>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg overflow-hidden border border-gray-300">
+                        <div class="aspect-video bg-gray-200 flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-gray-600 mb-2">Clique no botão acima para acessar a demonstração</p>
+                                <p class="text-sm text-gray-500">ou use as credenciais de teste fornecidas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Features -->
+                <div id="features" class="tab-content hidden">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
+                            <h3 class="text-xl font-bold text-blue-900 mb-3">👥 Gestão de Usuários</h3>
+                            <ul class="space-y-2 text-blue-800 text-sm">
+                                <li>✓ 4 tipos de roles com permissões</li>
+                                <li>✓ Cadastro e autenticação segura</li>
+                                <li>✓ Perfil de usuário personalizável</li>
+                                <li>✓ Controle de acesso por role</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
+                            <h3 class="text-xl font-bold text-green-900 mb-3">📋 Gestão de Tarefas</h3>
+                            <ul class="space-y-2 text-green-800 text-sm">
+                                <li>✓ Criar, editar e deletar tarefas</li>
+                                <li>✓ 7 estágios de workflow</li>
+                                <li>✓ Atribuição de tarefas</li>
+                                <li>✓ Rastreamento de progresso</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg border border-orange-200">
+                            <h3 class="text-xl font-bold text-orange-900 mb-3">📸 Evidências</h3>
+                            <ul class="space-y-2 text-orange-800 text-sm">
+                                <li>✓ Upload de fotos e documentos</li>
+                                <li>✓ Galeria de evidências</li>
+                                <li>✓ Comprovação de execução</li>
+                                <li>✓ Histórico de uploads</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200">
+                            <h3 class="text-xl font-bold text-purple-900 mb-3">💬 Comunicação</h3>
+                            <ul class="space-y-2 text-purple-800 text-sm">
+                                <li>✓ Chat integrado por tarefa</li>
+                                <li>✓ Mensagens em tempo real</li>
+                                <li>✓ Histórico de conversas</li>
+                                <li>✓ Notificações de atividade</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-lg border border-red-200">
+                            <h3 class="text-xl font-bold text-red-900 mb-3">📊 Relatórios</h3>
+                            <ul class="space-y-2 text-red-800 text-sm">
+                                <li>✓ Dashboard com métricas</li>
+                                <li>✓ Gráficos de desempenho</li>
+                                <li>✓ Exportação de dados</li>
+                                <li>✓ Análise de produtividade</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-6 rounded-lg border border-indigo-200">
+                            <h3 class="text-xl font-bold text-indigo-900 mb-3">⚙️ Administração</h3>
+                            <ul class="space-y-2 text-indigo-800 text-sm">
+                                <li>✓ Painel administrativo</li>
+                                <li>✓ Gerenciamento de usuários</li>
+                                <li>✓ Configurações do sistema</li>
+                                <li>✓ Logs de atividade</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Workflow -->
+                <div id="workflow" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Fluxo Completo de Tarefas</h3>
+                        
+                        <!-- Etapa 1 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-lg">1</div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-gray-900 mb-2">Criação da Tarefa</h4>
+                                <p class="text-gray-600">O Gestor do Prédio cria uma nova tarefa no sistema com descrição, prioridade e data de conclusão.</p>
+                                <div class="mt-3 bg-gray-100 p-3 rounded text-sm text-gray-700">
+                                    <strong>Status:</strong> OPEN
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 2 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-lg">2</div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-gray-900 mb-2">Recebimento pelo Líder</h4>
+                                <p class="text-gray-600">O Líder de Equipe recebe a tarefa e a confirma no sistema (o "tobogã").</p>
+                                <div class="mt-3 bg-gray-100 p-3 rounded text-sm text-gray-700">
+                                    <strong>Status:</strong> RECEIVED
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 3 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-lg">3</div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-gray-900 mb-2">Alocação ao Colaborador</h4>
+                                <p class="text-gray-600">O Líder aloca a tarefa a um Colaborador específico da equipe.</p>
+                                <div class="mt-3 bg-gray-100 p-3 rounded text-sm text-gray-700">
+                                    <strong>Status:</strong> ALLOCATED
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 4 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-lg">4</div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-gray-900 mb-2">Execução da Tarefa</h4>
+                                <p class="text-gray-600">O Colaborador executa a tarefa e registra evidências (fotos, documentos).</p>
+                                <div class="mt-3 bg-gray-100 p-3 rounded text-sm text-gray-700">
+                                    <strong>Status:</strong> COMPLETED
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 5 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-lg">5</div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-gray-900 mb-2">Validação pelo Gestor</h4>
+                                <p class="text-gray-600">O Gestor revisa as evidências e valida a conclusão da tarefa.</p>
+                                <div class="mt-3 bg-gray-100 p-3 rounded text-sm text-gray-700">
+                                    <strong>Status:</strong> FINALIZED
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Etapa 6 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-500 text-white font-bold text-lg">✓</div>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-gray-900 mb-2">Tarefa Concluída</h4>
+                                <p class="text-gray-600">A tarefa é marcada como concluída com sucesso no sistema.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Credenciais de Teste -->
+        <div class="mt-12 bg-blue-50 border-l-4 border-blue-500 p-6 rounded">
+            <h3 class="text-xl font-bold text-blue-900 mb-4">🔑 Credenciais de Teste</h3>
+            <p class="text-blue-800 mb-4">Use as seguintes credenciais para acessar a demonstração:</p>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded border border-blue-200">
+                    <p class="font-semibold text-gray-900">Admin</p>
+                    <p class="text-sm text-gray-600">Email: admin@chaplin.com</p>
+                    <p class="text-sm text-gray-600">Senha: admin123</p>
+                </div>
+                <div class="bg-white p-4 rounded border border-blue-200">
+                    <p class="font-semibold text-gray-900">Gestor do Prédio</p>
+                    <p class="text-sm text-gray-600">Email: gestor@chaplin.com</p>
+                    <p class="text-sm text-gray-600">Senha: gestor123</p>
+                </div>
+                <div class="bg-white p-4 rounded border border-blue-200">
+                    <p class="font-semibold text-gray-900">Líder de Equipe</p>
+                    <p class="text-sm text-gray-600">Email: lider@chaplin.com</p>
+                    <p class="text-sm text-gray-600">Senha: lider123</p>
+                </div>
+                <div class="bg-white p-4 rounded border border-blue-200">
+                    <p class="font-semibold text-gray-900">Colaborador</p>
+                    <p class="text-sm text-gray-600">Email: colaborador@chaplin.com</p>
+                    <p class="text-sm text-gray-600">Senha: colaborador123</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recursos -->
+        <div class="mt-12 bg-white rounded-lg shadow p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">📚 Recursos Adicionais</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+                <a href="/docs/" class="block p-4 border border-gray-200 rounded-lg hover:border-orange-500 hover:shadow-md transition">
+                    <p class="font-bold text-gray-900 mb-2">📖 Documentação Completa</p>
+                    <p class="text-sm text-gray-600">Guia de instalação, estrutura e comandos</p>
+                </a>
+                <a href="https://github.com/Kayque-Freitas/Chaplin-TCC" target="_blank" class="block p-4 border border-gray-200 rounded-lg hover:border-orange-500 hover:shadow-md transition">
+                    <p class="font-bold text-gray-900 mb-2">🔗 Repositório GitHub</p>
+                    <p class="text-sm text-gray-600">Código-fonte completo do projeto</p>
+                </a>
+                <a href="/" class="block p-4 border border-gray-200 rounded-lg hover:border-orange-500 hover:shadow-md transition">
+                    <p class="font-bold text-gray-900 mb-2">🏠 Página Inicial</p>
+                    <p class="text-sm text-gray-600">Visão geral do projeto Chaplin</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabName = button.getAttribute('data-tab');
+                
+                // Remove active state from all buttons and hide all content
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.style.borderBottomColor = 'transparent';
+                });
+                tabContents.forEach(content => content.classList.add('hidden'));
+                
+                // Add active state to clicked button and show content
+                button.classList.add('active');
+                button.style.borderBottomColor = '#f97316';
+                document.getElementById(tabName).classList.remove('hidden');
+            });
+        });
+
+        // Set first tab as active
+        tabButtons[0].style.borderBottomColor = '#f97316';
+    </script>
+</body>
+</html>

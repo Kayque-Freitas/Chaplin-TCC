@@ -1,223 +1,240 @@
-# Chaplin - Plataforma de Gerenciamento de Tarefas
+# Chaplin - Plataforma de Gestão de Tarefas e Colaboração
 
-Um projeto HTML/CSS estático com Tailwind CSS, responsivo e pronto para ser expandido com funcionalidades backend.
+**Chaplin** é uma plataforma web moderna para gestão de tarefas, colaboração em equipe e acompanhamento de projetos. Desenvolvida com Django e Tailwind CSS, oferece uma experiência intuitiva e responsiva para equipes de todos os tamanhos.
 
-## 📋 Estrutura do Projeto
+## 🎯 Características Principais
+
+- **Gestão de Tarefas** - Criar, atualizar e acompanhar tarefas em tempo real
+- **Colaboração em Equipe** - Comunicação integrada entre membros da equipe
+- **Múltiplos Roles** - Admin, Gestor, Líder e Colaborador com permissões específicas
+- **Dashboard Inteligente** - Visualização de estatísticas e tarefas recentes
+- **Evidências de Tarefas** - Anexar arquivos e documentos às tarefas
+- **Responsivo** - Funciona perfeitamente em desktop, tablet e mobile
+- **Autenticação Segura** - Sistema de login com sessões seguras
+
+## 🏗️ Estrutura do Projeto
 
 ```
-chaplin_static/
-├── index.html              # Página inicial (Homepage)
-├── css/
-│   └── styles.css         # Estilos customizados
-├── js/
-│   └── main.js            # Scripts de interatividade
-├── pages/
-│   ├── login.html         # Página de login
-│   ├── dashboard.html     # Dashboard principal
-│   ├── tarefas.html       # Listagem de tarefas
-│   ├── nova-tarefa.html   # Formulário de nova tarefa
-│   └── configuracoes.html # Página de configurações
-├── assets/
-│   └── images/            # Pasta para imagens
-└── README.md              # Este arquivo
+Chaplin-TCC/
+├── apps/                          # Aplicações Django
+│   ├── core/                      # App principal (home, docs, demo)
+│   ├── tasks/                     # App de tarefas
+│   └── users/                     # App de usuários
+├── chaplin_project/               # Configurações do projeto
+│   ├── settings.py               # Configurações principais
+│   ├── urls.py                   # URLs principais
+│   └── wsgi.py                   # WSGI para produção
+├── templates/                     # Templates HTML
+│   ├── shared/                   # Templates compartilhados
+│   ├── core/                     # Templates da app core
+│   ├── tasks/                    # Templates da app tasks
+│   └── users/                    # Templates da app users
+├── static/                        # Arquivos estáticos
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── docs/
+│   ├── downloads/
+│   └── slides/
+├── manage.py
+├── requirements.txt
+└── db.sqlite3
 ```
 
-## 🚀 Como Usar
+## 🚀 Instalação e Setup
 
-### 1. Abrir no VS Code
+### Pré-requisitos
+
+- Python 3.8+
+- pip
+- Git
+
+### Passo 1: Clonar o Repositório
+
 ```bash
-# Abra a pasta do projeto no VS Code
-code chaplin_static/
+git clone https://github.com/seu-usuario/Chaplin-TCC.git
+cd Chaplin-TCC
 ```
 
-### 2. Servir Localmente
-Você pode usar a extensão "Live Server" do VS Code:
-- Clique com botão direito em `index.html`
-- Selecione "Open with Live Server"
+### Passo 2: Criar Ambiente Virtual
 
-Ou use um servidor Python:
 ```bash
-python -m http.server 8000
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 ```
 
-Acesse: `http://localhost:8000`
+### Passo 3: Instalar Dependências
 
-### 3. Estrutura de Páginas
-
-#### **Homepage (index.html)**
-- Navegação responsiva com menu hambúrguer
-- Hero section com CTA
-- Seção "Sobre Nós"
-- Cards de serviços
-- Footer com links
-
-#### **Login (pages/login.html)**
-- Formulário de autenticação
-- Email e senha
-- Links para recuperação de senha e cadastro
-
-#### **Dashboard (pages/dashboard.html)**
-- Sidebar colapsável (responsivo)
-- Cards de estatísticas
-- Listagem de tarefas recentes
-- Menu de navegação
-
-#### **Tarefas (pages/tarefas.html)**
-- Tabela de tarefas (desktop)
-- Cards de tarefas (mobile)
-- Filtros por status, prioridade e responsável
-- Ações de editar/deletar
-
-#### **Nova Tarefa (pages/nova-tarefa.html)**
-- Formulário completo com campos:
-  - Título (obrigatório)
-  - Descrição
-  - Prioridade
-  - Data de vencimento
-  - Responsável
-  - Tags
-  - Notificações
-
-#### **Configurações (pages/configuracoes.html)**
-- Abas de configuração
-- Formulário de perfil
-- Upload de foto de perfil
-
-## 🎨 Design e Estilos
-
-### Tailwind CSS
-O projeto usa **Tailwind CSS via CDN**. Para customizar:
-
-1. Edite as cores em `css/styles.css` (variáveis CSS)
-2. Adicione classes Tailwind direto no HTML
-3. Customize em `css/styles.css` para estilos globais
-
-### Cores Principais
-- **Primária**: Orange (#f97316)
-- **Secundária**: Gray (#1f2937)
-- **Fundo**: White (#ffffff)
-- **Fundo Secundário**: Light Gray (#f9fafb)
-
-## 📱 Responsividade
-
-O projeto é **mobile-first** com breakpoints:
-- **Mobile**: < 640px
-- **Tablet**: 640px - 1024px
-- **Desktop**: > 1024px
-
-### Componentes Responsivos
-- ✅ Navegação com menu hambúrguer
-- ✅ Sidebar colapsável
-- ✅ Tabelas que viram cards em mobile
-- ✅ Grid layouts adaptativos
-- ✅ Imagens responsivas
-
-## 🔧 Funcionalidades Implementadas
-
-### ✅ Completas
-- [x] Estrutura HTML semântica
-- [x] Estilos Tailwind CSS
-- [x] Menu responsivo mobile-first
-- [x] Sidebar colapsável
-- [x] Formulários estilizados
-- [x] Cards e componentes reutilizáveis
-- [x] Animações suaves
-- [x] Validação básica de formulários
-- [x] Sistema de notificações
-- [x] Atalhos de teclado (Ctrl+K, Esc)
-
-### ⏳ Prontas para Expansão
-- [ ] Integração com backend (API)
-- [ ] Autenticação real
-- [ ] Persistência de dados
-- [ ] Funcionalidades de CRUD
-- [ ] Filtros dinâmicos
-- [ ] Paginação
-- [ ] Busca em tempo real
-- [ ] Temas dark/light
-
-## 📝 Como Expandir
-
-### Adicionar Nova Página
-1. Crie um arquivo `pages/nova-pagina.html`
-2. Copie a estrutura de outra página
-3. Customize o HTML e CSS
-4. Adicione o link na navegação
-
-### Adicionar Novo Componente
-1. Crie um novo arquivo em `components/` (opcional)
-2. Ou adicione direto no HTML com classes Tailwind
-3. Reutilize em outras páginas
-
-### Integrar com Backend
-1. Remova `e.preventDefault()` dos formulários em `js/main.js`
-2. Adicione endpoints da API
-3. Use `fetch()` para comunicação com servidor
-4. Processe respostas JSON
-
-Exemplo:
-```javascript
-// Em js/main.js
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const response = await fetch('/api/tarefas', {
-        method: 'POST',
-        body: JSON.stringify(Object.fromEntries(formData))
-    });
-    const data = await response.json();
-    showNotification('Tarefa criada!', 'success');
-});
+```bash
+pip install -r requirements.txt
 ```
 
-## 🎯 Próximos Passos Recomendados
+### Passo 4: Executar Migrações
 
-1. **Substituir Tailwind CDN por Build Tool**
-   ```bash
-   npm install -D tailwindcss postcss autoprefixer
-   npx tailwindcss init -p
-   ```
+```bash
+python manage.py migrate
+```
 
-2. **Adicionar Backend**
-   - Node.js + Express
-   - Python + Flask
-   - Ou qualquer framework de sua preferência
+### Passo 5: Criar Usuário Admin
 
-3. **Implementar Banco de Dados**
-   - MySQL/PostgreSQL
-   - MongoDB
-   - Firebase
+```bash
+python manage.py createsuperuser
+```
 
-4. **Adicionar Autenticação Real**
-   - JWT
-   - OAuth
-   - Sessões
+### Passo 6: Executar Servidor
 
-5. **Melhorar Performance**
-   - Minificar CSS/JS
-   - Otimizar imagens
-   - Implementar lazy loading
+```bash
+python manage.py runserver
+```
 
-## 🛠️ Tecnologias Usadas
+Acesse: http://localhost:8000
 
-- **HTML5** - Estrutura semântica
-- **CSS3** - Estilos e animações
-- **Tailwind CSS** - Framework de estilos
+## 📋 Credenciais de Teste
+
+| Usuário | Senha | Role |
+|---------|-------|------|
+| admin | admin123 | Admin |
+| gestor | gestor123 | Gestor |
+| lider | lider123 | Líder |
+| colaborador | colaborador123 | Colaborador |
+
+## 👥 Roles e Permissões
+
+### Admin
+- Acesso total ao sistema
+- Gerenciar usuários
+- Visualizar relatórios
+- Configurar sistema
+
+### Gestor
+- Criar e gerenciar tarefas
+- Atribuir tarefas a líderes
+- Visualizar progresso
+- Gerar relatórios
+
+### Líder
+- Alocar tarefas a colaboradores
+- Acompanhar progresso
+- Comunicar com equipe
+- Visualizar evidências
+
+### Colaborador
+- Executar tarefas atribuídas
+- Enviar evidências
+- Comunicar com líder
+- Visualizar tarefas
+
+## 🌐 URLs Principais
+
+### Públicas
+- `/` - Home
+- `/docs/` - Documentação
+- `/demo/` - Demonstração
+- `/slides/` - Apresentação TCC
+- `/resources/` - Recursos
+- `/sitemap/` - Mapa do Site
+- `/users/login/` - Login
+- `/users/register/` - Registro
+
+### Autenticadas
+- `/tasks/dashboard/` - Dashboard
+- `/tasks/list/` - Lista de Tarefas
+- `/tasks/create/` - Nova Tarefa
+- `/tasks/<id>/` - Detalhe da Tarefa
+- `/tasks/settings/` - Configurações
+- `/admin/` - Painel Administrativo
+
+## 🛠️ Tecnologias Utilizadas
+
+### Backend
+- **Django 4.2+** - Framework web
+- **Django ORM** - Mapeamento objeto-relacional
+- **SQLite** - Banco de dados (desenvolvimento)
+- **Python 3.8+** - Linguagem de programação
+
+### Frontend
+- **HTML5** - Marcação
+- **Tailwind CSS 4** - Estilização
 - **JavaScript Vanilla** - Interatividade
-- **Responsive Design** - Mobile-first
+
+## 📊 Modelos de Dados
+
+### User (Django)
+- username
+- email
+- password
+- first_name
+- last_name
+
+### UserProfile
+- user (ForeignKey)
+- role (admin, gestor, lider, colaborador)
+- phone
+- department
+
+### Task
+- title
+- description
+- priority (baixa, média, alta)
+- status (aberta, alocada, em_progresso, concluída)
+- assigned_to (ForeignKey User)
+- created_by (ForeignKey User)
+- due_date
+
+### TaskEvidence
+- task (ForeignKey Task)
+- user (ForeignKey User)
+- file
+- description
+
+### Message
+- sender (ForeignKey User)
+- task (ForeignKey Task)
+- content
+
+## 🔐 Segurança
+
+- **CSRF Protection** - Proteção contra ataques CSRF
+- **SQL Injection Prevention** - Uso de ORM Django
+- **XSS Prevention** - Escapamento automático
+- **Password Hashing** - Senhas criptografadas
+- **Session Security** - Sessões seguras
+
+## 🐛 Troubleshooting
+
+### Erro: "No module named 'apps'"
+Certifique-se de que está no diretório raiz e o ambiente virtual está ativado.
+
+### Erro: "Table doesn't exist"
+Execute as migrações:
+```bash
+python manage.py migrate
+```
+
+### Erro: "Static files not found"
+Colete os arquivos estáticos:
+```bash
+python manage.py collectstatic --noinput
+```
+
+## 📚 Documentação Adicional
+
+- [Arquitetura Técnica](static/docs/ARQUITETURA_TECNICA.md)
+- [Guia de Setup Completo](static/docs/CHAPLIN_DJANGO_SETUP_COMPLETO.md)
+- [Plano de Implementação](static/docs/CHAPLIN_PLANO_IMPLEMENTACAO.md)
+
+## 🤝 Contribuindo
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
 
 ## 📄 Licença
 
-Este projeto é fornecido como base para desenvolvimento. Sinta-se livre para modificar e expandir conforme necessário.
-
-## 💡 Dicas
-
-- Use o DevTools do navegador para testar responsividade
-- Teste em diferentes dispositivos/tamanhos de tela
-- Mantenha o código limpo e bem organizado
-- Adicione comentários para facilitar manutenção futura
-- Considere usar um build tool quando escalar o projeto
+Este projeto é licenciado sob a Licença MIT.
 
 ---
 
-**Desenvolvido com ❤️ para Chaplin**
+**Desenvolvido com ❤️ para melhorar a colaboração em equipe**

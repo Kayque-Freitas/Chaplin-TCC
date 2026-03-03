@@ -47,7 +47,13 @@ ROOT_URLCONF = 'chaplin_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'templates' / 'shared',
+            BASE_DIR / 'templates' / 'core',
+            BASE_DIR / 'templates' / 'tasks',
+            BASE_DIR / 'templates' / 'users',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,12 +71,8 @@ WSGI_APPLICATION = 'chaplin_project.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME', default='chaplin_db'),
-        'USER': config('DB_USER', default='root'),
-        'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='3306'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -119,3 +121,14 @@ LOGIN_REDIRECT_URL = 'tasks:dashboard'
 # Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
+
+# CSRF Configuration
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-i07u8zjxwkyfbosvtpysg-dc050520.us1.manus.computer',
+    'https://*.manus.computer',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'

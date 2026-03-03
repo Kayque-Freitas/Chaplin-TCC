@@ -14,15 +14,15 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <a href="index.html" class="text-2xl font-bold text-orange-500">Chaplin</a>
+                    <a href="/" class="text-2xl font-bold text-orange-500">Chaplin</a>
                 </div>
 
                 <!-- Menu Desktop -->
                 <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-gray-700 hover:text-orange-500 transition">Home</a>
-                    <a href="#sobre" class="text-gray-700 hover:text-orange-500 transition">Sobre</a>
-                    <a href="#servicos" class="text-gray-700 hover:text-orange-500 transition">Serviços</a>
-                    <a href="pages/login.html" class="text-gray-700 hover:text-orange-500 transition">Login</a>
+                    <a href="/" class="text-gray-700 hover:text-orange-500 transition">Home</a>
+                    <a href="/docs/" class="text-gray-700 hover:text-orange-500 transition">Documentação</a>
+                    <a href="/demo/" class="text-gray-700 hover:text-orange-500 transition">Demonstração</a>
+                    <a href="/users/login/" class="text-gray-700 hover:text-orange-500 transition">Login</a>
                 </div>
 
                 <!-- Botão do Menu Mobile -->
@@ -35,36 +35,66 @@
 
             <!-- Menu Mobile -->
             <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <a href="index.html" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Home</a>
-                <a href="#sobre" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Sobre</a>
-                <a href="#servicos" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Serviços</a>
-                <a href="pages/login.html" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Login</a>
+                <a href="/" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Home</a>
+                <a href="/docs/" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Documentação</a>
+                <a href="/demo/" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Demonstração</a>
+                <a href="/users/login/" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Login</a>
             </div>
         </div>
     </nav>
 
     <!-- Seção Hero -->
-    <section class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-20 md:py-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
-                        Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing
-                    </h1>
-                    <p class="text-lg text-gray-300 mb-8">
-                        Gerencie suas tarefas de forma eficiente e colabore com sua equipe em tempo real.
+    <section class="relative bg-gradient-to-br from-orange-500 via-orange-600 to-orange-700 text-white py-24 md:py-40 overflow-hidden">
+        <!-- Padrão de fundo decorativo -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/2 translate-y-1/2"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <!-- Conteúdo Esquerdo -->
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <span class="inline-block bg-white text-orange-600 px-4 py-2 rounded-full text-sm font-semibold">🚀 Solução Inteligente</span>
+                        <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+                            Gestão de Tarefas Simplificada
+                        </h1>
+                    </div>
+                    <p class="text-xl text-orange-100 leading-relaxed">
+                        Centralize a comunicação, organize tarefas e acompanhe o progresso de manutenção com uma plataforma intuitiva e poderosa.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-lg transition">
-                            Saiba Mais
-                        </button>
-                        <button class="border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-semibold py-3 px-8 rounded-lg transition">
-                            Contato
-                        </button>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="/users/login/" class="inline-block bg-white text-orange-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-lg transition transform hover:scale-105 shadow-lg text-center">
+                            Começar Agora
+                        </a>
+                        <a href="/demo/" class="inline-block border-2 border-white text-white hover:bg-white hover:text-orange-600 font-bold py-4 px-8 rounded-lg transition text-center">
+                            Ver Demonstração
+                        </a>
+                    </div>
+                    <!-- Estatísticas -->
+                    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-orange-400">
+                        <div>
+                            <p class="text-3xl font-bold">100+</p>
+                            <p class="text-orange-100 text-sm">Empresas</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold">10K+</p>
+                            <p class="text-orange-100 text-sm">Tarefas</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold">99%</p>
+                            <p class="text-orange-100 text-sm">Satisfação</p>
+                        </div>
                     </div>
                 </div>
-                <div class="hidden md:block">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Hero" class="rounded-lg shadow-lg">
+                
+                <!-- Imagem Direita -->
+                <div class="hidden md:flex items-center justify-center">
+                    <div class="relative w-full h-full">
+                        <div class="absolute inset-0 bg-white opacity-10 rounded-3xl transform rotate-3"></div>
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=500&fit=crop" alt="Hero" class="rounded-3xl shadow-2xl relative z-10 transform -rotate-3 hover:rotate-0 transition duration-300">
+                    </div>
                 </div>
             </div>
         </div>

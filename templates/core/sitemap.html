@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa do Site - Chaplin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navegação -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="/" class="text-2xl font-bold text-orange-500">Chaplin</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-orange-500 transition">Home</a>
+                    <a href="/sitemap/" class="text-orange-500 font-semibold">Mapa</a>
+                    <a href="/users/login/" class="text-gray-700 hover:text-orange-500 transition">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Cabeçalho -->
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold mb-4 text-gray-900">🗺️ Mapa do Site</h1>
+            <p class="text-lg text-gray-600">Navegação completa de todas as páginas do Chaplin</p>
+        </div>
+
+        <!-- Seções Principais -->
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <!-- Seção Pública -->
+            <section class="bg-white p-8 rounded-lg border-2 border-orange-500">
+                <h2 class="text-2xl font-bold mb-6 text-gray-900 flex items-center gap-2">
+                    <span class="text-2xl">🌐</span> Seção Pública
+                </h2>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="/" class="text-orange-500 hover:text-orange-600 font-semibold">
+                            🏠 Home
+                        </a>
+                        <p class="text-sm text-gray-600">Página inicial com apresentação do projeto</p>
+                    </li>
+                    <li>
+                        <a href="/docs/" class="text-orange-500 hover:text-orange-600 font-semibold">
+                            📖 Documentação
+                        </a>
+                        <p class="text-sm text-gray-600">Guia completo com instruções de instalação e uso</p>
+                    </li>
+                    <li>
+                        <a href="/demo/" class="text-orange-500 hover:text-orange-600 font-semibold">
+                            🎬 Demonstração
+                        </a>
+                        <p class="text-sm text-gray-600">Apresentação interativa das funcionalidades</p>
+                    </li>
+                    <li>
+                        <a href="/slides/" class="text-orange-500 hover:text-orange-600 font-semibold">
+                            🎓 Apresentação TCC
+                        </a>
+                        <p class="text-sm text-gray-600">Slides da defesa com visualizador interativo</p>
+                    </li>
+                    <li>
+                        <a href="/resources/" class="text-orange-500 hover:text-orange-600 font-semibold">
+                            📚 Recursos
+                        </a>
+                        <p class="text-sm text-gray-600">Downloads de documentação e código-fonte</p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Seção Autenticada -->
+            <section class="bg-white p-8 rounded-lg border-2 border-blue-500">
+                <h2 class="text-2xl font-bold mb-6 text-gray-900 flex items-center gap-2">
+                    <span class="text-2xl">🔐</span> Seção Autenticada
+                </h2>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="/users/login/" class="text-blue-500 hover:text-blue-600 font-semibold">
+                            🔑 Login
+                        </a>
+                        <p class="text-sm text-gray-600">Acesso ao sistema com credenciais</p>
+                    </li>
+                    <li>
+                        <a href="/users/register/" class="text-blue-500 hover:text-blue-600 font-semibold">
+                            📝 Registro
+                        </a>
+                        <p class="text-sm text-gray-600">Criar nova conta de usuário</p>
+                    </li>
+                    <li>
+                        <a href="/tasks/" class="text-blue-500 hover:text-blue-600 font-semibold">
+                            📋 Tarefas
+                        </a>
+                        <p class="text-sm text-gray-600">Gerenciamento de tarefas e projetos</p>
+                    </li>
+                    <li>
+                        <a href="/admin/" class="text-blue-500 hover:text-blue-600 font-semibold">
+                            ⚙️ Painel Admin
+                        </a>
+                        <p class="text-sm text-gray-600">Administração do sistema (apenas admin)</p>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- Estrutura Visual -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">📊 Estrutura do Site</h2>
+            <div class="bg-white p-8 rounded-lg border border-gray-200 overflow-x-auto">
+                <pre class="text-sm text-gray-700"><code>Chaplin/
+├── 🏠 Home (/)
+│   ├── Demonstração ao Vivo
+│   ├── Sobre o Projeto
+│   └── Serviços
+│
+├── 📖 Documentação (/docs/)
+│   ├── Sobre o Projeto
+│   ├── Requisitos
+│   ├── Guia Passo-a-Passo (7 etapas)
+│   ├── Estrutura do Projeto
+│   ├── Roles de Usuário
+│   ├── Fluxo de Tarefas
+│   ├── Comandos Úteis
+│   └── Link para Demonstração
+│
+├── 🎬 Demonstração (/demo/)
+│   ├── Aplicação ao Vivo
+│   ├── Funcionalidades (6 categorias)
+│   ├── Fluxo de Trabalho (5 etapas)
+│   └── Credenciais de Teste
+│
+├── 🎓 Apresentação TCC (/slides/)
+│   ├── Visualizador de Slides
+│   ├── 14 Slides Completos
+│   ├── Navegação Interativa
+│   ├── Índice de Slides
+│   └── Atalhos de Teclado
+│
+├── 📚 Recursos (/resources/)
+│   ├── Documentação
+│   ├── Apresentação TCC
+│   ├── Código-Fonte
+│   ├── Modelos e Templates
+│   ├── Tecnologias Utilizadas
+│   └── FAQ
+│
+├── 🗺️ Mapa do Site (/sitemap/)
+│   └── Esta página
+│
+└── 🔐 Autenticação
+    ├── Login (/users/login/)
+    ├── Registro (/users/register/)
+    ├── Tarefas (/tasks/)
+    └── Admin (/admin/)</code></pre>
+            </div>
+        </section>
+
+        <!-- Funcionalidades por Página -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">✨ Funcionalidades por Página</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Home -->
+                <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg border border-orange-200">
+                    <h3 class="text-xl font-bold text-orange-900 mb-3">🏠 Home</h3>
+                    <ul class="space-y-2 text-orange-800 text-sm">
+                        <li>✓ Seção hero com CTA</li>
+                        <li>✓ Estatísticas do projeto</li>
+                        <li>✓ Seção sobre</li>
+                        <li>✓ Serviços oferecidos</li>
+                        <li>✓ Links para demo e docs</li>
+                    </ul>
+                </div>
+
+                <!-- Documentação -->
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
+                    <h3 class="text-xl font-bold text-blue-900 mb-3">📖 Documentação</h3>
+                    <ul class="space-y-2 text-blue-800 text-sm">
+                        <li>✓ Sidebar de navegação</li>
+                        <li>✓ Índice de seções</li>
+                        <li>✓ Syntax highlighting</li>
+                        <li>✓ 7 etapas de instalação</li>
+                        <li>✓ Estrutura do projeto</li>
+                    </ul>
+                </div>
+
+                <!-- Demonstração -->
+                <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg border border-green-200">
+                    <h3 class="text-xl font-bold text-green-900 mb-3">🎬 Demonstração</h3>
+                    <ul class="space-y-2 text-green-800 text-sm">
+                        <li>✓ 3 abas interativas</li>
+                        <li>✓ Funcionalidades por categoria</li>
+                        <li>✓ Fluxo de trabalho visual</li>
+                        <li>✓ Credenciais de teste</li>
+                        <li>✓ Links para recursos</li>
+                    </ul>
+                </div>
+
+                <!-- Apresentação -->
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg border border-purple-200">
+                    <h3 class="text-xl font-bold text-purple-900 mb-3">🎓 Apresentação</h3>
+                    <ul class="space-y-2 text-purple-800 text-sm">
+                        <li>✓ Visualizador em iframe</li>
+                        <li>✓ Navegação por botões</li>
+                        <li>✓ Índice clicável</li>
+                        <li>✓ Barra de progresso</li>
+                        <li>✓ Atalhos de teclado</li>
+                    </ul>
+                </div>
+
+                <!-- Recursos -->
+                <div class="bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-lg border border-red-200">
+                    <h3 class="text-xl font-bold text-red-900 mb-3">📚 Recursos</h3>
+                    <ul class="space-y-2 text-red-800 text-sm">
+                        <li>✓ Links de download</li>
+                        <li>✓ Documentação em MD</li>
+                        <li>✓ GitHub repository</li>
+                        <li>✓ Protótipo ZIP</li>
+                        <li>✓ FAQ interativa</li>
+                    </ul>
+                </div>
+
+                <!-- Mapa -->
+                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-6 rounded-lg border border-indigo-200">
+                    <h3 class="text-xl font-bold text-indigo-900 mb-3">🗺️ Mapa do Site</h3>
+                    <ul class="space-y-2 text-indigo-800 text-sm">
+                        <li>✓ Estrutura visual</li>
+                        <li>✓ Funcionalidades por página</li>
+                        <li>✓ Fluxo de navegação</li>
+                        <li>✓ Atalhos rápidos</li>
+                        <li>✓ Estatísticas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fluxo de Navegação -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">🔄 Fluxo de Navegação Recomendado</h2>
+            <div class="bg-white p-8 rounded-lg border border-gray-200">
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">1</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Visite a Home</p>
+                            <p class="text-gray-600">Conheça o projeto e veja a proposta de valor</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">2</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Veja a Demonstração</p>
+                            <p class="text-gray-600">Entenda as funcionalidades e o fluxo de trabalho</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">3</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Assista a Apresentação</p>
+                            <p class="text-gray-600">Veja os slides da defesa TCC com todos os detalhes</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">4</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Leia a Documentação</p>
+                            <p class="text-gray-600">Aprenda como instalar e rodar o projeto localmente</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-orange-500 text-white font-bold">5</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Acesse os Recursos</p>
+                            <p class="text-gray-600">Baixe arquivos, código-fonte e documentação adicional</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-green-500 text-white font-bold">✓</div>
+                        <div>
+                            <p class="font-bold text-gray-900">Faça Login</p>
+                            <p class="text-gray-600">Acesse o sistema e comece a usar o Chaplin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estatísticas -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">📊 Estatísticas do Site</h2>
+            <div class="grid md:grid-cols-4 gap-4">
+                <div class="bg-white p-6 rounded-lg border border-gray-200 text-center">
+                    <p class="text-3xl font-bold text-orange-500">6</p>
+                    <p class="text-gray-600">Páginas Principais</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-gray-200 text-center">
+                    <p class="text-3xl font-bold text-blue-500">14</p>
+                    <p class="text-gray-600">Slides TCC</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-gray-200 text-center">
+                    <p class="text-3xl font-bold text-green-500">4</p>
+                    <p class="text-gray-600">Roles de Usuário</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-gray-200 text-center">
+                    <p class="text-3xl font-bold text-purple-500">∞</p>
+                    <p class="text-gray-600">Possibilidades</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Atalhos Rápidos -->
+        <section class="bg-orange-50 border-l-4 border-orange-500 p-8 rounded-lg">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">⚡ Atalhos Rápidos</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <a href="/" class="block p-4 bg-white rounded-lg hover:shadow-md transition text-center">
+                    <p class="font-bold text-gray-900">🏠 Home</p>
+                </a>
+                <a href="/docs/" class="block p-4 bg-white rounded-lg hover:shadow-md transition text-center">
+                    <p class="font-bold text-gray-900">📖 Docs</p>
+                </a>
+                <a href="/demo/" class="block p-4 bg-white rounded-lg hover:shadow-md transition text-center">
+                    <p class="font-bold text-gray-900">🎬 Demo</p>
+                </a>
+                <a href="/slides/" class="block p-4 bg-white rounded-lg hover:shadow-md transition text-center">
+                    <p class="font-bold text-gray-900">🎓 Slides</p>
+                </a>
+                <a href="/resources/" class="block p-4 bg-white rounded-lg hover:shadow-md transition text-center">
+                    <p class="font-bold text-gray-900">📚 Recursos</p>
+                </a>
+                <a href="/users/login/" class="block p-4 bg-white rounded-lg hover:shadow-md transition text-center">
+                    <p class="font-bold text-gray-900">🔑 Login</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-gray-900 text-gray-400 py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 Chaplin - Projeto de TCC. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
