@@ -3,10 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Task, TaskEvidence, Message
 from .forms import TaskForm
+from apps.users.models import UserProfile
 
 @login_required
 def dashboard_view(request):
     """View do dashboard com estatísticas"""
+    if not hasattr(request.user, 'profile'):
+        UserProfile.objects.create(user=request.user, role='admin' if request.user.is_superuser else 'colaborador')
     user_profile = request.user.profile
     
     if user_profile.role == 'gestor':
@@ -132,6 +135,8 @@ def add_message_view(request, pk):
 @login_required
 def settings_view(request):
     """View de configurações do usuário"""
+    if not hasattr(request.user, 'profile'):
+        UserProfile.objects.create(user=request.user, role='admin' if request.user.is_superuser else 'colaborador')
     user_profile = request.user.profile
     
     if request.method == 'POST':

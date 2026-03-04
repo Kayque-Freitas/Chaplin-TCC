@@ -21,8 +21,8 @@
                 <!-- Menu Desktop -->
                 <div class="hidden md:flex space-x-8">
                     <a href="{% url 'core:index' %}" class="text-gray-700 hover:text-orange-500 transition">Home</a>
-                    <a href="#" class="text-gray-700 hover:text-orange-500 transition">Documentação</a>
-                    <a href="#" class="text-gray-700 hover:text-orange-500 transition">Demonstração</a>
+                    <a href="{% url 'core:docs' %}" class="text-gray-700 hover:text-orange-500 transition">Documentação</a>
+                    <a href="{% url 'core:demo' %}" class="text-gray-700 hover:text-orange-500 transition">Demonstração</a>
                     <a href="{% url 'users:login' %}" class="text-gray-700 hover:text-orange-500 transition">Login</a>
                 </div>
 
@@ -37,8 +37,8 @@
             <!-- Menu Mobile -->
             <div id="mobile-menu" class="hidden md:hidden pb-4">
                 <a href="{% url 'core:index' %}" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Home</a>
-                <a href="#" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Documentação</a>
-                <a href="#" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Demonstração</a>
+                <a href="{% url 'core:docs' %}" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Documentação</a>
+                <a href="{% url 'core:demo' %}" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Demonstração</a>
                 <a href="{% url 'users:login' %}" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Login</a>
             </div>
         </div>
@@ -69,7 +69,7 @@
                         <a href="{% url 'users:login' %}" class="inline-block bg-white text-orange-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-lg transition transform hover:scale-105 shadow-lg text-center">
                             Começar Agora
                         </a>
-                        <a href="#" class="inline-block border-2 border-white text-white hover:bg-white hover:text-orange-600 font-bold py-4 px-8 rounded-lg transition text-center">
+                        <a href="{% url 'core:demo' %}" class="inline-block border-2 border-white text-white hover:bg-white hover:text-orange-600 font-bold py-4 px-8 rounded-lg transition text-center">
                             Ver Demonstração
                         </a>
                     </div>
@@ -185,7 +185,7 @@
                 <div>
                     <h4 class="text-white font-bold mb-4">Produto</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white transition">Recursos</a></li>
+                        <li><a href="{% url 'core:resources' %}" class="hover:text-white transition">Recursos</a></li>
                         <li><a href="#" class="hover:text-white transition">Preços</a></li>
                         <li><a href="#" class="hover:text-white transition">Segurança</a></li>
                     </ul>

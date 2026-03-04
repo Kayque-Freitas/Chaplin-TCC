@@ -145,18 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Prevent form submission for demo
-const demoForms = document.querySelectorAll('form');
-demoForms.forEach(form => {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        showNotification('Formulário enviado com sucesso! (Demo)', 'success');
-        // Reset form after 1 second
-        setTimeout(() => {
-            form.reset();
-        }, 500);
-    });
-});
+// Prevent form submission for demo removed since the app is integrated with backend
 
 // Add keyboard shortcuts
 document.addEventListener('keydown', (e) => {
