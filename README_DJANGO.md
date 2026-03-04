@@ -69,9 +69,7 @@ DB_PORT=3306
 
 ### 5. Executar Migrações
 
-```bash
-python manage.py migrate
-```
+```bash```
 
 ### 6. Criar Superusuário (Admin)
 
