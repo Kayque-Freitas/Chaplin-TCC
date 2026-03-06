@@ -8,7 +8,7 @@
 
 Sistema web de **gestão de tarefas de manutenção predial**. Um gestor abre uma ordem de serviço (tarefa), atribui a um colaborador técnico, e o colaborador executa, documenta com fotos (evidências) e marca como concluída.
 
-**Stack:** Python + Django (back-end) | HTML + Tailwind CSS (front-end) | SQLite (banco de dados)
+**Stack:** Python + Django (back-end) | HTML + Tailwind CSS (front-end) | SQLite ou PostgreSQL (banco de dados) | Host em Nuvem (Render)
 
 ---
 

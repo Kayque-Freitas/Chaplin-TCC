@@ -225,6 +225,89 @@ python manage.py runserver 8080
 
 ---
 
+## 🐘 Como usar PostgreSQL (Produção / Banco Físico)
+
+O projeto vem com **SQLite** por padrão para facilitar, mas o código está totalmente preparado para usar o **PostgreSQL**.
+
+**1. Instale o PostgreSQL e o pgAdmin:**
+Baixe em [postgresql.org/download/](https://www.postgresql.org/download/).
+
+**2. Crie o Banco de Dados Físico:**
+- Abra o **pgAdmin** e conecte-se ao seu servidor local (usuário padrão: `postgres`).
+- Clique com o botão direito em `Databases` > `Create` > `Database...`
+- Nomeie como `chaplin_db` e salve.
+
+**3. Atualize o arquivo `.env`:**
+Adicione as variáveis de conexão (substitua `suasenha` pela senha do PostgreSQL):
+```env
+DB_NAME=chaplin_db
+DB_USER=postgres
+DB_PASSWORD=suasenha
+DB_HOST=127.0.0.1
+DB_PORT=5432
+```
+*Importante: O arquivo `settings.py` já tem a lógica que reconhece essas variáveis e troca automaticamente para o PostgreSQL.*
+
+**4. Instale o driver de PostgreSQL no Python:**
+No terminal (dentro do `venv`), instale:
+```bash
+pip install psycopg2
+```
+
+**5. Rode as Migrations:**
+Como o banco é novo e vazio, você precisa criar todas as tabelas e o administrador nele:
+```bash
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+---
+
+## ☁️ Como Hospedar no Render (Rodar em Qualquer Máquina)
+
+O [Render.com](https://render.com) é uma plataforma gratuita onde você pode hospedar o Django. O projeto ficará disponível online 24h por dia.
+
+**1. Preparar o Repositório:**
+Certifique-se de que a biblioteca `gunicorn` (servidor de produção) está no seu `requirements.txt`.
+```bash
+pip install gunicorn psycopg2-binary
+pip freeze > requirements.txt
+git add .
+git commit -m "add prod config"
+git push origin main
+```
+
+**2. Criar o Banco PostgreSQL no Render:**
+- Acesse o painel do Render e clique em **New > PostgreSQL**.
+- Nomeie (ex: `chaplin-db-prod`).
+- Após criado, copie a **Internal Database URL** fornecida por eles.
+
+**3. Criar o Projeto no Render:**
+- Clique em **New > Web Service**.
+- Conecte com o repositório do projeto no seu GitHub.
+- Configure assim:
+  - **Environment:** `Python 3`
+  - **Build Command:** `pip install -r requirements.txt && python manage.py migrate`
+  * *(Nota: no render gratuito, os static files devem usar o WhiteNoise, já configurado).*
+  - **Start Command:** `gunicorn chaplin_project.wsgi:application`
+
+**4. Adicionar as Variáveis de Ambiente no Render:**
+Na página do Web Service no Render, vá na aba **Environment** e adicione:
+- `SECRET_KEY`: (Crie uma nova senha maluca)
+- `DEBUG`: `False`
+- `ALLOWED_HOSTS`: `*` (ou coloque o domínio que o Render te der)
+- Coloque os dados fragmentados do banco do passo 2 (ou use o campo nativo do `settings.py` para DATABASE_URL, mas preenchendo as variáveis de DB individuais da url interna vai funcionar perfeitamente):
+  - `DB_NAME`: (Nome do DB do render)
+  - `DB_USER`: (User do DB do render)
+  - `DB_PASSWORD`: (Senha do DB do render)
+  - `DB_HOST`: (Host interno do banco do render)
+  - `DB_PORT`: `5432`
+
+**5. Deploy!**
+O Render instalará tudo de forma automatizada e rodará o comando `Start`. A partir daí, o link deles (ex: `https://chaplin-tcc.onrender.com`) permitirá abrir o projeto em **qualquer computador ou celular** do mundo, sem precisar instalar Python!
+
+---
+
 ## 📚 Comandos Django — Referência Rápida
 
 ```bash
