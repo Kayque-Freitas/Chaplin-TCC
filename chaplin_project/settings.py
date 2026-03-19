@@ -71,16 +71,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'chaplin_project.wsgi.application'
 
 # Database
-DATABASES = {
+   DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600
+        default='postgresql://chaplin_user:LAez62FabfFVzUN30sgaX6fZjYu7r7ZD@://dpg-d6tk9ikhg0os73fserhg-a.oregon-postgres.render.com'
+    )
+}
     # 'default': config(
     #     'DATABASE_URL',
     #     default=f'sqlite:///{BASE_DIR}/db.sqlite3',
     #     cast=dj_database_url.parse
-    )
-}
 
 # Authentication Backends
 AUTHENTICATION_BACKENDS = [
