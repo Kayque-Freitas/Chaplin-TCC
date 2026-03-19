@@ -12,7 +12,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-chaplin-dev-key-chang
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', '.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -72,10 +72,13 @@ WSGI_APPLICATION = 'chaplin_project.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': config(
-        'DATABASE_URL',
-        default=f'sqlite:///{BASE_DIR}/db.sqlite3',
-        cast=dj_database_url.parse
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    # 'default': config(
+    #     'DATABASE_URL',
+    #     default=f'sqlite:///{BASE_DIR}/db.sqlite3',
+    #     cast=dj_database_url.parse
     )
 }
 
