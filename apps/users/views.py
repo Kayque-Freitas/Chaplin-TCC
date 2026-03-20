@@ -4,8 +4,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import UserProfile, ActivityLog, Especialidade
+from .forms import UserRegistrationForm
 from django.db.models import Q
 from django.core.paginator import Paginator
+from apps.tasks.views import _is_manager
 import pyotp
 
 def login_view(request):
@@ -18,6 +20,7 @@ def login_view(request):
             if profile and profile.two_factor_enabled and profile.totp_secret:
                 # Store user id in session for 2FA step (don't log in yet)
                 request.session['pre2fa_user_id'] = user.id
+                request.session['pre2fa_user_backend'] = user.backend
                 return redirect('users:two_factor_verify')
             login(request, user)
             return redirect('tasks:dashboard')
@@ -92,6 +95,12 @@ def two_factor_verify_view(request):
         code = request.POST.get('code', '').strip()
         totp = pyotp.TOTP(profile.totp_secret)
         if totp.verify(code, valid_window=1):
+            backend = request.session.get('pre2fa_user_backend')
+            if backend:
+                user.backend = backend
+            else:
+                user.backend = 'apps.users.backends.EmailOrUsernameModelBackend'
+            
             del request.session['pre2fa_user_id']
             login(request, user)
             return redirect('tasks:dashboard')
@@ -108,22 +117,30 @@ def logout_view(request):
     logout(request)
     return redirect('core:index')
 
+@login_required
 def register_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        first_name = request.POST.get('first_name')
-        
-        if User.objects.filter(username=username).exists():
-            return render(request, 'users/register.html', {'error': 'Usuário já existe'})
-        
-        user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name)
-        UserProfile.objects.create(user=user, role='colaborador')
-        login(request, user)
+    """View para registrar novos usuários (restrito a gestores e admins)"""
+    if not is_admin(request.user) and not _is_manager(request.user):
+        messages.error(request, 'Sem permissão para criar contas.')
         return redirect('tasks:dashboard')
-    
-    return render(request, 'users/register.html')
+        
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            # Form is valid, create user but don't save yet to set password properly
+            user = form.save(commit=False)
+            password = form.cleaned_data.get('password')
+            user.set_password(password)
+            user.save()
+            # The UserProfile is automatically created via the post_save signal
+            # Default role is 'colaborador' which is fine
+            
+            messages.success(request, f'Usuário {user.username} criado com sucesso!')
+            return redirect('users:admin_users_list' if is_admin(request.user) else 'tasks:dashboard')
+    else:
+        form = UserRegistrationForm()
+        
+    return render(request, 'users/register.html', {'form': form})
 
 @login_required
 def profile_view(request):

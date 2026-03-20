@@ -37,7 +37,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {% for evidence in evidences %}
                     <div class="border border-gray-200 rounded-lg p-4">
+                        {% if evidence.photo %}
                         <img src="{{ evidence.photo.url }}" alt="Evidência" class="w-full h-40 object-cover rounded-lg mb-3">
+                        {% else %}
+                        <div class="w-full h-40 bg-gray-100 flex items-center justify-center rounded-lg mb-3">
+                            <span class="text-gray-400 text-sm">Sem foto de evidência</span>
+                        </div>
+                        {% endif %}
                         <p class="text-sm text-gray-600">{{ evidence.description }}</p>
                         <p class="text-xs text-gray-500 mt-2">{{ evidence.created_at|date:"d/m/Y H:i" }}</p>
                     </div>

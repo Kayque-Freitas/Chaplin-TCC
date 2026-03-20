@@ -21,8 +21,6 @@
                 <!-- Menu Desktop -->
                 <div class="hidden md:flex space-x-8">
                     <a href="{% url 'core:index' %}" class="text-gray-700 hover:text-orange-500 transition">Home</a>
-                    <a href="{% url 'core:docs' %}" class="text-gray-700 hover:text-orange-500 transition">Documentação</a>
-                    <a href="{% url 'core:demo' %}" class="text-gray-700 hover:text-orange-500 transition">Demonstração</a>
                     <a href="{% url 'users:login' %}" class="text-gray-700 hover:text-orange-500 transition">Login</a>
                 </div>
 
@@ -37,8 +35,6 @@
             <!-- Menu Mobile -->
             <div id="mobile-menu" class="hidden md:hidden pb-4">
                 <a href="{% url 'core:index' %}" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Home</a>
-                <a href="{% url 'core:docs' %}" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Documentação</a>
-                <a href="{% url 'core:demo' %}" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Demonstração</a>
                 <a href="{% url 'users:login' %}" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Login</a>
             </div>
         </div>
@@ -68,9 +64,6 @@
                     <div class="flex flex-col sm:flex-row gap-4 pt-4">
                         <a href="{% url 'users:login' %}" class="inline-block bg-white text-orange-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-lg transition transform hover:scale-105 shadow-lg text-center">
                             Começar Agora
-                        </a>
-                        <a href="{% url 'core:demo' %}" class="inline-block border-2 border-white text-white hover:bg-white hover:text-orange-600 font-bold py-4 px-8 rounded-lg transition text-center">
-                            Ver Demonstração
                         </a>
                     </div>
                     <!-- Estatísticas -->
@@ -108,10 +101,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
                     <p class="text-gray-700 text-lg mb-6">
-                        Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                        O Chaplin é uma plataforma completa desenvolvida especificamente para resolver os desafios do gerenciamento de tarefas de manutenção predial. Esqueça sistemas complexos e planilhas confusas.
                     </p>
                     <p class="text-gray-700 text-lg">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Nosso sistema oferece um fluxo de trabalho claro e direto: gestores criam e atribuem ordens de serviço, enquanto membros da equipe técnica executam, reportam o tempo gasto e adicionam evidências fotográficas em tempo real. Tudo isso com um sistema de controle de acesso (RBAC) robusto que garante que cada usuário veja apenas o que é pertinente à sua função.
                     </p>
                 </div>
                 <div>
@@ -174,43 +167,7 @@
         </div>
     </section>
 
-    <!-- Rodapé -->
-    <footer class="bg-gray-900 text-gray-400 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h3 class="text-white font-bold mb-4">Chaplin</h3>
-                    <p>Plataforma de gerenciamento de tarefas moderna e eficiente.</p>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Produto</h4>
-                    <ul class="space-y-2">
-                        <li><a href="{% url 'core:resources' %}" class="hover:text-white transition">Recursos</a></li>
-                        <li><a href="#" class="hover:text-white transition">Preços</a></li>
-                        <li><a href="#" class="hover:text-white transition">Segurança</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Empresa</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white transition">Sobre</a></li>
-                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
-                        <li><a href="#" class="hover:text-white transition">Contato</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Legal</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-white transition">Privacidade</a></li>
-                        <li><a href="#" class="hover:text-white transition">Termos</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 text-center">
-                <p>&copy; Em desenvolvimento</p>
-            </div>
-        </div>
-    </footer>
+
 
     <script src="{% static 'js/main.js' %}"></script>
 </body>

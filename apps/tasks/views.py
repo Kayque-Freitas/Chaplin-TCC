@@ -94,6 +94,7 @@ def tasks_list_view(request):
         'current_status': status,
         'current_priority': priority,
         'current_search': search,
+        'can_manage': _is_manager(request.user),
     }
     
     return render(request, 'tasks/list.html', context)
@@ -181,12 +182,18 @@ def assign_task_view(request, pk):
                     tipo='tarefa_atribuida', task=task)
         return redirect('tasks:detail', pk=task.pk)
     
-    return render(request, 'tasks/assign.html', {'task': task})
+    users = AuthUser.objects.filter(is_active=True).order_by('first_name', 'username')
+    return render(request, 'tasks/assign.html', {'task': task, 'users': users})
 
 @login_required
 def complete_task_view(request, pk):
     """View para marcar tarefa como concluída"""
     task = get_object_or_404(Task, pk=pk)
+    
+    # Bloquear colaboradores que tentem concluir tarefas de outros
+    if not _is_manager(request.user) and task.assigned_to != request.user:
+        django_messages.error(request, 'Você não tem permissão para concluir esta tarefa.')
+        return redirect('tasks:list')
     
     if request.method == 'POST':
         description = request.POST.get('description', '')
@@ -238,8 +245,7 @@ def add_message_view(request, pk):
                         mensagem=f'{request.user.get_full_name() or request.user.username}: {content[:80]}',
                         tipo='nova_mensagem', task=task)
         return redirect('tasks:detail', pk=task.pk)
-    
-    return render(request, 'tasks/message.html', {'task': task})
+    return redirect('tasks:detail', pk=task.pk)
 
 
 @login_required
