@@ -1,139 +1,64 @@
-# Chaplin — Plataforma de Gestão de Tarefas Predial
+# Chaplin — Gestão de Tarefas Predial
 
-**Chaplin** é um sistema web de gerenciamento de tarefas de manutenção predial, desenvolvido como TCC. Permite que gestores criem e acompanhem ordens de serviço, atribuam responsáveis, coletem evidências fotográficas e mantenham comunicação integrada por tarefa.
+O Chaplin é um sistema web desenvolvido como Trabalho de Conclusão de Curso (TCC) para gerenciar a manutenção preventiva e corretiva em edifícios e propriedades. Ele centraliza a comunicação entre gestores, líderes de equipe e colaboradores, garantindo que as ordens de serviço sejam acompanhadas desde a abertura até a conclusão com evidências fotográficas.
 
----
+## Funcionalidades Principais
 
-## ✅ Funcionalidades Implementadas
-
-| Funcionalidade | Status |
-|---|---|
-| Login / Logout / Registro | ✅ |
-| Sistema de Roles (Admin, Gestor, Líder, Colaborador) | ✅ |
-| RBAC — controle de acesso por role | ✅ |
-| CRUD de Tarefas | ✅ |
-| Alocação de responsável por tarefa | ✅ |
-| Evidências fotográficas (foto + descrição) | ✅ |
-| Comunicação por tarefa (mensagens) | ✅ |
-| Endereço de tarefa via ViaCEP (preenchimento automático) | ✅ |
-| Gestão de Áreas do Prédio | ✅ |
-| Visualização Kanban | ✅ |
-| Visualização em Calendário | ✅ |
-| Sistema de Notificações em tempo real | ✅ |
-| Tema Claro / Escuro (persistente) | ✅ |
-| Autenticação de Dois Fatores — 2FA (TOTP) | ✅ |
-| Painel de Admin — Gestão de Contas | ✅ |
+- **Gestão de Usuários**: Sistema de permissões baseado em funções (Admin, Gestor, Líder e Colaborador).
+- **Controle de Tarefas**: Acompanhamento completo do status da manutenção (Aberta, Alocada, Concluída e Finalizada).
+- **Evidências Fotográficas**: Upload de fotos e descrições técnicas para comprovação do serviço.
+- **Comunicação Integrada**: Chat interno em cada tarefa para troca de informações entre os envolvidos.
+- **Visualização Flexível**: Acompanhamento por lista, Kanban ou Calendário.
+- **Segurança**: Autenticação robusta com a opção de Segundo Fator (2FA) via TOTP.
 
 ---
 
-## 🏗️ Estrutura do Projeto
+## Estrutura do Projeto
 
-```
-Chaplin-TCC/
-├── apps/
-│   ├── core/              # Home, landing page
-│   ├── tasks/             # Tarefas, notificações, áreas
-│   │   ├── models.py      # Task, Notification, AreaPredio, TaskEvidence, Message
-│   │   ├── views.py       # Toda a lógica de negócio
-│   │   ├── forms.py       # Formulários Django
-│   │   └── urls.py        # Rotas de tarefas
-│   └── users/
-│       ├── models.py      # UserProfile (role, 2FA, especialidade, endereço)
-│       ├── views.py       # Login, 2FA, perfil, admin de contas
-│       └── urls.py        # Rotas de usuários
-├── templates/
-│   ├── shared/
-│   │   └── base_dashboard.html   # Layout base (navbar, sidebar, toggle tema)
-│   ├── tasks/                    # Todos os HTMLs de tarefas
-│   └── users/                    # Login, 2FA, admin de contas
-├── static/
-│   ├── css/styles.css
-│   ├── js/main.js
-│   └── docs/              # Documentação auxiliar
-├── chaplin_project/
-│   ├── settings.py
-│   └── urls.py
-├── manage.py
-├── requirements.txt       # Todas as dependências Python
-└── .env                   # Variáveis de ambiente (NÃO commitar)
-```
+O projeto é organizado em aplicações Django modulares:
+
+- **`apps/core/`**: Página inicial e componentes estáticos.
+- **`apps/tasks/`**: Lógica de tarefas, notificações, áreas do prédio e evidências.
+- **`apps/users/`**: Gestão de perfis, autenticação e controle de acesso.
+
+Para uma visão detalhada da arquitetura, consulte [ESTRUTURA_PROJETO.md](ESTRUTURA_PROJETO.md).
 
 ---
 
-## 🚀 Como Rodar Localmente
+## Como Começar
 
-> Leia o guia completo em [`static/docs/GUIA_RODAR_LOCALMENTE.md`](static/docs/GUIA_RODAR_LOCALMENTE.md)
+Para rodar o projeto localmente pela primeira vez, siga estes passos simplificados:
 
-**Resumo rápido:**
+1. **Clone o repositório e entre na pasta:**
 ```bash
 git clone https://github.com/Kayque-Freitas/Chaplin-TCC.git
 cd Chaplin-TCC
+```
+
+2. **Crie e ative um ambiente virtual:**
+```bash
 python -m venv venv
-venv\Scripts\activate          # Windows
+venv\Scripts\activate  # No Windows
+```
+
+3. **Instale as dependências e prepare o banco (SQLite):**
+```bash
 pip install -r requirements.txt
-# Criar .env (veja o guia)
 python manage.py migrate
-python manage.py createsuperuser
+```
+
+4. **Inicie o servidor:**
+```bash
 python manage.py runserver
 ```
-Acesse: http://127.0.0.1:8000
+
+Para instruções mais detalhadas sobre configuração de banco de dados (PostgreSQL), solução de problemas ou deploy, consulte o [Guia de Configuração](static/docs/GUIA_SETUP.md).
 
 ---
 
-## 👥 Roles e Permissões
+## Equipe e Desenvolvimento
 
-| Role | Criar Tarefa | Alocar | Editar | Ver todos | Admin Contas |
-|---|:---:|:---:|:---:|:---:|:---:|
-| `admin` | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `gestor` | ✅ | ✅ | ✅ | As próprias | ❌ |
-| `lider` | ✅ | ✅ | ✅ | ✅ | ❌ |
-| `colaborador` | ❌ | ❌ | ❌ | Só as suas | ❌ |
+Este projeto foi desenvolvido como parte do TCC da ETEC. O objetivo é oferecer uma ferramenta prática e profissional para o mercado de manutenção predial.
 
----
-
-## 🔐 Segurança
-
-- CSRF Protection (embutida no Django)
-- Senhas com hash (PBKDF2 — padrão Django)
-- 2FA via TOTP (pyotp) — opcional por usuário
-- RBAC server-side (não depende só do front-end)
-
----
-
-## 🌐 Principais URLs
-
-| Página | URL |
-|---|---|
-| Home | `/` |
-| Login | `/usuarios/login/` |
-| Dashboard | `/tasks/dashboard/` |
-| Lista de Tarefas | `/tasks/lista/` |
-| Nova Tarefa | `/tasks/criar/` |
-| Kanban | `/tasks/kanban/` |
-| Calendário | `/tasks/calendario/` |
-| Notificações | `/tasks/notificacoes/` |
-| Configurações | `/tasks/configuracoes/` |
-| Áreas do Prédio | `/tasks/areas/` |
-| Ativar 2FA | `/usuarios/2fa/configurar/` |
-| Admin de Contas | `/usuarios/admin-panel/usuarios/` |
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-| Camada | Tecnologia |
-|---|---|
-| Backend | Python 3.13, Django 4.2 |
-| Banco de dados | SQLite (dev) |
-| Frontend | HTML5, Tailwind CSS (CDN), JavaScript Vanilla |
-| 2FA | pyotp + qrcode |
-| CEP | API pública ViaCEP |
-| Imagens | Pillow |
-
----
-
-## 📄 Documentação
-
-- [Guia Completo de Setup](static/docs/GUIA_RODAR_LOCALMENTE.md)
-- [Arquitetura Técnica](static/docs/ARQUITETURA_TECNICA.md)
-- [Resumo para o Grupo](static/docs/RESUMO_GRUPO.md)
+- **Desenvolvido por**: [Kayque Freitas](https://github.com/Kayque-Freitas) e equipe.
+- **Tecnologias**: Python, Django, Tailwind CSS, SQLite/PostgreSQL.
