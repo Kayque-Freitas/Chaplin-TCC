@@ -12,7 +12,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-chaplin-dev-key-chang
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['*', '.onrender.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,*').split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -70,16 +70,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chaplin_project.wsgi.application'
 
-# Database
-   DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://chaplin_user:LAez62FabfFVzUN30sgaX6fZjYu7r7ZD@://dpg-d6tk9ikhg0os73fserhg-a.oregon-postgres.render.com'
-    )
-}
-    # 'default': config(
-    #     'DATABASE_URL',
-    #     default=f'sqlite:///{BASE_DIR}/db.sqlite3',
-    #     cast=dj_database_url.parse
+# Database Configuration
+# Decide between 'sqlite' or 'postgres' based on the DB_ENGINE variable in your .env
+DB_ENGINE = config('DB_ENGINE', default='sqlite')
+
+if DB_ENGINE == 'postgres':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME', default='postgres'),
+            'USER': config('DB_USER', default='postgres'),
+            'PASSWORD': config('DB_PASSWORD', default='postgres'),
+            'HOST': config('DB_HOST', default='localhost'),
+            'PORT': config('DB_PORT', default='5432'),
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Authentication Backends
 AUTHENTICATION_BACKENDS = [
@@ -136,8 +148,6 @@ SESSION_COOKIE_AGE = 1209600  # 2 weeks
 
 # CSRF Configuration
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-i07u8zjxwkyfbosvtpysg-dc050520.us1.manus.computer',
-    'https://*.manus.computer',
     'http://localhost:8000',
     'http://127.0.0.1:8000',
 ]
