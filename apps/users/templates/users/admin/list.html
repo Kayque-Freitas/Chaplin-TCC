@@ -40,7 +40,7 @@
                     <h1 class="text-3xl font-bold text-gray-900">Gestão de Usuários</h1>
                     <p class="text-gray-600 mt-1">Total registrados: {{ page_obj.paginator.count }}</p>
                 </div>
-                <a href="#" class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-lg font-medium shadow-sm transition">+ Novo Usuário</a>
+                <a href="{% url 'users:register' %}" class="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-lg font-medium shadow-sm transition">+ Novo Usuário</a>
             </div>
 
             <!-- Messages -->
@@ -109,7 +109,10 @@
                                 {{ user_obj.date_joined|date:"d/m/Y H:i" }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="{% url 'users:admin_user_edit' user_obj.id %}" class="text-orange-600 hover:text-orange-900 mr-3 border border-orange-200 py-1 px-3 rounded hover:bg-orange-50">Editar Modelagem</a>
+                                <a href="{% url 'users:admin_user_edit' user_obj.id %}" class="text-orange-600 hover:text-orange-900 mr-2 border border-orange-200 py-1 px-3 rounded hover:bg-orange-50">Editar</a>
+                                {% if user_obj != request.user %}
+                                <a href="{% url 'users:admin_user_delete' user_obj.id %}" class="text-red-600 hover:text-red-900 border border-red-200 py-1 px-3 rounded hover:bg-red-50">Excluir</a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% empty %}

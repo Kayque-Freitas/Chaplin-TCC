@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import Task, TaskEvidence, Message, AreaPredio, Notification
+from django.utils import timezone
+from .models import Task, TaskEvidence, Message, Notification
 from .forms import TaskForm
 from apps.users.models import UserProfile
 from django.db.models import Q
@@ -138,7 +139,7 @@ def task_detail_view(request, pk):
 
     return render(request, 'tasks/detail.html', {
         'task': task,
-        'messages': task_messages,
+        'task_messages': task_messages,
         'evidences': evidences,
         'can_manage': _is_manager(request.user),
     })
@@ -197,22 +198,19 @@ def complete_task_view(request, pk):
     
     if request.method == 'POST':
         description = request.POST.get('description', '')
-        tempo_gasto = request.POST.get('tempo_gasto', '')
-        materiais_utilizados = request.POST.get('materiais_utilizados', '')
         photo = request.FILES.get('photo')
         
         # Opcionalmente exigir alguns campos ou apenas instanciar
         evidence = TaskEvidence(
             task=task,
-            description=description,
-            tempo_gasto=tempo_gasto,
-            materiais_utilizados=materiais_utilizados
+            description=description
         )
         if photo:
             evidence.photo = photo
         evidence.save()
         
         task.status = 'concluida'
+        task.completed_at = timezone.now()
         task.save()
         # Notificar o criador da tarefa sobre conclusão
         if task.created_by and task.created_by != request.user:
@@ -246,6 +244,45 @@ def add_message_view(request, pk):
                         tipo='nova_mensagem', task=task)
         return redirect('tasks:detail', pk=task.pk)
     return redirect('tasks:detail', pk=task.pk)
+
+
+@login_required
+def delete_task_view(request, pk):
+    """Exclui uma tarefa — restrito a gestor/admin."""
+    if not _is_manager(request.user):
+        django_messages.error(request, 'Você não tem permissão para excluir tarefas.')
+        return redirect('tasks:list')
+    task = get_object_or_404(Task, pk=pk)
+    if request.method == 'POST':
+        titulo = task.title
+        task.delete()
+        django_messages.success(request, f'Tarefa "{titulo}" excluída com sucesso.')
+        return redirect('tasks:list')
+    return render(request, 'tasks/delete_confirm.html', {'task': task})
+
+
+@login_required
+def finalize_task_view(request, pk):
+    """Gestor/admin aceita a conclusão de uma tarefa (concluída → finalizada)."""
+    if not _is_manager(request.user):
+        django_messages.error(request, 'Você não tem permissão para finalizar tarefas.')
+        return redirect('tasks:detail', pk=pk)
+    task = get_object_or_404(Task, pk=pk)
+    if task.status != 'concluida':
+        django_messages.error(request, 'Apenas tarefas com status "Concluída" podem ser finalizadas.')
+        return redirect('tasks:detail', pk=pk)
+    if request.method == 'POST':
+        task.status = 'finalizada'
+        task.save()
+        if task.assigned_to and task.assigned_to != request.user:
+            _notify(task.assigned_to,
+                    f'Tarefa finalizada: {task.title}',
+                    mensagem=f'Aprovada por {request.user.get_full_name() or request.user.username}.',
+                    tipo='tarefa_finalizada', task=task)
+        django_messages.success(request, f'Tarefa "{task.title}" finalizada com sucesso.')
+        return redirect('tasks:detail', pk=pk)
+    django_messages.error(request, 'Método não permitido.')
+    return redirect('tasks:detail', pk=pk)
 
 
 @login_required
@@ -331,137 +368,4 @@ def kanban_view(request):
     return render(request, 'tasks/kanban.html', context)
 
 
-@login_required
-def calendar_view(request):
-    """Visualização Calendário de Tarefas por Data de Vencimento"""
-    from datetime import date
-    import json
 
-    if not hasattr(request.user, 'profile'):
-        UserProfile.objects.create(user=request.user, role='admin' if request.user.is_superuser else 'colaborador')
-    user_profile = request.user.profile
-
-    # Filtrar tarefas com due_date baseado no role
-    if user_profile.role == 'gestor':
-        tasks_with_dates = Task.objects.filter(created_by=request.user, due_date__isnull=False)
-    elif user_profile.role == 'colaborador':
-        tasks_with_dates = Task.objects.filter(assigned_to=request.user, due_date__isnull=False)
-    else:
-        tasks_with_dates = Task.objects.filter(due_date__isnull=False)
-
-    # Preparar eventos para o FullCalendar (formato JSON)
-    events = []
-    for task in tasks_with_dates:
-        # Cor baseada na prioridade
-        color_map = {
-            'urgente': '#ef4444',  # red
-            'alta': '#f97316',     # orange
-            'normal': '#3b82f6',   # blue
-            'baixa': '#22c55e',    # green
-        }
-        color = color_map.get(task.priority, '#6b7280')
-
-        events.append({
-            'id': task.pk,
-            'title': task.title,
-            'start': task.due_date.isoformat(),
-            'url': f'/tasks/{task.pk}/',
-            'backgroundColor': color,
-            'borderColor': color,
-        })
-
-    context = {
-        'events_json': json.dumps(events),
-    }
-    return render(request, 'tasks/calendar.html', context)
-
-
-# ─────────────────────────────────────
-# GESTÃO DE ÁREAS DO PRÉDIO (GESTOR)
-# ─────────────────────────────────────
-
-def _is_gestor_or_admin(user):
-    """Verifica se o usuário é Gestor ou Admin."""
-    profile = getattr(user, 'profile', None)
-    return profile and profile.role in ('gestor', 'admin')
-
-
-@login_required
-def area_list_view(request):
-    """Lista todas as áreas do prédio."""
-    if not _is_gestor_or_admin(request.user):
-        return redirect('tasks:dashboard')
-    areas = AreaPredio.objects.all()
-    return render(request, 'tasks/area_list.html', {'areas': areas})
-
-
-@login_required
-def area_create_view(request):
-    """Cria uma nova área do prédio."""
-    if not _is_gestor_or_admin(request.user):
-        return redirect('tasks:dashboard')
-    from django.contrib.auth.models import User as AuthUser
-
-    if request.method == 'POST':
-        nome = request.POST.get('nome', '').strip()
-        descricao = request.POST.get('descricao', '').strip()
-        andar = request.POST.get('andar', '').strip()
-        responsavel_id = request.POST.get('responsavel')
-        ativo = request.POST.get('ativo') == 'on'
-
-        if not nome:
-            return render(request, 'tasks/area_form.html', {
-                'error': 'O nome da área é obrigatório.',
-                'users': AuthUser.objects.all(),
-                'form_action': 'create',
-            })
-
-        responsavel = AuthUser.objects.filter(pk=responsavel_id).first() if responsavel_id else None
-        AreaPredio.objects.create(
-            nome=nome, descricao=descricao, andar=andar,
-            responsavel=responsavel, ativo=ativo
-        )
-        return redirect('tasks:area_list')
-
-    return render(request, 'tasks/area_form.html', {
-        'users': AuthUser.objects.all(),
-        'form_action': 'create',
-    })
-
-
-@login_required
-def area_edit_view(request, pk):
-    """Edita uma área do prédio."""
-    if not _is_gestor_or_admin(request.user):
-        return redirect('tasks:dashboard')
-    from django.contrib.auth.models import User as AuthUser
-
-    area = get_object_or_404(AreaPredio, pk=pk)
-
-    if request.method == 'POST':
-        area.nome = request.POST.get('nome', area.nome).strip()
-        area.descricao = request.POST.get('descricao', area.descricao).strip()
-        area.andar = request.POST.get('andar', area.andar).strip()
-        responsavel_id = request.POST.get('responsavel')
-        area.responsavel = AuthUser.objects.filter(pk=responsavel_id).first() if responsavel_id else None
-        area.ativo = request.POST.get('ativo') == 'on'
-        area.save()
-        return redirect('tasks:area_list')
-
-    return render(request, 'tasks/area_form.html', {
-        'area': area,
-        'users': AuthUser.objects.all(),
-        'form_action': 'edit',
-    })
-
-
-@login_required
-def area_delete_view(request, pk):
-    """Desativa (soft-delete) ou exclui uma área do prédio."""
-    if not _is_gestor_or_admin(request.user):
-        return redirect('tasks:dashboard')
-    area = get_object_or_404(AreaPredio, pk=pk)
-    if request.method == 'POST':
-        area.delete()
-        return redirect('tasks:area_list')
-    return render(request, 'tasks/area_confirm_delete.html', {'area': area})

@@ -73,10 +73,30 @@ class UserProfile(models.Model):
         verbose_name_plural = "Perfis de Usuários"
 
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
+def create_or_update_user_profile(sender, instance, created, **kwargs):
+    """Cria ou atualiza o perfil do usuário automaticamente."""
     if created:
-        UserProfile.objects.create(user=instance)
+        role = 'admin' if instance.is_superuser else 'colaborador'
+        UserProfile.objects.get_or_create(user=instance, defaults={'role': role})
+    else:
+        # Garante que o perfil existe antes de salvar
+        profile, _ = UserProfile.objects.get_or_create(user=instance)
+        profile.save()
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+@receiver(post_save, sender=UserProfile)
+def sync_user_role(sender, instance, **kwargs):
+    """Sincroniza a flag de superuser/staff baseada na role do UserProfile."""
+    user = instance.user
+    changed = False
+    is_admin = (instance.role == 'admin')
+    
+    if user.is_superuser != is_admin:
+        user.is_superuser = is_admin
+        changed = True
+    
+    if user.is_staff != is_admin:
+        user.is_staff = is_admin
+        changed = True
+        
+    if changed:
+        user.save(update_fields=['is_superuser', 'is_staff'])

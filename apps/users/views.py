@@ -9,13 +9,22 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from apps.tasks.views import _is_manager
 import pyotp
+from django.core.cache import cache
 
 def login_view(request):
+    ip = request.META.get('REMOTE_ADDR', '')
+    cache_key = f"login_fails_{ip}"
+    fails = cache.get(cache_key, 0)
+
+    if fails >= 5:
+        return render(request, 'users/login.html', {'error': 'Muitas tentativas fracassadas. O acesso está bloqueado por 5 minutos.'})
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            cache.delete(cache_key)
             profile = getattr(user, 'profile', None)
             if profile and profile.two_factor_enabled and profile.totp_secret:
                 # Store user id in session for 2FA step (don't log in yet)
@@ -25,6 +34,7 @@ def login_view(request):
             login(request, user)
             return redirect('tasks:dashboard')
         else:
+            cache.set(cache_key, fails + 1, timeout=300)
             return render(request, 'users/login.html', {'error': 'Usuário ou senha inválidos. Tente novamente.'})
     return render(request, 'users/login.html')
 
@@ -102,6 +112,8 @@ def two_factor_verify_view(request):
                 user.backend = 'apps.users.backends.EmailOrUsernameModelBackend'
             
             del request.session['pre2fa_user_id']
+            if 'pre2fa_user_backend' in request.session:
+                del request.session['pre2fa_user_backend']
             login(request, user)
             return redirect('tasks:dashboard')
         else:
@@ -231,4 +243,51 @@ def admin_user_edit_view(request, user_id):
         'target_user': target_user,
         'roles': UserProfile.ROLE_CHOICES,
         'especialidades': especialidades
+    })
+
+@login_required
+@user_passes_test(is_admin)
+def admin_user_delete_view(request, user_id):
+    """View para excluir ou desativar um usuário."""
+    target_user = get_object_or_404(User, id=user_id)
+    
+    # Não permitir que o admin exclua a si mesmo
+    if target_user == request.user:
+        messages.error(request, 'Você não pode excluir sua própria conta.')
+        return redirect('users:admin_users_list')
+    
+    if request.method == 'POST':
+        action = request.POST.get('action', 'deactivate')
+        username = target_user.username
+        
+        if action == 'delete':
+            # Hard delete
+            ActivityLog.objects.create(
+                admin_user=request.user,
+                target_user=None,
+                action='DELETE_USER',
+                role_old=target_user.profile.role if hasattr(target_user, 'profile') else '',
+                role_new='',
+                ip_address=request.META.get('REMOTE_ADDR')
+            )
+            target_user.delete()
+            messages.success(request, f'Usuário "{username}" excluído permanentemente.')
+        else:
+            # Soft delete (desativar)
+            target_user.is_active = False
+            target_user.save()
+            ActivityLog.objects.create(
+                admin_user=request.user,
+                target_user=target_user,
+                action='DEACTIVATE_USER',
+                role_old=target_user.profile.role if hasattr(target_user, 'profile') else '',
+                role_new='',
+                ip_address=request.META.get('REMOTE_ADDR')
+            )
+            messages.success(request, f'Usuário "{username}" desativado com sucesso.')
+        
+        return redirect('users:admin_users_list')
+    
+    return render(request, 'users/admin/delete.html', {
+        'target_user': target_user,
     })
