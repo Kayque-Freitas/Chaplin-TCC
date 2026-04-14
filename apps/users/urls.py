@@ -7,6 +7,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register_view, name='register'),
+    path('verify-email/', views.verify_email_code_view, name='verify_email'),
     path('profile/', views.profile_view, name='profile'),
     
     # Admin Panel - Gestão de Contas

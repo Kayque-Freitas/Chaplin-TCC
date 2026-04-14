@@ -47,6 +47,8 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=20, blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     company_name = models.CharField(max_length=200, blank=True)
+    cpf = models.CharField(max_length=14, blank=True, verbose_name="CPF")
+    cnpj = models.CharField(max_length=18, blank=True, verbose_name="CNPJ")
     bio = models.TextField(blank=True)
     
     # Endereço (ViaCEP)
@@ -58,9 +60,12 @@ class UserProfile(models.Model):
     cidade = models.CharField(max_length=100, blank=True)
     estado = models.CharField(max_length=2, blank=True)
 
-    # Autenticação de Dois Fatores (2FA)
+    # Autenticação de Dois Fatores (2FA) e E-mail Verify
     two_factor_enabled = models.BooleanField(default=False, verbose_name='2FA Ativo')
     totp_secret = models.CharField(max_length=64, blank=True, verbose_name='Chave TOTP')
+    
+    email_verification_code = models.CharField(max_length=6, blank=True, null=True)
+    email_code_expires_at = models.DateTimeField(blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -10,6 +10,12 @@ from django.core.paginator import Paginator
 from apps.tasks.views import _is_manager
 import pyotp
 from django.core.cache import cache
+import random
+from django.utils import timezone
+from datetime import timedelta
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import UserRegistrationForm, EmailVerificationForm
 
 def login_view(request):
     ip = request.META.get('REMOTE_ADDR', '')
@@ -129,30 +135,79 @@ def logout_view(request):
     logout(request)
     return redirect('core:index')
 
-@login_required
 def register_view(request):
-    """View para registrar novos usuários (restrito a gestores e admins)"""
-    if not is_admin(request.user) and not _is_manager(request.user):
-        messages.error(request, 'Sem permissão para criar contas.')
-        return redirect('tasks:dashboard')
-        
+    """View para registrar novos usuários (Pública)"""
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            # Form is valid, create user but don't save yet to set password properly
             user = form.save(commit=False)
             password = form.cleaned_data.get('password')
             user.set_password(password)
+            user.is_active = False # Conta travada até validar o e-mail
             user.save()
-            # The UserProfile is automatically created via the post_save signal
-            # Default role is 'colaborador' which is fine
             
-            messages.success(request, f'Usuário {user.username} criado com sucesso!')
-            return redirect('users:admin_users_list' if is_admin(request.user) else 'tasks:dashboard')
+            profile = user.profile
+            profile.role = form.cleaned_data.get('role', 'gestor')
+            profile.cpf = form.cleaned_data.get('cpf', '')
+            profile.cnpj = form.cleaned_data.get('cnpj', '')
+            
+            code = str(random.randint(100000, 999999))
+            profile.email_verification_code = code
+            profile.email_code_expires_at = timezone.now() + timedelta(minutes=15)
+            profile.save()
+            
+            # Enviar E-mail
+            try:
+                send_mail(
+                    subject='[Chaplin] Seu código de ativação',
+                    message=f'Olá {user.first_name},\n\nSeu código de ativação de 6 dígitos é: {code}\nEle expira em 15 minutos.',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[user.email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                print(f"Erro ao enviar email: {e}")
+                
+            request.session['verify_user_id'] = user.id
+            messages.info(request, f'Pronto! Enviamos um código de segurança de 6 dígitos para o e-mail {user.email}.')
+            return redirect('users:verify_email')
     else:
         form = UserRegistrationForm()
         
     return render(request, 'users/register.html', {'form': form})
+
+def verify_email_code_view(request):
+    """Visualização pública para validar o OTP do E-mail e ativar a conta"""
+    user_id = request.session.get('verify_user_id')
+    if not user_id:
+        return redirect('users:register')
+        
+    user = get_object_or_404(User, id=user_id)
+    
+    if request.method == 'POST':
+        form = EmailVerificationForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data.get('code')
+            profile = getattr(user, 'profile', None)
+            
+            if not profile or not profile.email_verification_code:
+                messages.error(request, 'Nenhum código gerado para este usuário.')
+            elif profile.email_code_expires_at and profile.email_code_expires_at < timezone.now():
+                messages.error(request, 'Este código expirou. Realize o cadastro novamente.')
+            elif profile.email_verification_code == code:
+                user.is_active = True
+                user.save()
+                profile.email_verification_code = ''
+                profile.save()
+                del request.session['verify_user_id']
+                messages.success(request, 'E-mail validado com sucesso! Você já pode entrar na plataforma.')
+                return redirect('users:login')
+            else:
+                messages.error(request, 'Código inválido. Tente novamente.')
+    else:
+        form = EmailVerificationForm()
+        
+    return render(request, 'users/verify_email.html', {'form': form, 'email': user.email})
 
 @login_required
 def profile_view(request):

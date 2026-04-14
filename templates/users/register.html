@@ -4,10 +4,11 @@
 
 {% block content %}
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
+    <div class="max-w-xl w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
         <div class="text-center">
-            <h2 class="text-3xl font-bold text-gray-900">Criar Conta</h2>
-            <p class="mt-2 text-gray-600">Plataforma de Gestão de Tarefas</p>
+            <h2 class="text-3xl font-bold text-orange-500">Chaplin</h2>
+            <h3 class="mt-2 text-xl font-semibold text-gray-900">Cadastro de Corporação</h3>
+            <p class="mt-1 text-sm text-gray-500">Preencha os dados institucionais para criar a sua área administrativa.</p>
         </div>
 
         <form method="post" class="mt-8 space-y-6">
@@ -19,25 +20,32 @@
                 </div>
             {% endif %}
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             {% for field in form %}
-                <div>
-                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                <div class="{% if field.name == 'email' or field.name == 'role' %}col-span-1 md:col-span-2{% endif %}">
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
                         {{ field.label }}
                     </label>
-                    <div class="mt-1">
-                        {{ field }}
-                    </div>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="text-xs text-gray-500 mt-1">{{ field.help_text }}</p>
+                    {% endif %}
                     {% if field.errors %}
                         <p class="mt-1 text-sm text-red-600">{{ field.errors.0 }}</p>
                     {% endif %}
                 </div>
             {% endfor %}
+            </div>
 
-            <button type="submit" class="w-full bg-orange-500 text-white hover:bg-orange-600 font-bold py-2 px-4 rounded-lg transition duration-200">Registrar</button>
+            <div class="pt-4">
+                <button type="submit" class="w-full bg-orange-500 text-white hover:bg-orange-600 font-bold py-3 px-4 rounded-lg transition duration-200">
+                    Cadastrar e Enviar E-mail de Verificação
+                </button>
+            </div>
         </form>
 
-        <p class="text-center text-gray-600">
-            <a href="{% url 'tasks:dashboard' %}" class="text-gray-500 hover:text-gray-700">Voltar ao Dashboard</a>
+        <p class="text-center text-sm text-gray-600">
+            Já possui uma conta? <a href="{% url 'users:login' %}" class="text-orange-500 hover:text-orange-600 font-semibold">Fazer Login</a>
         </p>
     </div>
 </div>
