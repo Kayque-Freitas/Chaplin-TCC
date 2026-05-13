@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.utils.html import strip_tags
 
 class UserRegistrationForm(forms.ModelForm):
     username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'maxlength': '30'}))
@@ -26,9 +27,14 @@ class UserRegistrationForm(forms.ModelForm):
         
         return cleaned_data
 
-class EmailVerificationForm(forms.Form):
-    code = forms.CharField(max_length=6, widget=forms.TextInput(attrs={
-        'class': 'w-full text-center text-3xl tracking-[1em] px-4 py-3 border border-gray-300 rounded-lg font-mono focus:ring-2 focus:ring-orange-500 focus:border-transparent',
-        'placeholder': '000000',
-        'maxlength': '6'
-    }))
+    def clean_first_name(self):
+        return strip_tags(self.cleaned_data.get("first_name", "")).strip()
+
+    def clean_username(self):
+        return strip_tags(self.cleaned_data.get("username", "")).strip()
+        
+    def clean_cpf(self):
+        return strip_tags(self.cleaned_data.get("cpf", "")).strip()
+        
+    def clean_cnpj(self):
+        return strip_tags(self.cleaned_data.get("cnpj", "")).strip()

@@ -60,12 +60,7 @@ class UserProfile(models.Model):
     cidade = models.CharField(max_length=100, blank=True)
     estado = models.CharField(max_length=2, blank=True)
 
-    # Autenticação de Dois Fatores (2FA) e E-mail Verify
-    two_factor_enabled = models.BooleanField(default=False, verbose_name='2FA Ativo')
-    totp_secret = models.CharField(max_length=64, blank=True, verbose_name='Chave TOTP')
-    
-    email_verification_code = models.CharField(max_length=6, blank=True, null=True)
-    email_code_expires_at = models.DateTimeField(blank=True, null=True)
+    # Removido Autenticação de Dois Fatores (2FA) e E-mail Verify
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
