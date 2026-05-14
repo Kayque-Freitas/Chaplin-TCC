@@ -4,13 +4,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import UserProfile, ActivityLog, Especialidade
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, AdminUserCreateForm
 from django.db.models import Q
 from django.core.paginator import Paginator
 from apps.tasks.views import _is_manager
-from django.core.mail import send_mail
-from django.conf import settings
-from .forms import UserRegistrationForm
+from django.utils.html import strip_tags
 
 def login_view(request):
     if request.method == 'POST':
@@ -94,6 +92,51 @@ def admin_users_list_view(request):
         'roles': UserProfile.ROLE_CHOICES
     }
     return render(request, 'users/admin/list.html', context)
+
+@login_required
+@user_passes_test(is_admin)
+def admin_user_create_view(request):
+    """View para o Administrador criar um novo usuário com qualquer perfil"""
+    especialidades = Especialidade.objects.all()
+
+    if request.method == 'POST':
+        form = AdminUserCreateForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.is_active = True
+            user.save()
+
+            profile = user.profile
+            profile.role = form.cleaned_data.get('role', 'colaborador')
+            profile.phone = form.cleaned_data.get('phone', '')
+
+            esp_id = request.POST.get('especialidade')
+            if esp_id:
+                profile.especialidade_id = esp_id
+
+            profile.save()
+
+            # Log de auditoria
+            ActivityLog.objects.create(
+                admin_user=request.user,
+                target_user=user,
+                action='CREATE_USER',
+                role_old='',
+                role_new=profile.role,
+                ip_address=request.META.get('REMOTE_ADDR')
+            )
+
+            messages.success(request, f'Usuário "{user.username}" criado com sucesso como {profile.get_role_display()}.')
+            return redirect('users:admin_users_list')
+    else:
+        form = AdminUserCreateForm()
+
+    return render(request, 'users/admin/create.html', {
+        'form': form,
+        'especialidades': especialidades,
+    })
+
 
 @login_required
 @user_passes_test(is_admin)

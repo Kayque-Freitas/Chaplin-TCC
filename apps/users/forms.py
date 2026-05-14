@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.html import strip_tags
 
 class UserRegistrationForm(forms.ModelForm):
+    """Formulário público de registro — apenas gestor/admin"""
     username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'maxlength': '30'}))
     email = forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'maxlength': '254'}))
     first_name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'maxlength': '150'}))
@@ -38,3 +39,49 @@ class UserRegistrationForm(forms.ModelForm):
         
     def clean_cnpj(self):
         return strip_tags(self.cleaned_data.get("cnpj", "")).strip()
+
+
+class AdminUserCreateForm(forms.ModelForm):
+    """Formulário do painel admin — pode criar qualquer perfil"""
+    INPUT_CSS = 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none'
+
+    username = forms.CharField(max_length=30, label='Usuário', widget=forms.TextInput(attrs={'class': INPUT_CSS, 'placeholder': 'Nome de usuário'}))
+    email = forms.EmailField(max_length=254, label='E-mail', widget=forms.EmailInput(attrs={'class': INPUT_CSS, 'placeholder': 'email@exemplo.com'}))
+    first_name = forms.CharField(max_length=150, label='Nome', widget=forms.TextInput(attrs={'class': INPUT_CSS}))
+    last_name = forms.CharField(max_length=150, label='Sobrenome', required=False, widget=forms.TextInput(attrs={'class': INPUT_CSS}))
+    password = forms.CharField(min_length=8, label='Senha', widget=forms.PasswordInput(attrs={'class': INPUT_CSS, 'minlength': '8'}))
+    password_confirm = forms.CharField(min_length=8, label='Confirmar Senha', widget=forms.PasswordInput(attrs={'class': INPUT_CSS, 'minlength': '8'}))
+
+    ROLE_CHOICES = [
+        ('colaborador', 'Colaborador Técnico'),
+        ('lider', 'Líder de Equipe'),
+        ('gestor', 'Gestor do Prédio'),
+        ('admin', 'Administrador'),
+    ]
+    role = forms.ChoiceField(choices=ROLE_CHOICES, label='Nível de Acesso', widget=forms.Select(attrs={'class': INPUT_CSS}))
+    phone = forms.CharField(max_length=20, required=False, label='Telefone', widget=forms.TextInput(attrs={'class': INPUT_CSS, 'placeholder': '(11) 99999-9999'}))
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'password']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pw = cleaned_data.get("password")
+        pw2 = cleaned_data.get("password_confirm")
+        if pw and pw2 and pw != pw2:
+            self.add_error('password_confirm', "As senhas não coincidem.")
+        return cleaned_data
+
+    def clean_first_name(self):
+        return strip_tags(self.cleaned_data.get("first_name", "")).strip()
+
+    def clean_last_name(self):
+        return strip_tags(self.cleaned_data.get("last_name", "")).strip()
+
+    def clean_username(self):
+        return strip_tags(self.cleaned_data.get("username", "")).strip()
+
+    def clean_phone(self):
+        return strip_tags(self.cleaned_data.get("phone", "")).strip()
+

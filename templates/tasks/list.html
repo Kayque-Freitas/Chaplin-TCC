@@ -8,17 +8,17 @@
         <!-- Page Header -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div>
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Tarefas</h1>
-                <p class="text-gray-600 mt-2">Gerencie todas as suas tarefas</p>
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Tarefas</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">Gerencie todas as suas tarefas</p>
             </div>
             <div class="flex items-center gap-3 flex-wrap">
                 <!-- View Toggle -->
-                <div class="flex items-center bg-white rounded-lg shadow-sm border border-gray-200 p-1">
+                <div class="flex items-center bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-1">
                     <a href="{% url 'tasks:list' %}" class="flex items-center gap-2 px-3 py-2 rounded-md bg-orange-500 text-white transition text-sm font-medium">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
                         Lista
                     </a>
-                    <a href="{% url 'tasks:kanban' %}" class="flex items-center gap-2 px-3 py-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition text-sm font-medium">
+                    <a href="{% url 'tasks:kanban' %}" class="flex items-center gap-2 px-3 py-2 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition text-sm font-medium">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
                         Kanban
                     </a>
@@ -33,25 +33,25 @@
         </div>
 
         <!-- Filters Section -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8 border border-gray-200 dark:border-gray-700">
             <form method="GET" action="{% url 'tasks:list' %}" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                 <!-- Search Input -->
                 <div class="md:col-span-2">
-                    <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Buscar</label>
+                    <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Buscar</label>
                     <input
                         type="text"
                         name="search"
                         id="search"
                         value="{{ current_search }}"
                         placeholder="Buscar por título, descrição ou local..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white"
                     >
                 </div>
 
                 <!-- Status Filter -->
                 <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                    <select name="status" id="status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Status</label>
+                    <select name="status" id="status" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white">
                         <option value="">Todos</option>
                         <option value="aberta" {% if current_status == 'aberta' %}selected{% endif %}>Aberta</option>
                         <option value="alocada" {% if current_status == 'alocada' %}selected{% endif %}>Alocada</option>
@@ -62,8 +62,8 @@
 
                 <!-- Priority Filter -->
                 <div>
-                    <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Prioridade</label>
-                    <select name="priority" id="priority" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Prioridade</label>
+                    <select name="priority" id="priority" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white">
                         <option value="">Todas</option>
                         <option value="baixa" {% if current_priority == 'baixa' %}selected{% endif %}>Baixa</option>
                         <option value="normal" {% if current_priority == 'normal' %}selected{% endif %}>Normal</option>
@@ -82,24 +82,24 @@
         </div>
 
         <!-- Tasks Table (Desktop) -->
-        <div class="hidden md:block bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="hidden md:block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
             <table class="w-full">
-                <thead class="bg-gray-100 border-b border-gray-200">
+                <thead class="bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
                     <tr>
-                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Título</th>
-                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
-                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Prioridade</th>
-                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Responsável</th>
-                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Vencimento</th>
-                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Ações</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Título</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Status</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Prioridade</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Responsável</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Vencimento</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Ações</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     {% for task in tasks %}
-                    <tr class="hover:bg-gray-50 transition cursor-pointer" onclick="window.location.href='{% url 'tasks:detail' task.pk %}'">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='{% url 'tasks:detail' task.pk %}'">
                         <td class="px-6 py-4">
-                            <div class="text-sm font-medium text-gray-900">{{ task.title }}</div>
-                            <div class="text-xs text-gray-500 truncate max-w-xs">{{ task.description|truncatewords:10 }}</div>
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">{{ task.title }}</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400 truncate max-w-xs">{{ task.description|truncatewords:10 }}</div>
                         </td>
                         <td class="px-6 py-4 text-sm">
                             <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold
@@ -121,10 +121,10 @@
                                 {{ task.get_priority_display }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 text-sm text-gray-600">
+                        <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
                             {% if task.assigned_to %}{{ task.assigned_to.get_full_name|default:task.assigned_to.username }}{% else %}Não Alocada{% endif %}
                         </td>
-                        <td class="px-6 py-4 text-sm text-gray-600">
+                        <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
                             {{ task.due_date|date:"d/m/Y"|default:"-" }}
                         </td>
                         <td class="px-6 py-4 text-sm">
@@ -133,7 +133,7 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="6" class="px-6 py-8 text-center text-gray-500">Nenhuma tarefa encontrada com os filtros selecionados.</td>
+                        <td colspan="6" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Nenhuma tarefa encontrada com os filtros selecionados.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -143,9 +143,9 @@
         <!-- Tasks Cards (Mobile) -->
         <div class="md:hidden space-y-4">
             {% for task in tasks %}
-            <div class="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition" onclick="window.location.href='{% url 'tasks:detail' task.pk %}'">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition border border-gray-200 dark:border-gray-700" onclick="window.location.href='{% url 'tasks:detail' task.pk %}'">
                 <div class="flex justify-between items-start mb-4">
-                    <h3 class="text-lg font-semibold text-gray-900 border-b pb-2 mb-2">{{ task.title }}</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white border-b dark:border-gray-700 pb-2 mb-2">{{ task.title }}</h3>
                     <span class="inline-block px-2 py-1 rounded text-xs font-semibold
                         {% if task.status == 'aberta' %} bg-green-100 text-green-800
                         {% elif task.status == 'alocada' %} bg-blue-100 text-blue-800
@@ -156,8 +156,8 @@
                     </span>
                 </div>
                 <div class="space-y-2 mb-4">
-                    <p class="text-sm text-gray-600"><strong>Responsável:</strong> {% if task.assigned_to %}{{ task.assigned_to.get_full_name|default:task.assigned_to.username }}{% else %}Não Alocada{% endif %}</p>
-                    <p class="text-sm text-gray-600"><strong>Vencimento:</strong> {{ task.due_date|date:"d/m/Y"|default:"-" }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400"><strong class="dark:text-gray-300">Responsável:</strong> {% if task.assigned_to %}{{ task.assigned_to.get_full_name|default:task.assigned_to.username }}{% else %}Não Alocada{% endif %}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400"><strong class="dark:text-gray-300">Vencimento:</strong> {{ task.due_date|date:"d/m/Y"|default:"-" }}</p>
                     <p class="text-sm">
                         <span class="inline-block px-2 py-1 rounded text-xs font-semibold
                             {% if task.priority == 'baixa' %} bg-blue-100 text-blue-800
@@ -170,11 +170,11 @@
                     </p>
                 </div>
                 <div class="flex gap-2 w-full mt-4">
-                    <a href="{% url 'tasks:detail' task.pk %}" class="w-full text-center bg-gray-100 text-gray-700 hover:bg-gray-200 font-semibold py-2 rounded transition">Acessar Tarefa</a>
+                    <a href="{% url 'tasks:detail' task.pk %}" class="w-full text-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 font-semibold py-2 rounded transition">Acessar Tarefa</a>
                 </div>
             </div>
             {% empty %}
-            <div class="bg-white rounded-lg shadow-md p-6 text-center text-gray-500">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
                 Nenhuma tarefa encontrada.
             </div>
             {% endfor %}

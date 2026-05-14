@@ -20,4 +20,6 @@ urlpatterns = [
     path('notificacoes/', views.notifications_view, name='notifications'),
     path('notificacoes/<int:pk>/lida/', views.mark_notification_read, name='notification_read'),
     path('notificacoes/count/', views.unread_notifications_count, name='notifications_count'),
+    path('notificacoes/json/', views.notifications_json_view, name='notifications_json'),
+    path('notificacoes/mark-all/', views.mark_all_notifications_read, name='notifications_mark_all'),
 ]

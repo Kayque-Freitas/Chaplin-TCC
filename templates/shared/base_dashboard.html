@@ -50,17 +50,28 @@
                         </svg>
                     </button>
 
-                    <!-- Notificações -->
-                    {% with unread_count=request.user.notifications.filter.count %}
-                    <a href="{% url 'tasks:notifications' %}" id="notification-bell"
-                        class="relative text-gray-600 dark:text-gray-300 hover:text-orange-500 dark:hover:text-orange-400 transition w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-                        title="Notificações">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                        </svg>
-                        <span id="notif-badge" class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-bold rounded-full hidden items-center justify-center px-1"></span>
-                    </a>
-                    {% endwith %}
+                    <!-- Notificações (Dropdown Modal) -->
+                    <div class="relative">
+                        <button id="notification-bell" type="button"
+                            class="relative text-gray-600 dark:text-gray-300 hover:text-orange-500 dark:hover:text-orange-400 transition w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                            title="Notificações">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                            </svg>
+                            <span id="notif-badge" class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-bold rounded-full hidden items-center justify-center px-1"></span>
+                        </button>
+                        <!-- Notifications Dropdown -->
+                        <div id="notif-dropdown" class="hidden absolute right-0 top-12 w-80 max-h-96 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden flex flex-col">
+                            <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                                <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Notificações</h3>
+                                <button id="notif-mark-all" class="text-xs text-orange-500 hover:text-orange-600 font-medium">Marcar todas como lidas</button>
+                            </div>
+                            <div id="notif-list" class="overflow-y-auto flex-1 divide-y divide-gray-100 dark:divide-gray-700">
+                                <p class="px-4 py-6 text-sm text-gray-500 dark:text-gray-400 text-center">Carregando...</p>
+                            </div>
+                            <a href="{% url 'tasks:notifications' %}" class="block px-4 py-2.5 text-center text-xs font-medium text-orange-500 hover:bg-gray-50 dark:hover:bg-gray-700 border-t border-gray-200 dark:border-gray-700">Ver todas as notificações</a>
+                        </div>
+                    </div>
 
                     <!-- Perfil -->
                     <div class="relative flex items-center gap-3">
@@ -82,10 +93,7 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                                 Configurações
                             </a>
-                            <a href="{% url 'tasks:notifications' %}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-600 dark:hover:text-orange-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                                Notificações
-                            </a>
+
                             {% if user.profile.role == 'admin' %}
                             <a href="{% url 'users:admin_users_list' %}" class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-600 dark:hover:text-orange-400">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -113,11 +121,9 @@
                 userBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     userMenu.classList.toggle('hidden');
-                });
-                document.addEventListener('click', function(e) {
-                    if (!userMenu.contains(e.target) && !userBtn.contains(e.target)) {
-                        userMenu.classList.add('hidden');
-                    }
+                    // Fechar notificações se aberto
+                    const nd = document.getElementById('notif-dropdown');
+                    if (nd) nd.classList.add('hidden');
                 });
             }
 
@@ -141,7 +147,6 @@
                 }
             }
 
-            // Sync icons with current theme on load
             applyTheme(html.classList.contains('dark'));
 
             if (themeBtn) {
@@ -152,7 +157,7 @@
 
             // ── Notification Badge ─────────────────────────────────────
             const badge = document.getElementById('notif-badge');
-            if (badge) {
+            function updateBadge() {
                 fetch('/tasks/notificacoes/count/')
                     .then(r => r.json())
                     .then(data => {
@@ -160,86 +165,150 @@
                             badge.textContent = data.count > 99 ? '99+' : data.count;
                             badge.style.display = 'flex';
                             badge.classList.remove('hidden');
+                        } else {
+                            badge.style.display = 'none';
                         }
                     })
                     .catch(() => {});
             }
+            if (badge) updateBadge();
+
+            // ── Notification Dropdown ──────────────────────────────────
+            const bellBtn = document.getElementById('notification-bell');
+            const notifDropdown = document.getElementById('notif-dropdown');
+            const notifList = document.getElementById('notif-list');
+            const markAllBtn = document.getElementById('notif-mark-all');
+
+            function renderNotifItem(n) {
+                const isUnread = !n.lida;
+                return `<div class="px-4 py-3 ${isUnread ? 'bg-orange-50/50 dark:bg-orange-900/10' : ''} hover:bg-gray-50 dark:hover:bg-gray-700/50 transition text-sm">
+                    <p class="font-medium text-gray-900 dark:text-white ${isUnread ? '' : 'font-normal'}">${n.titulo}</p>
+                    ${n.mensagem ? `<p class="text-gray-500 dark:text-gray-400 text-xs mt-0.5 line-clamp-2">${n.mensagem}</p>` : ''}
+                    <p class="text-gray-400 dark:text-gray-500 text-xs mt-1">${n.created_at}</p>
+                </div>`;
+            }
+
+            function loadNotifications() {
+                fetch('/tasks/notificacoes/json/')
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.notifications && data.notifications.length > 0) {
+                            notifList.innerHTML = data.notifications.map(renderNotifItem).join('');
+                        } else {
+                            notifList.innerHTML = '<p class="px-4 py-8 text-sm text-gray-500 dark:text-gray-400 text-center">Nenhuma notificação.</p>';
+                        }
+                    })
+                    .catch(() => {
+                        notifList.innerHTML = '<p class="px-4 py-8 text-sm text-red-500 text-center">Erro ao carregar.</p>';
+                    });
+            }
+
+            if (bellBtn && notifDropdown) {
+                bellBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    notifDropdown.classList.toggle('hidden');
+                    // Fechar menu do usuário se aberto
+                    if (userMenu) userMenu.classList.add('hidden');
+                    // Carregar notificações ao abrir
+                    if (!notifDropdown.classList.contains('hidden')) {
+                        loadNotifications();
+                    }
+                });
+            }
+
+            if (markAllBtn) {
+                markAllBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    fetch('/tasks/notificacoes/mark-all/', { method: 'POST', headers: { 'X-CSRFToken': (document.cookie.match(/csrftoken=([^;]+)/) || [])[1] || '' } })
+                        .then(() => {
+                            loadNotifications();
+                            updateBadge();
+                        })
+                        .catch(() => {});
+                });
+            }
+
+            // Fechar tudo ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (userMenu && !userMenu.contains(e.target) && userBtn && !userBtn.contains(e.target)) {
+                    userMenu.classList.add('hidden');
+                }
+                if (notifDropdown && !notifDropdown.contains(e.target) && bellBtn && !bellBtn.contains(e.target)) {
+                    notifDropdown.classList.add('hidden');
+                }
+            });
         });
     </script>
 
     <!-- Main Container -->
-    <div class="flex min-h-[calc(100vh-64px)]">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="fixed md:static left-0 top-16 md:top-0 w-64 md:min-h-[calc(100vh-64px)] bg-gray-900 dark:bg-gray-950 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40 flex flex-col border-r border-gray-800 dark:border-gray-800">
-            <nav class="p-4 space-y-1 flex-grow overflow-y-auto">
-                <!-- Dashboard -->
-                <a href="{% url 'tasks:dashboard' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium {% if request.resolver_match.url_name == 'dashboard' %}bg-orange-500 text-white{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
-                    <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"></path>
-                        <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zm8-1a1 1 0 00-1 1v6a1 1 0 001 1h4a1 1 0 001-1v-6a1 1 0 00-1-1h-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Dashboard</span>
-                </a>
+    <div class="flex h-[calc(100vh-64px)]">
+        <!-- Sidebar (sticky, nunca rola com a página) -->
+        <aside id="sidebar" class="fixed md:sticky left-0 top-16 md:top-[64px] w-64 h-[calc(100vh-64px)] bg-gray-900 dark:bg-gray-950 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40 flex flex-col border-r border-gray-800 dark:border-gray-800 shrink-0">
+            <nav class="flex-1 flex flex-col p-5 overflow-y-auto">
+                <!-- Grupo Principal -->
+                <div class="space-y-2">
+                    <!-- Dashboard -->
+                    <a href="{% url 'tasks:dashboard' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium {% if request.resolver_match.url_name == 'dashboard' %}bg-orange-500 text-white shadow-md{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
+                        <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"></path>
+                            <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zm8-1a1 1 0 00-1 1v6a1 1 0 001 1h4a1 1 0 001-1v-6a1 1 0 00-1-1h-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
 
-                <!-- Tarefas -->
-                <a href="{% url 'tasks:list' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium {% if request.resolver_match.url_name == 'list' %}bg-orange-500 text-white{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
-                    <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H3a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V6a1 1 0 00-1-1h-3a1 1 0 000-2 2 2 0 00-2-2H4zm9.6 5.2a1 1 0 00-1.4-1.4L9 10.6 7.4 9a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4.2-4.2z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Tarefas</span>
-                </a>
+                    <!-- Tarefas -->
+                    <a href="{% url 'tasks:list' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium {% if request.resolver_match.url_name == 'list' %}bg-orange-500 text-white shadow-md{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
+                        <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H3a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V6a1 1 0 00-1-1h-3a1 1 0 000-2 2 2 0 00-2-2H4zm9.6 5.2a1 1 0 00-1.4-1.4L9 10.6 7.4 9a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4.2-4.2z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Tarefas</span>
+                    </a>
 
-                <!-- Nova Tarefa (somente gestores, líderes e admins) -->
-                {% if user.profile.role != 'colaborador' %}
-                <a href="{% url 'tasks:create' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium {% if request.resolver_match.url_name == 'create' %}bg-orange-500 text-white{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
-                    <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Nova Tarefa</span>
-                </a>
-                {% endif %}
+                    <!-- Nova Tarefa (somente gestores, líderes e admins) -->
+                    {% if user.profile.role != 'colaborador' %}
+                    <a href="{% url 'tasks:create' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium {% if request.resolver_match.url_name == 'create' %}bg-orange-500 text-white shadow-md{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
+                        <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Nova Tarefa</span>
+                    </a>
+                    {% endif %}
 
-                <!-- Kanban -->
-                <a href="{% url 'tasks:kanban' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium {% if request.resolver_match.url_name == 'kanban' %}bg-orange-500 text-white{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
-                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path>
-                    </svg>
-                    <span>Kanban</span>
-                </a>
+                </div>
 
+                <!-- Spacer -->
+                <div class="flex-1 min-h-[24px]"></div>
 
+                <!-- Grupo Inferior -->
+                <div class="space-y-2">
+                    <div class="border-t border-gray-700/60 dark:border-gray-800 my-2"></div>
 
+                    {% if user.profile.role == 'admin' %}
+                    <a href="{% url 'users:admin_users_list' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                        <svg class="w-[22px] h-[22px] shrink-0 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Gestão de Contas</span>
+                    </a>
+                    {% endif %}
 
+                    <!-- Configurações -->
+                    <a href="{% url 'tasks:settings' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium {% if request.resolver_match.url_name == 'settings' %}bg-orange-500 text-white shadow-md{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
+                        <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Configurações</span>
+                    </a>
 
-                <!-- Divisor -->
-                <div class="border-t border-gray-700 dark:border-gray-800 my-3"></div>
-
-                {% if user.profile.role == 'admin' %}
-                <!-- Admin Users -->
-                <a href="{% url 'users:admin_users_list' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition">
-                    <svg class="w-5 h-5 shrink-0 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    <span>Gestão de Contas</span>
-                </a>
-                {% endif %}
-
-                <!-- Configurações -->
-                <a href="{% url 'tasks:settings' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium {% if request.resolver_match.url_name == 'settings' %}bg-orange-500 text-white{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
-                    <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Configurações</span>
-                </a>
-
-                <!-- Logout -->
-                <a href="{% url 'users:logout' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-red-400 hover:bg-red-600 hover:text-white transition">
-                    <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Sair</span>
-                </a>
+                    <!-- Logout -->
+                    <a href="{% url 'users:logout' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium text-red-400 hover:bg-red-600/90 hover:text-white transition">
+                        <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>Sair</span>
+                    </a>
+                </div>
             </nav>
 
             <!-- Informações do Usuário (Rodapé da Sidebar) -->
@@ -250,8 +319,8 @@
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 w-full min-w-0 bg-gray-50 dark:bg-gray-950 flex flex-col transition-colors duration-200">
+        <!-- Main Content (só este bloco rola) -->
+        <main class="flex-1 min-w-0 bg-gray-50 dark:bg-gray-950 overflow-y-auto transition-colors duration-200">
             {% block content %}{% endblock %}
         </main>
     </div>

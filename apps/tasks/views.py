@@ -311,6 +311,30 @@ def unread_notifications_count(request):
 
 
 @login_required
+def notifications_json_view(request):
+    """Retorna as últimas 20 notificações em JSON para o dropdown."""
+    notifications = Notification.objects.filter(recipient=request.user).order_by('-created_at')[:20]
+    data = [{
+        'id': n.id,
+        'titulo': n.titulo,
+        'mensagem': n.mensagem,
+        'tipo': n.tipo,
+        'lida': n.lida,
+        'created_at': n.created_at.strftime('%d/%m/%Y %H:%M'),
+    } for n in notifications]
+    return JsonResponse({'notifications': data})
+
+
+@login_required
+def mark_all_notifications_read(request):
+    """Marca todas as notificações do usuário como lidas via POST."""
+    if request.method == 'POST':
+        Notification.objects.filter(recipient=request.user, lida=False).update(lida=True)
+        return JsonResponse({'ok': True})
+    return JsonResponse({'error': 'POST required'}, status=405)
+
+
+@login_required
 def settings_view(request):
     """View de configurações do usuário"""
     if not hasattr(request.user, 'profile'):

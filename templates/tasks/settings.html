@@ -5,18 +5,15 @@
 
 {% block content %}
 <div class="p-6 md:p-8">
-    <div class="mb-8 flex justify-between items-center">
-        <div>
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Configurações</h1>
-            <p class="text-gray-600 mt-2">Personalize sua experiência e gerencie sua conta</p>
-        </div>
+    <div class="mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Configurações</h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">Personalize sua experiência e gerencie sua conta</p>
     </div>
 
-    <!-- Django Messages (Success/Error Feedbacks) -->
     {% if messages %}
     <div class="mb-6 space-y-2">
         {% for message in messages %}
-        <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+        <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400{% else %}bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400{% endif %}">
             {{ message }}
         </div>
         {% endfor %}
@@ -26,21 +23,13 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Settings Navigation -->
         <div class="lg:col-span-1">
-            <div class="bg-white rounded-lg shadow-md p-4">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 border border-gray-200 dark:border-gray-700">
                 <nav class="space-y-2" id="settings-nav">
-                    <a href="#" onclick="showTab('profile-tab')" id="nav-profile-tab" class="settings-link flex items-center gap-3 px-4 py-3 bg-orange-50 text-orange-600 rounded-lg font-medium transition">
+                    <a href="#" onclick="showTab('profile-tab')" id="nav-profile-tab" class="settings-link flex items-center gap-3 px-4 py-3 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-lg font-medium transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         Perfil do Usuário
                     </a>
-                    <a href="#" onclick="showTab('prefs-tab')" id="nav-prefs-tab" class="settings-link flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        Preferências
-                    </a>
-                    <a href="#" onclick="showTab('notifs-tab')" id="nav-notifs-tab" class="settings-link flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                        Notificações
-                    </a>
-                    <a href="#" onclick="showTab('security-tab')" id="nav-security-tab" class="settings-link flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition">
+                    <a href="#" onclick="showTab('security-tab')" id="nav-security-tab" class="settings-link flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg font-medium transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                         Segurança
                     </a>
@@ -48,103 +37,100 @@
             </div>
 
             <!-- Profile Summary -->
-            <div class="bg-white rounded-lg shadow-md p-6 mt-6 text-center">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mt-6 text-center border border-gray-200 dark:border-gray-700">
                 <div class="w-24 h-24 bg-orange-500 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
                     {{ user.first_name|first|upper|default:"U" }}
                 </div>
-                <h3 class="text-xl font-bold text-gray-900">{{ user.first_name|default:user.username }}</h3>
-                <p class="text-sm font-medium text-orange-600 mt-1">{{ user_profile.get_role_display }}</p>
-                <p class="text-gray-600 mt-2 text-sm">{{ user.email }}</p>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ user.first_name|default:user.username }}</h3>
+                <p class="text-sm font-medium text-orange-600 dark:text-orange-400 mt-1">{{ user_profile.get_role_display }}</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-2 text-sm">{{ user.email }}</p>
             </div>
         </div>
 
         <!-- Settings Content Forms -->
         <div class="lg:col-span-2">
-            <div class="bg-white rounded-lg shadow-md p-6">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
                 
                 <!-- 1. TAB: Perfil do Usuário -->
                 <div id="profile-tab" class="settings-tab block">
-                    <h2 class="text-2xl font-bold text-gray-900 border-b border-gray-200 pb-3 mb-6">Perfil do Usuário</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-3 mb-6">Perfil do Usuário</h2>
                     
                     <form method="POST" class="space-y-6">
                         {% csrf_token %}
-                        <!-- Name Input -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">Nome</label>
-                                <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+                                <label for="first_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome</label>
+                                <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" required>
                             </div>
                             <div>
-                                <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">Sobrenome</label>
-                                <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+                                <label for="last_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sobrenome</label>
+                                <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" required>
                             </div>
                         </div>
 
-                        <!-- Email & Phone -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                                <input type="email" id="email" name="email" value="{{ user.email }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+                                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                                <input type="email" id="email" name="email" value="{{ user.email }}" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" required>
                             </div>
                             <div>
-                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
-                                <input type="tel" id="phone" name="phone" value="{{ user_profile.phone }}" placeholder="(00) 00000-0000" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Telefone</label>
+                                <input type="tel" id="phone" name="phone" value="{{ user_profile.phone }}" placeholder="(00) 00000-0000" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white">
                             </div>
                         </div>
 
                         <!-- Endereço via CEP -->
-                        <div class="pt-6 border-t border-gray-200">
-                            <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                 Endereço Completo
                             </h4>
                             
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                 <div class="md:col-span-1">
-                                    <label for="cep" class="block text-sm font-medium text-gray-700 mb-2">CEP</label>
-                                    <input type="text" id="cep" name="cep" value="{{ user_profile.cep }}" placeholder="00000-000" maxlength="9" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    <label for="cep" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">CEP</label>
+                                    <input type="text" id="cep" name="cep" value="{{ user_profile.cep }}" placeholder="00000-000" maxlength="9" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white">
                                     <p id="cep-error" class="hidden text-red-500 text-xs mt-1">CEP não encontrado.</p>
                                 </div>
                                 <div class="md:col-span-2">
-                                    <label for="logradouro" class="block text-sm font-medium text-gray-700 mb-2">Logradouro</label>
-                                    <input type="text" id="logradouro" name="logradouro" value="{{ user_profile.logradouro }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50">
+                                    <label for="logradouro" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Logradouro</label>
+                                    <input type="text" id="logradouro" name="logradouro" value="{{ user_profile.logradouro }}" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 dark:bg-gray-700 dark:text-white">
                                 </div>
                             </div>
                             
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                 <div class="md:col-span-1">
-                                    <label for="numero" class="block text-sm font-medium text-gray-700 mb-2">Número</label>
-                                    <input type="text" id="numero" name="numero" value="{{ user_profile.numero }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    <label for="numero" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Número</label>
+                                    <input type="text" id="numero" name="numero" value="{{ user_profile.numero }}" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white">
                                 </div>
                                 <div class="md:col-span-2">
-                                    <label for="complemento" class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
-                                    <input type="text" id="complemento" name="complemento" value="{{ user_profile.complemento }}" placeholder="Apto, Bloco, etc." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    <label for="complemento" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Complemento</label>
+                                    <input type="text" id="complemento" name="complemento" value="{{ user_profile.complemento }}" placeholder="Apto, Bloco, etc." class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white">
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div class="md:col-span-1">
-                                    <label for="bairro" class="block text-sm font-medium text-gray-700 mb-2">Bairro</label>
-                                    <input type="text" id="bairro" name="bairro" value="{{ user_profile.bairro }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50">
+                                <div>
+                                    <label for="bairro" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bairro</label>
+                                    <input type="text" id="bairro" name="bairro" value="{{ user_profile.bairro }}" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 dark:bg-gray-700 dark:text-white">
                                 </div>
-                                <div class="md:col-span-1">
-                                    <label for="cidade" class="block text-sm font-medium text-gray-700 mb-2">Cidade</label>
-                                    <input type="text" id="cidade" name="cidade" value="{{ user_profile.cidade }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50">
+                                <div>
+                                    <label for="cidade" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cidade</label>
+                                    <input type="text" id="cidade" name="cidade" value="{{ user_profile.cidade }}" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 dark:bg-gray-700 dark:text-white">
                                 </div>
-                                <div class="md:col-span-1">
-                                    <label for="estado" class="block text-sm font-medium text-gray-700 mb-2">Estado</label>
-                                    <input type="text" id="estado" name="estado" value="{{ user_profile.estado }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50">
+                                <div>
+                                    <label for="estado" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Estado</label>
+                                    <input type="text" id="estado" name="estado" value="{{ user_profile.estado }}" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 dark:bg-gray-700 dark:text-white">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bio Textarea -->
-                        <div class="pt-6 border-t border-gray-200">
-                            <label for="bio" class="block text-sm font-medium text-gray-700 mb-2">Sua Biografia</label>
-                            <textarea id="bio" name="bio" rows="4" placeholder="Conte um pouco sobre sua formação técnica ou experiência..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">{{ user_profile.bio }}</textarea>
+                        <!-- Bio -->
+                        <div class="pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <label for="bio" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sua Biografia</label>
+                            <textarea id="bio" name="bio" rows="4" placeholder="Conte um pouco sobre sua formação técnica ou experiência..." class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white">{{ user_profile.bio }}</textarea>
                         </div>
 
-                        <!-- Save Button -->
                         <div class="flex gap-4 pt-6 mt-4">
                             <button type="submit" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg shadow-sm transition">
                                 Salvar Alterações
@@ -153,127 +139,36 @@
                     </form>
                 </div>
 
-                <!-- 2. TAB: Preferências -->
-                <div id="prefs-tab" class="settings-tab hidden">
-                    <h2 class="text-2xl font-bold text-gray-900 border-b border-gray-200 pb-3 mb-6">Preferências da Conta</h2>
-                    <div class="space-y-6">
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <div>
-                                <h4 class="font-medium text-gray-900">Idioma do Sistema</h4>
-                                <p class="text-sm text-gray-500">Altere o idioma padrão de sua interface</p>
-                            </div>
-                            <select class="border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option>Português (Brasil)</option>
-                                <option>English (US)</option>
-                                <option>Español</option>
-                            </select>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <div>
-                                <h4 class="font-medium text-gray-900">Tema do Interface</h4>
-                                <p class="text-sm text-gray-500">Personalize o visual (Escuro/Claro)</p>
-                            </div>
-                            <select class="border border-gray-300 rounded-lg px-4 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option>Padrão (Claro do Sistema)</option>
-                                <option disabled>Modo Escuro (Em breve)</option>
-                            </select>
-                        </div>
-                        <div class="pt-4">
-                            <button class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-6 rounded-lg transition text-sm">Salvar Preferências</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. TAB: Notificações -->
-                <div id="notifs-tab" class="settings-tab hidden">
-                    <h2 class="text-2xl font-bold text-gray-900 border-b border-gray-200 pb-3 mb-6">Notificações</h2>
-                    <div class="space-y-4">
-                        <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-orange-500 rounded border-gray-300 focus:ring-orange-500 mt-1" checked>
-                            <div>
-                                <span class="block text-sm font-medium text-gray-900">Email Quando Tarefa For Alocada</span>
-                                <span class="block text-xs text-gray-500">Receba um alerta unicamente quando for designado.</span>
-                            </div>
-                        </label>
-                        <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-orange-500 rounded border-gray-300 focus:ring-orange-500 mt-1" checked>
-                            <div>
-                                <span class="block text-sm font-medium text-gray-900">Email de Alteração de Status</span>
-                                <span class="block text-xs text-gray-500">Sempre que a sua tarefa for movida para Pendente ou Concluída.</span>
-                            </div>
-                        </label>
-                        <label class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-orange-500 rounded border-gray-300 focus:ring-orange-500 mt-1">
-                            <div>
-                                <span class="block text-sm font-medium text-gray-900">Resumo Semanal</span>
-                                <span class="block text-xs text-gray-500">Receba no email um sumário das estatísticas da semana e o que você fechou.</span>
-                            </div>
-                        </label>
-                        <div class="pt-4 border-t border-gray-100 mt-4">
-                            <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-lg transition text-sm">Atualizar Alertas</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. TAB: Segurança -->
+                <!-- 2. TAB: Segurança -->
                 <div id="security-tab" class="settings-tab hidden">
-                    <h2 class="text-2xl font-bold text-gray-900 border-b border-gray-200 pb-3 mb-6">Segurança e Acesso</h2>
-                    <form class="space-y-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Senha Atual</label>
-                            <input type="password" class="w-full lg:w-2/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-3 mb-6">Segurança e Acesso</h2>
+                    
+                    <!-- Info Card -->
+                    <div class="flex items-start gap-4 p-5 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800 mb-6">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-green-100 dark:bg-green-900/40">
+                            <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Nova Senha</label>
-                            <input type="password" class="w-full lg:w-2/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Confirme a Nova Senha</label>
-                            <input type="password" class="w-full lg:w-2/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
-                        </div>
-                        <div class="pt-4 border-t border-gray-100 mt-4 flex gap-4">
-                            <button type="button" class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-6 rounded-lg transition text-sm">Atualizar Senha</button>
-                        </div>
-                    </form>
-
-                    <!-- 2FA Card -->
-                    <div class="mt-8 pt-6 border-t border-gray-200">
-                        <div class="flex items-start justify-between gap-6 p-5 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-                            <div class="flex items-start gap-4">
-                                <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0
-                                    {% if user.profile.two_factor_enabled %}bg-green-100{% else %}bg-gray-200{% endif %}">
-                                    <svg class="w-5 h-5 {% if user.profile.two_factor_enabled %}text-green-600{% else %}text-gray-500{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900 dark:text-white">Autenticação em Dois Fatores (2FA)</h4>
-                                    {% if user.profile.two_factor_enabled %}
-                                    <span class="inline-block mt-1 text-xs font-semibold text-green-700 bg-green-100 px-2 py-0.5 rounded-full">✓ Ativado</span>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Sua conta está protegida por um segundo fator de autenticação.</p>
-                                    {% else %}
-                                    <span class="inline-block mt-1 text-xs font-semibold text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full">Inativo</span>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Ative para maior segurança. Será necessário um código do app autenticador ao entrar.</p>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            {% if user.profile.two_factor_enabled %}
-                            <a href="{% url 'users:disable_2fa' %}" class="shrink-0 text-sm font-semibold text-red-600 hover:text-red-800 border border-red-200 hover:bg-red-50 px-4 py-2 rounded-lg transition">
-                                Desativar
-                            </a>
-                            {% else %}
-                            <a href="{% url 'users:setup_2fa' %}" class="shrink-0 text-sm font-semibold text-orange-600 hover:text-orange-800 border border-orange-200 hover:bg-orange-50 px-4 py-2 rounded-lg transition">
-                                Ativar 2FA
-                            </a>
-                            {% endif %}
+                            <h4 class="font-semibold text-gray-900 dark:text-white">Conta Protegida</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Sua conta está protegida por autenticação segura com validação de senha e proteção contra tentativas abusivas de login.</p>
                         </div>
                     </div>
 
-                    <div class="mt-8 pt-6 border-t border-red-200">
-                        <h3 class="text-lg font-bold text-red-600 mb-2">Zona de Risco</h3>
-                        <p class="text-sm text-gray-600 mb-4">A deleção de conta é irreversível e todas as tarefas dependentes ficarão orfãs.</p>
-                        <button type="button" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-semibold py-2 px-6 rounded-lg transition text-sm">Excluir Minha Conta</button>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                            <p class="text-sm text-gray-700 dark:text-gray-300"><strong>Usuário:</strong> {{ user.username }}</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                            <p class="text-sm text-gray-700 dark:text-gray-300"><strong>Último acesso:</strong> {{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                            <p class="text-sm text-gray-700 dark:text-gray-300"><strong>Nível de acesso:</strong> {{ user_profile.get_role_display }}</p>
+                        </div>
                     </div>
+
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-6">Para alterar sua senha ou nível de acesso, entre em contato com o administrador do sistema.</p>
                 </div>
 
             </div>
@@ -282,29 +177,24 @@
 </div>
 
 <script>
-    // Tab switching logic for Settings
     function showTab(targetId) {
-        // Hide all tabs
         document.querySelectorAll('.settings-tab').forEach(tab => {
             tab.classList.remove('block');
             tab.classList.add('hidden');
         });
         
-        // Reset all links classes
         document.querySelectorAll('.settings-link').forEach(link => {
-            link.className = 'settings-link flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium transition';
+            link.className = 'settings-link flex items-center gap-3 px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg font-medium transition';
         });
         
-        // Show target tab
         document.getElementById(targetId).classList.remove('hidden');
         document.getElementById(targetId).classList.add('block');
         
-        // Highlight active link
         const activeLink = document.getElementById('nav-' + targetId);
-        activeLink.className = 'settings-link flex items-center gap-3 px-4 py-3 bg-orange-50 text-orange-600 rounded-lg font-medium transition';
+        activeLink.className = 'settings-link flex items-center gap-3 px-4 py-3 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-lg font-medium transition';
     }
 
-    // Logic for ViaCEP
+    // ViaCEP
     document.addEventListener('DOMContentLoaded', function() {
         const cepInput = document.getElementById('cep');
         const logradouroInput = document.getElementById('logradouro');
@@ -319,7 +209,6 @@
                 let cep = cepInput.value.replace(/\D/g, '');
                 if (cep.length === 8) {
                     errorMsg.classList.add('hidden');
-                    
                     fetch(`https://viacep.com.br/ws/${cep}/json/`)
                         .then(response => response.json())
                         .then(data => {
@@ -334,8 +223,7 @@
                                 numeroInput.focus();
                             }
                         })
-                        .catch(err => {
-                            console.error(err);
+                        .catch(() => {
                             errorMsg.classList.remove('hidden');
                             errorMsg.innerText = "Erro ao conectar com servidor de CEP.";
                         });
