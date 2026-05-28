@@ -12,9 +12,9 @@
     </div>
 
     <!-- Stats Grid (dados dinâmicos vindos da view) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <!-- Total -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <a href="{% url 'tasks:list' %}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 dark:text-gray-400 text-sm">Total de Tarefas</p>
@@ -27,10 +27,10 @@
                     </svg>
                 </div>
             </div>
-        </div>
+        </a>
 
         <!-- Em Progresso -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <a href="{% url 'tasks:list' %}?status=alocada" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 dark:text-gray-400 text-sm">Em Progresso</p>
@@ -42,10 +42,10 @@
                     </svg>
                 </div>
             </div>
-        </div>
+        </a>
 
         <!-- Concluídas -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <a href="{% url 'tasks:list' %}?status=concluida" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 dark:text-gray-400 text-sm">Concluídas</p>
@@ -57,10 +57,25 @@
                     </svg>
                 </div>
             </div>
-        </div>
+        </a>
+
+        <!-- Finalizadas -->
+        <a href="{% url 'tasks:list' %}?status=finalizada" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">Finalizadas</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ finalized_tasks }}</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+            </div>
+        </a>
 
         <!-- Abertas -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <a href="{% url 'tasks:list' %}?status=aberta" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-gray-600 dark:text-gray-400 text-sm">Abertas</p>
@@ -72,7 +87,7 @@
                     </svg>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <!-- Recent Tasks -->

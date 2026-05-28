@@ -52,7 +52,8 @@ def dashboard_view(request):
         'total_tasks': tasks.count(),
         'open_tasks': tasks.filter(status='aberta').count(),
         'assigned_tasks': tasks.filter(status='alocada').count(),
-        'completed_tasks': tasks.filter(status__in=['concluida', 'finalizada']).count(),
+        'completed_tasks': tasks.filter(status='concluida').count(),
+        'finalized_tasks': tasks.filter(status='finalizada').count(),
     }
     return render(request, 'tasks/dashboard.html', context)
 
@@ -131,7 +132,7 @@ def task_detail_view(request, pk):
     task = get_object_or_404(Task, pk=pk)
     role = _get_role(request.user)
     # Colaboradores só acessam tarefas suas
-    if role == 'colaborador' and task.assigned_to != request.user:
+    if role == 'colaborador' and task.assigned_to_id != request.user.id:
         django_messages.error(request, 'Você não tem acesso a esta tarefa.')
         return redirect('tasks:list')
     task_messages = task.messages.all()
@@ -192,7 +193,7 @@ def complete_task_view(request, pk):
     task = get_object_or_404(Task, pk=pk)
     
     # Bloquear colaboradores que tentem concluir tarefas de outros
-    if not _is_manager(request.user) and task.assigned_to != request.user:
+    if not _is_manager(request.user) and task.assigned_to_id != request.user.id:
         django_messages.error(request, 'Você não tem permissão para concluir esta tarefa.')
         return redirect('tasks:list')
     
@@ -213,7 +214,7 @@ def complete_task_view(request, pk):
         task.completed_at = timezone.now()
         task.save()
         # Notificar o criador da tarefa sobre conclusão
-        if task.created_by and task.created_by != request.user:
+        if task.created_by and task.created_by_id != request.user.id:
             _notify(task.created_by,
                     f'Tarefa concluída: {task.title}',
                     mensagem=f'Concluída por {request.user.get_full_name() or request.user.username}.',
@@ -233,9 +234,9 @@ def add_message_view(request, pk):
             Message.objects.create(task=task, sender=request.user, content=content)
             # Notificar o responsavel e o criador (exceto o remetente)
             recipients = set()
-            if task.assigned_to and task.assigned_to != request.user:
+            if task.assigned_to and task.assigned_to_id != request.user.id:
                 recipients.add(task.assigned_to)
-            if task.created_by and task.created_by != request.user:
+            if task.created_by and task.created_by_id != request.user.id:
                 recipients.add(task.created_by)
             for recipient in recipients:
                 _notify(recipient,
@@ -274,7 +275,7 @@ def finalize_task_view(request, pk):
     if request.method == 'POST':
         task.status = 'finalizada'
         task.save()
-        if task.assigned_to and task.assigned_to != request.user:
+        if task.assigned_to and task.assigned_to_id != request.user.id:
             _notify(task.assigned_to,
                     f'Tarefa finalizada: {task.title}',
                     mensagem=f'Aprovada por {request.user.get_full_name() or request.user.username}.',

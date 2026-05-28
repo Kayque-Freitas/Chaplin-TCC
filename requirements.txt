@@ -1,9 +1,9 @@
 asgiref==3.11.1
 colorama==0.4.6
-crispy-bootstrap5==2025.6
+crispy-bootstrap5
 dj-database-url==2.1.0
-Django==6.0.3
-django-crispy-forms==2.6
+Django==4.2
+django-crispy-forms
 gunicorn==25.1.0
 packaging==26.0
 pillow==12.1.1
