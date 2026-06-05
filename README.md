@@ -9,7 +9,7 @@ O Chaplin é um sistema web desenvolvido como Trabalho de Conclusão de Curso (T
 - **Evidências Fotográficas**: Upload de fotos e descrições técnicas para comprovação do serviço.
 - **Comunicação Integrada**: Chat interno em cada tarefa para troca de informações entre os envolvidos.
 - **Visualização Flexível**: Acompanhamento por lista, Kanban ou Calendário.
-- **Segurança**: Autenticação robusta com a opção de Segundo Fator (2FA) via TOTP.
+- **Segurança**: Autenticação robusta estendida com suporte completo no Django.
 
 ---
 

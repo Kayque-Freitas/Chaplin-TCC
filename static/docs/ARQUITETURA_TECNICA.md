@@ -8,7 +8,6 @@ O sistema Chaplin foi desenvolvido utilizando o framework **Django**, seguindo o
 - **Framework**: Django 4.2 (Python 3.10+)
 - **Autenticação**: Django Contrib Auth (Sessões)
 - **Segurança**: CSRF Protection, Password Hashing (PBKDF2), RBAC (Role-Based Access Control)
-- **2FA**: pyotp + qrcode (Second Factor Authentication)
 
 ### Frontend
 - **Interface**: Django Templates + HTML5
@@ -25,7 +24,7 @@ O sistema Chaplin foi desenvolvido utilizando o framework **Django**, seguindo o
 
 O sistema centraliza as informações em quatro módulos principais:
 
-1. **Usuários e Perfis (`UserProfile`)**: Estende o usuário padrão do Django para incluir o `role` (Admin, Gestor, Líder, Colaborador) e configurações de segurança como o segredo do 2FA.
+1. **Usuários e Perfis (`UserProfile`)**: Estende o usuário padrão do Django para incluir o `role` (Admin, Gestor, Líder, Colaborador) e configurações de segurança como as informações de endereço.
 2. **Tarefas (`Task`)**: Registra título, descrição, status (`ABERTA`, `ALOCADA`, `CONCLUIDA`, `FINALIZADA`), prioridade e localização da ordem de serviço.
 3. **Evidências (`TaskEvidence`)**: Armazena as fotos e descrições enviadas pelos colaboradores ao finalizarem um serviço.
 4. **Comunicação (`Message`)**: Histórico de mensagens trocadas dentro de cada tarefa específica.

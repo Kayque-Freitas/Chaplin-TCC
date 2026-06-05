@@ -8,6 +8,7 @@ from apps.users.models import UserProfile
 from django.db.models import Q
 from django.contrib.auth.models import User as AuthUser
 from django.contrib import messages as django_messages
+from django.utils.html import strip_tags
 
 
 def _notify(recipient, titulo, mensagem='', tipo='sistema', task=None):
@@ -345,20 +346,20 @@ def settings_view(request):
     if request.method == 'POST':
         # Atualizar configurações
         user = request.user
-        user.first_name = request.POST.get('first_name', user.first_name)
-        user.last_name = request.POST.get('last_name', user.last_name)
-        user.email = request.POST.get('email', user.email)
+        user.first_name = strip_tags(request.POST.get('first_name', user.first_name))
+        user.last_name = strip_tags(request.POST.get('last_name', user.last_name))
+        user.email = strip_tags(request.POST.get('email', user.email))
         user.save()
         
-        user_profile.phone = request.POST.get('phone', user_profile.phone)
-        user_profile.bio = request.POST.get('bio', user_profile.bio)
-        user_profile.cep = request.POST.get('cep', user_profile.cep)
-        user_profile.logradouro = request.POST.get('logradouro', user_profile.logradouro)
-        user_profile.numero = request.POST.get('numero', user_profile.numero)
-        user_profile.complemento = request.POST.get('complemento', user_profile.complemento)
-        user_profile.bairro = request.POST.get('bairro', user_profile.bairro)
-        user_profile.cidade = request.POST.get('cidade', user_profile.cidade)
-        user_profile.estado = request.POST.get('estado', user_profile.estado)
+        user_profile.phone = strip_tags(request.POST.get('phone', user_profile.phone))
+        user_profile.bio = strip_tags(request.POST.get('bio', user_profile.bio))
+        user_profile.cep = strip_tags(request.POST.get('cep', user_profile.cep))
+        user_profile.logradouro = strip_tags(request.POST.get('logradouro', user_profile.logradouro))
+        user_profile.numero = strip_tags(request.POST.get('numero', user_profile.numero))
+        user_profile.complemento = strip_tags(request.POST.get('complemento', user_profile.complemento))
+        user_profile.bairro = strip_tags(request.POST.get('bairro', user_profile.bairro))
+        user_profile.cidade = strip_tags(request.POST.get('cidade', user_profile.cidade))
+        user_profile.estado = strip_tags(request.POST.get('estado', user_profile.estado))
         user_profile.save()
         
         return redirect('tasks:settings')

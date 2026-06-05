@@ -17,9 +17,8 @@ O Chaplin é uma plataforma web de **gestão de manutenção predial**. O fluxo 
 
 ## Principais Funcionalidades Técnicas
 
-### 1. Autenticação e 2FA
+### 1. Autenticação
 - **Funcionamento**: Login padrão do Django estendido para aceitar E-mail ou CPF/Username.
-- **2FA**: Utiliza a biblioteca `pyotp` para gerar códigos temporários que o usuário escaneia via Google Authenticator.
 
 ### 2. Integração ViaCEP
 - **Objetivo**: Facilitar o preenchimento do endereço da tarefa.

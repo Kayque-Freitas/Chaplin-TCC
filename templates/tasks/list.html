@@ -96,7 +96,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     {% for task in tasks %}
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onclick="window.location.href='{% url 'tasks:detail' task.pk %}'">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer" onclick="window.location.href='{% url 'tasks:detail' task.pk %}'">
                         <td class="px-6 py-4">
                             <div class="text-sm font-medium text-gray-900 dark:text-white">{{ task.title }}</div>
                             <div class="text-xs text-gray-500 dark:text-gray-400 truncate max-w-xs">{{ task.description|truncatewords:10 }}</div>

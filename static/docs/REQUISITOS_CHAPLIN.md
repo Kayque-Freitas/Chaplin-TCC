@@ -7,11 +7,10 @@ Este documento lista os requisitos que guiaram o desenvolvimento do Chaplin, foc
 ### 1. Autenticação e Perfis
 - **RF1.1**: O sistema deve permitir o login de usuários com E-mail ou Nome de Usuário.
 - **RF1.2**: O sistema deve suportar quatro níveis de acesso (Roles): Admin, Gestor, Líder e Colaborador.
-- **RF1.3**: O sistema deve oferecer a opção de Ativar Autenticação de Dois Fatores (2FA) para maior segurança.
 - **RF1.4**: O sistema deve permitir a edição de perfis individuais, incluindo foto e especialidade técnica.
 
 ### 2. Gestão de Tarefas (Ordens de Serviço)
-- **RF2.1**: O sistema deve permitir que Gestores criem novas tarefas, definindo título, descrição, quarto/local e prioridade.
+- **RF2.1**: O sistema deve permitir que Gestores criem novas tarefas, definindo título, descrição, local/setor e prioridade.
 - **RF2.2**: O sistema deve carregar automaticamente o endereço do prédio via integração com a API ViaCEP ao informar o CEP.
 - **RF2.3**: O sistema deve permitir que Líderes atribuam (aloquem) tarefas abertas a Colaboradores específicos.
 - **RF2.4**: O sistema deve permitir que Colaboradores registrem a conclusão da tarefa com uma descrição técnica e evidência fotográfica.

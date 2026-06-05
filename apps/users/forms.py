@@ -10,9 +10,14 @@ class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(min_length=8, widget=forms.PasswordInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'minlength': '8'}))
     password_confirm = forms.CharField(min_length=8, widget=forms.PasswordInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'minlength': '8'}), label="Confirmar Senha")
     
-    role = forms.ChoiceField(choices=[('gestor', 'Gestor da Equipe'), ('admin', 'Admin do Prédio')], widget=forms.Select(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg'}))
-    cpf = forms.CharField(max_length=14, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'placeholder': '000.000.000-00'}))
-    cnpj = forms.CharField(max_length=18, required=False, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'placeholder': '00.000.000/0000-00'}))
+    ROLE_CHOICES = [
+        ('gestor', 'Gestor Predial (Anfitrião)'),
+        ('lider', 'Líder de Equipe Técnica'),
+        ('colaborador', 'Colaborador'),
+    ]
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.Select(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg'}))
+    cpf = forms.CharField(max_length=14, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg mask-cpf', 'placeholder': '000.000.000-00'}))
+    cnpj = forms.CharField(max_length=18, required=False, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg mask-cnpj', 'placeholder': '00.000.000/0000-00'}))
 
     class Meta:
         model = User
@@ -43,7 +48,7 @@ class UserRegistrationForm(forms.ModelForm):
 
 class AdminUserCreateForm(forms.ModelForm):
     """Formulário do painel admin — pode criar qualquer perfil"""
-    INPUT_CSS = 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none'
+    INPUT_CSS = 'w-full px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none dark:text-white'
 
     username = forms.CharField(max_length=30, label='Usuário', widget=forms.TextInput(attrs={'class': INPUT_CSS, 'placeholder': 'Nome de usuário'}))
     email = forms.EmailField(max_length=254, label='E-mail', widget=forms.EmailInput(attrs={'class': INPUT_CSS, 'placeholder': 'email@exemplo.com'}))
@@ -53,13 +58,12 @@ class AdminUserCreateForm(forms.ModelForm):
     password_confirm = forms.CharField(min_length=8, label='Confirmar Senha', widget=forms.PasswordInput(attrs={'class': INPUT_CSS, 'minlength': '8'}))
 
     ROLE_CHOICES = [
-        ('colaborador', 'Colaborador Técnico'),
-        ('lider', 'Líder de Equipe'),
-        ('gestor', 'Gestor do Prédio'),
-        ('admin', 'Administrador'),
+        ('colaborador', 'Colaborador'),
+        ('lider', 'Líder de Equipe Técnica'),
+        ('gestor', 'Gestor Predial (Anfitrião)'),
     ]
     role = forms.ChoiceField(choices=ROLE_CHOICES, label='Nível de Acesso', widget=forms.Select(attrs={'class': INPUT_CSS}))
-    phone = forms.CharField(max_length=20, required=False, label='Telefone', widget=forms.TextInput(attrs={'class': INPUT_CSS, 'placeholder': '(11) 99999-9999'}))
+    phone = forms.CharField(max_length=20, required=False, label='Telefone', widget=forms.TextInput(attrs={'class': INPUT_CSS + ' mask-phone', 'placeholder': '(11) 99999-9999'}))
 
     class Meta:
         model = User
@@ -84,4 +88,3 @@ class AdminUserCreateForm(forms.ModelForm):
 
     def clean_phone(self):
         return strip_tags(self.cleaned_data.get("phone", "")).strip()
-

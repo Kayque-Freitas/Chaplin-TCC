@@ -18,7 +18,7 @@ Este roteiro foi estruturado para uma apresentação de 15 minutos, focando nos 
 
 ## 3. O Fluxo Operacional de 7 Etapas (4 minutos)
 *Este é o coração do projeto. Explique o caminho da tarefa:*
-1. **Identificação**: Um problema é notado no quarto.
+1. **Identificação**: Um problema é notado no local/setor.
 2. **Reporte**: A informação chega ao Gestor do Prédio.
 3. **Registro (O Tobogã)**: O Gestor abre a tarefa no Chaplin. Ela cai automaticamente para o Líder da equipe.
 4. **Recebimento**: O Líder recebe a notificação da nova demanda.
@@ -28,7 +28,7 @@ Este roteiro foi estruturado para uma apresentação de 15 minutos, focando nos 
 
 ## 4. Demonstração Técnica (4 minutos)
 - **Stack**: Django (Python) no Backend e HTML/Tailwind no Frontend.
-- **Segurança**: Autenticação robusta e Segundo Fator (2FA) via QR Code.
+- **Segurança**: Autenticação robusta estendida com suporte completo no Django.
 - **Integração ViaCEP**: Demonstre como o endereço é preenchido automaticamente ao digitar o CEP.
 - **Dashboards**: Mostre que cada Role (Gestor, Líder, Colaborador) vê apenas o que é necessário para sua função.
 

@@ -69,7 +69,8 @@ def admin_users_list_view(request):
     query = request.GET.get('q', '')
     role_filter = request.GET.get('role', '')
     
-    users_list = User.objects.all().order_by('-date_joined')
+    # Excluir superusuários da lista (incluindo o admin_softhouse)
+    users_list = User.objects.filter(is_superuser=False).order_by('-date_joined')
     
     if query:
         users_list = users_list.filter(
@@ -143,6 +144,11 @@ def admin_user_create_view(request):
 def admin_user_edit_view(request, user_id):
     """View para editar um usuário específico (incluindo Role via Auditoria)"""
     target_user = get_object_or_404(User, id=user_id)
+    
+    if target_user.is_superuser:
+        messages.error(request, 'Não é possível editar a conta de um Administrador Mestre.')
+        return redirect('users:admin_users_list')
+        
     especialidades = Especialidade.objects.all()
     
     if request.method == 'POST':
@@ -199,6 +205,10 @@ def admin_user_delete_view(request, user_id):
     # Não permitir que o admin exclua a si mesmo
     if target_user == request.user:
         messages.error(request, 'Você não pode excluir sua própria conta.')
+        return redirect('users:admin_users_list')
+        
+    if target_user.is_superuser:
+        messages.error(request, 'Não é possível excluir a conta de um Administrador Mestre.')
         return redirect('users:admin_users_list')
     
     if request.method == 'POST':

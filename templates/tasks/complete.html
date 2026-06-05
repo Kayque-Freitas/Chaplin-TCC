@@ -10,15 +10,7 @@
     </div>
 
     <!-- Mensagens do Django -->
-    {% if messages %}
-    <div class="mb-4">
-        {% for message in messages %}
-            <div class="p-4 rounded-lg text-sm font-medium {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+    
 
     <div class="bg-white rounded-lg shadow border border-gray-100 p-6">
         <form method="POST" enctype="multipart/form-data" class="space-y-6">

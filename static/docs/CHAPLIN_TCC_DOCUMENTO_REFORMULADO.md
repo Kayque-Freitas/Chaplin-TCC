@@ -201,7 +201,7 @@ O fluxo operacional da Chaplin segue sete etapas principais:
 
 #### **Etapa 1: Identificação de Problemas**
 - **Responsável**: Camareiras ou profissionais de limpeza do hotel
-- **Ação**: Após checkout do hóspede, o profissional realiza inspeção do quarto e identifica problemas (vazamentos, lâmpadas queimadas, móveis danificados) ou necessidades de reposição
+- **Ação**: Após checkout do hóspede, o profissional realiza inspeção do local/setor e identifica problemas (vazamentos, lâmpadas queimadas, móveis danificados) ou necessidades de reposição
 - **Saída**: Lista de problemas identificados
 
 #### **Etapa 2: Reporte ao Gestor**
@@ -212,7 +212,7 @@ O fluxo operacional da Chaplin segue sete etapas principais:
 #### **Etapa 3: Registro na Plataforma (O "Tobogã")**
 - **Responsável**: Gestor do prédio
 - **Ação**: O gestor acessa a Chaplin e registra a ocorrência, incluindo:
-  - Número do quarto
+  - Local / Setor
   - Categoria do problema (elétrico, hidráulico, estrutural, limpeza, etc.)
   - Descrição detalhada
   - Fotos do problema
@@ -362,7 +362,7 @@ Cada empresa terceirizada pode:
 
 ### 9.3 Gestão de Tarefas
 
-- Criar tarefa com: título, descrição, prioridade, data de vencimento, quarto
+- Criar tarefa com: título, descrição, prioridade, data de vencimento, local/setor
 - Listar tarefas com filtros (status, prioridade, responsável)
 - Atribuir tarefa a colaborador
 - Completar tarefa com foto e descrição de evidência
@@ -434,7 +434,7 @@ Cada empresa terceirizada pode:
 |--------|-----------|--------------|
 | **Frontend** | HTML, CSS, JavaScript, Tailwind CSS | Simples, intuitivo, responsivo |
 | **Backend** | Django + Templates | Integrado, seguro, com boas práticas |
-| **Banco de Dados** | MySQL | Relacional, ACID, escalável |
+| **Banco de Dados** | PostgreSQL/SQLite | Relacional, ACID, escalável |
 | **Armazenamento de Arquivos** | AWS S3 | Escalável, seguro, barato |
 | **Autenticação** | Sessões Django | Simples, segura, integrada |
 
@@ -508,7 +508,7 @@ chaplin/
         ┌────────────────┼────────────────┐
         │                │                │
 ┌───────▼───────┐ ┌─────▼──────┐ ┌──────▼────────┐
-│   MySQL DB    │ │  AWS S3    │ │   Logs        │
+│   PostgreSQL    │ │  AWS S3    │ │   Logs        │
 │               │ │  (Fotos)   │ │               │
 └───────────────┘ └────────────┘ └───────────────┘
 ```
@@ -550,7 +550,7 @@ Com a implementação proposta, espera-se alcançar:
 - Django Templates: https://docs.djangoproject.com/en/stable/topics/templates/
 - AWS S3: https://aws.amazon.com/s3/
 - Tailwind CSS: https://tailwindcss.com/
-- MySQL: https://www.mysql.com/
+- PostgreSQL: https://www.postgresql.org/
 
 ---
 

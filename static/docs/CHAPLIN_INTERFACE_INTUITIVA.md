@@ -23,7 +23,7 @@ O Chaplin foi projetado com um objetivo central: ser a ferramenta mais simples p
 
 ### Registro Simplificado
 Ao invés de formulários complexos, o Chaplin foca no essencial:
-- `Onde?` (Número do Quarto)
+- `Onde?` (Local / Setor)
 - `O Quê?` (Descrição do Problema)
 - `Urgência?` (Prioridade)
 - `Foto` (Evidência visual)

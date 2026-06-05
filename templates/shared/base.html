@@ -71,5 +71,30 @@
 
     <script src="/static/js/main.js"></script>
     {% block extra_js %}{% endblock %}
+
+    <!-- IMask.js -->
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('.mask-cep').forEach(function (el) {
+                IMask(el, { mask: '00000-000' });
+            });
+            document.querySelectorAll('.mask-cpf').forEach(function (el) {
+                IMask(el, { mask: '000.000.000-00' });
+            });
+            document.querySelectorAll('.mask-cnpj').forEach(function (el) {
+                IMask(el, { mask: '00.000.000/0000-00' });
+            });
+            document.querySelectorAll('.mask-phone').forEach(function (el) {
+                IMask(el, {
+                    mask: [
+                        { mask: '(00) 0000-0000' },
+                        { mask: '(00) 00000-0000' }
+                    ]
+                });
+            });
+        });
+    </script>
+    
 </body>
 </html>

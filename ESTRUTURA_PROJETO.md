@@ -11,7 +11,7 @@ Chaplin-TCC/
 ├── apps/                 # Aplicações Django locais
 │   ├── core/             # Páginas estáticas (Home, Landing Page)
 │   ├── tasks/            # Gestão de Tarefas, Notificações e Áreas
-│   └── users/            # Gestão de Perfis, 2FA e Autenticação
+│   └── users/            # Gestão de Perfis e Autenticação
 ├── chaplin_project/      # Configurações do projeto Django
 │   ├── settings.py       # Configurações de Banco, Apps e Segurança
 │   └── urls.py           # Roteamento global das URLs
@@ -47,7 +47,7 @@ A aplicação central do sistema, onde reside toda a lógica de negócio das tar
 Responsável por toda a camada de segurança e perfis.
 - **Modelos Principais**: `UserProfile` (extensão do `User` padrão do Django).
 - **Backend de Autenticação**: Permite login tanto por e-mail quanto por nome de usuário.
-- **Funcionalidades**: Registro, Login/Logout, Painel Admin de usuários e Configuração de 2FA.
+- **Funcionalidades**: Registro, Login/Logout e Painel Admin de usuários.
 
 ## Convenções de Código
 

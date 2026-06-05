@@ -25,7 +25,6 @@
 | Backend | Python 3.13, Django 6.0.3 |
 | Banco de Dados | SQLite (dev local) / PostgreSQL (Render produção) |
 | Frontend | HTML5, Tailwind CSS (CDN), JavaScript Vanilla |
-| 2FA | pyotp + qrcode |
 | CEP | API pública ViaCEP |
 | Imagens | Pillow |
 | Servidor WSGI | Gunicorn |
@@ -46,14 +45,14 @@ Chaplin-TCC/
 │   │   ├── forms.py        # Formulários Django
 │   │   └── urls.py         # Rotas de tarefas
 │   └── users/              # Usuários, perfis, autenticação
-│       ├── models.py       # UserProfile (role, 2FA, especialidade, endereço), ActivityLog, Especialidade
-│       ├── views.py        # Login, registro, 2FA, perfil, admin de contas
+│       ├── models.py       # UserProfile (role, especialidade, endereço), ActivityLog, Especialidade
+│       ├── views.py        # Login, registro, perfil, admin de contas
 │       ├── backends.py     # Backend de autenticação (e-mail ou username)
 │       └── urls.py         # Rotas de usuários
 ├── templates/
 │   ├── shared/base_dashboard.html   # Layout base (navbar, sidebar, toggle tema)
 │   ├── tasks/                       # Templates de tarefas
-│   ├── users/                       # Templates de login/2FA/admin
+│   ├── users/                       # Templates de login/admin
 │   └── core/                        # Landing page
 ├── static/
 │   ├── css/styles.css
@@ -88,7 +87,6 @@ Chaplin-TCC/
 ## 5. Funcionalidades Implementadas
 
 - Login/Logout com autenticação por **username OU e-mail** (backend customizado).
-- **2FA** opcional via TOTP (pyotp). Fluxo: setup QR → confirma código → ativa.
 - **CRUD de Tarefas** com status: `aberta → alocada → concluída → finalizada`; prioridade: `baixa, normal, alta, urgente`.
 - **Alocação de responsável** por tarefa (notifica o alocado).
 - **Evidências fotográficas** (foto + descrição + tempo gasto + materiais).
@@ -107,7 +105,7 @@ Chaplin-TCC/
 | Tabela | Descrição |
 |---|---|
 | `auth_user` | Usuários padrão Django |
-| `users_userprofile` | Role, 2FA, especialidade, endereço pessoal (OneToOne com `auth_user`) |
+| `users_userprofile` | Role, especialidade, endereço pessoal (OneToOne com `auth_user`) |
 | `users_activitylog` | Auditoria de mudanças de role |
 | `users_especialidade` | Especialidades técnicas |
 | `tasks_task` | Tarefas (título, status, prioridade, endereço, área, tipo_problema) |
@@ -136,7 +134,6 @@ Chaplin-TCC/
 | Notificações | `/tasks/notificacoes/` |
 | Configurações | `/tasks/configuracoes/` |
 | Áreas do Prédio | `/tasks/areas/` |
-| Ativar 2FA | `/usuarios/2fa/configurar/` |
 | Admin de Contas | `/usuarios/admin-panel/usuarios/` |
 
 ---
@@ -147,8 +144,8 @@ Chaplin-TCC/
 |---|---|
 | `apps/tasks/models.py` | Modelos: Task, TaskEvidence, Message, Notification, AreaPredio, TipoProblem |
 | `apps/tasks/views.py` | CRUD de tarefas, dashboard, kanban, calendário, notificações, áreas |
-| `apps/users/models.py` | UserProfile (role, 2FA), ActivityLog, Especialidade, signal `post_save` |
-| `apps/users/views.py` | Login, registro, 2FA, perfil, admin de contas |
+| `apps/users/models.py` | UserProfile (role), ActivityLog, Especialidade, signal `post_save` |
+| `apps/users/views.py` | Login, registro, perfil, admin de contas |
 | `apps/users/backends.py` | Backend de autenticação (e-mail ou username) |
 | `templates/shared/base_dashboard.html` | Layout base: navbar, sidebar, toggle tema |
 | `templates/core/` | Landing page |
@@ -392,9 +389,8 @@ def register_view(request):
 
 ### 12.3 Cadastro e Autenticação — Garantir Funcionalidade Completa
 
-- Verificar se `login_view` trata corretamente todos os cenários (credenciais inválidas, 2FA pendente, sessões expiradas).
+- Verificar se `login_view` trata corretamente todos os cenários (credenciais inválidas, sessões expiradas).
 - Verificar se o backend `EmailOrUsernameModelBackend` em `apps/users/backends.py` funciona corretamente para login por e-mail E por username.
-- Garantir que o fluxo 2FA (setup → verificação → desativação) está funcional e seguro.
 - Validar que os dados inseridos no cadastro são persistidos corretamente nas tabelas `auth_user` e `users_userprofile`.
 
 ### 12.4 Validação de Inputs e Integridade de Dados
@@ -422,7 +418,7 @@ def register_view(request):
 ### 12.6 Testes Automatizados
 
 Rodar/escrever testes para:
-- **Autenticação:** login com username, login com e-mail, login com senha errada, fluxo 2FA.
+- **Autenticação:** login com username, login com e-mail, login com senha errada.
 - **Registro:** criação de usuário, bloqueio de username duplicado, persistência do `UserProfile`.
 - **CRUD de Tarefas:** criar, editar, alocar, concluir, deletar — verificando permissões por role.
 - **Notificações:** geração automática ao criar/alocar/concluir tarefa.
@@ -439,7 +435,6 @@ Pontos críticos identificados que a IA deve investigar e corrigir:
 4. **`CSRF_TRUSTED_ORIGINS`** — contém URL de outro ambiente (`manus.computer`). Limpar.
 5. **Falta de validação nos forms** — `register_view` não valida comprimento de senha, formato de e-mail, nem caracteres especiais.
 6. **`setup_users.py` usa senhas fracas** — ok para dev, mas não devem ir para produção.
-7. **`mysqlclient` no `requirements.txt`** — desnecessário se usar apenas SQLite/PostgreSQL. Remover para evitar erros de build.
 8. **Falta de `@login_required`** em `register_view` — depende da decisão de quem pode registrar (ver seção 12.2).
 9. **`admin_user_edit_view`** — ao promover para admin, define `is_superuser=True` e `is_staff=True`; ao rebaixar, remove `is_superuser` mas NÃO remove `is_staff`. Verificar se isso é intencional.
 10. **`complete_task_view`** — não verifica se o usuário é o responsável pela tarefa antes de permitir conclusão. Qualquer usuário logado pode concluir qualquer tarefa acessando a URL diretamente.
