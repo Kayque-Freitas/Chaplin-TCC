@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body class="bg-gray-50 text-gray-900">
-    <!-- Navegação -->
+    
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -24,9 +24,9 @@
         </div>
     </nav>
 
-    <!-- Sidebar + Conteúdo -->
+    
     <div class="flex max-w-7xl mx-auto">
-        <!-- Sidebar -->
+        
         <aside class="hidden lg:block w-64 bg-white border-r border-gray-200 p-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
             <h3 class="font-bold text-gray-900 mb-4">Índice</h3>
             <ul class="space-y-2 text-sm">
@@ -41,9 +41,9 @@
             </ul>
         </aside>
 
-        <!-- Conteúdo Principal -->
+        
         <main class="flex-1 p-6 md:p-12">
-            <!-- Sobre -->
+            
             <section id="sobre" class="mb-16">
                 <h1 class="text-4xl font-bold mb-4 text-gray-900">Documentação Chaplin</h1>
                 <p class="text-lg text-gray-600 mb-4">Plataforma de Gestão de Tarefas de Manutenção para empresas terceirizadas</p>
@@ -54,7 +54,7 @@
                 </div>
             </section>
 
-            <!-- Requisitos -->
+            
             <section id="requisitos" class="mb-16">
                 <h2 class="text-3xl font-bold mb-6 text-gray-900">📋 Requisitos</h2>
                 <div class="grid md:grid-cols-2 gap-4">
@@ -77,19 +77,19 @@
                 </div>
             </section>
 
-            <!-- Instalação -->
+            
             <section id="instalacao" class="mb-16">
                 <h2 class="text-3xl font-bold mb-6 text-gray-900">🚀 Como Rodar Localmente</h2>
                 
                 <div class="space-y-6">
-                    <!-- Passo 1 -->
+                    
                     <div class="bg-white p-6 rounded-lg border border-gray-200">
                         <h3 class="text-xl font-bold mb-3 text-gray-900">1️⃣ Clonar o Repositório</h3>
                         <pre><code class="language-bash">git clone https://github.com/Kayque-Freitas/Chaplin-TCC.git
 cd Chaplin-TCC</code></pre>
                     </div>
 
-                    <!-- Passo 2 -->
+                    
                     <div class="bg-white p-6 rounded-lg border border-gray-200">
                         <h3 class="text-xl font-bold mb-3 text-gray-900">2️⃣ Criar Ambiente Virtual</h3>
                         <div class="space-y-3">
@@ -106,13 +106,13 @@ source venv/bin/activate</code></pre>
                         </div>
                     </div>
 
-                    <!-- Passo 3 -->
+                    
                     <div class="bg-white p-6 rounded-lg border border-gray-200">
                         <h3 class="text-xl font-bold mb-3 text-gray-900">3️⃣ Instalar Dependências</h3>
                         <pre><code class="language-bash">pip install -r requirements.txt</code></pre>
                     </div>
 
-                    <!-- Passo 4 -->
+                    
                     <div class="bg-white p-6 rounded-lg border border-gray-200">
                         <h3 class="text-xl font-bold mb-3 text-gray-900">4️⃣ Configurar Banco de Dados</h3>
                         <p class="text-gray-600 mb-3">Criar banco MySQL:</p>
@@ -124,19 +124,19 @@ FLUSH PRIVILEGES;</code></pre>
                         <pre><code class="language-bash">cp .env.example .env</code></pre>
                     </div>
 
-                    <!-- Passo 5 -->
+                    
                     <div class="bg-white p-6 rounded-lg border border-gray-200">
                         <h3 class="text-xl font-bold mb-3 text-gray-900">5️⃣ Executar Migrações</h3>
                         <pre><code class="language-bash">python manage.py migrate</code></pre>
                     </div>
 
-                    <!-- Passo 6 -->
+                    
                     <div class="bg-white p-6 rounded-lg border border-gray-200">
                         <h3 class="text-xl font-bold mb-3 text-gray-900">6️⃣ Criar Superusuário</h3>
                         <pre><code class="language-bash">python manage.py createsuperuser</code></pre>
                     </div>
 
-                    <!-- Passo 7 -->
+                    
                     <div class="bg-white p-6 rounded-lg border border-gray-200">
                         <h3 class="text-xl font-bold mb-3 text-gray-900">7️⃣ Rodar o Servidor</h3>
                         <pre><code class="language-bash">python manage.py runserver</code></pre>
@@ -145,7 +145,7 @@ FLUSH PRIVILEGES;</code></pre>
                 </div>
             </section>
 
-            <!-- Estrutura -->
+            
             <section id="estrutura" class="mb-16">
                 <h2 class="text-3xl font-bold mb-6 text-gray-900">📊 Estrutura do Projeto</h2>
                 <div class="bg-white p-6 rounded-lg border border-gray-200">
@@ -175,7 +175,7 @@ FLUSH PRIVILEGES;</code></pre>
                 </div>
             </section>
 
-            <!-- Roles -->
+            
             <section id="roles" class="mb-16">
                 <h2 class="text-3xl font-bold mb-6 text-gray-900">🔐 Roles de Usuário</h2>
                 <div class="grid md:grid-cols-2 gap-4">
@@ -198,7 +198,7 @@ FLUSH PRIVILEGES;</code></pre>
                 </div>
             </section>
 
-            <!-- Fluxo -->
+            
             <section id="fluxo" class="mb-16">
                 <h2 class="text-3xl font-bold mb-6 text-gray-900">📝 Fluxo de Tarefas</h2>
                 <div class="space-y-3">
@@ -225,7 +225,7 @@ FLUSH PRIVILEGES;</code></pre>
                 </div>
             </section>
 
-            <!-- Comandos -->
+            
             <section id="comandos" class="mb-16">
                 <h2 class="text-3xl font-bold mb-6 text-gray-900">🛠️ Comandos Úteis</h2>
                 <div class="bg-white p-6 rounded-lg border border-gray-200">
@@ -249,7 +249,7 @@ python manage.py test</code></pre>
                 </div>
             </section>
 
-            <!-- Demonstração -->
+            
             <section id="demo" class="mb-16">
                 <h2 class="text-3xl font-bold mb-6 text-gray-900">🎬 Demonstração ao Vivo</h2>
                 <div class="bg-white p-6 rounded-lg border border-gray-200">
@@ -260,7 +260,7 @@ python manage.py test</code></pre>
                 </div>
             </section>
 
-            <!-- Footer -->
+            
             <footer class="mt-16 pt-8 border-t border-gray-200">
                 <p class="text-gray-600 text-center">Desenvolvido como Projeto de TCC - ETEC</p>
             </footer>

@@ -31,27 +31,23 @@ def logout_view(request):
     return redirect('core:index')
 
 def register_view(request):
-    """View para registrar novos usuários (Pública)"""
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             password = form.cleaned_data.get('password')
             user.set_password(password)
-            user.is_active = True # Conta ativa imediatamente
+            user.is_active = True 
             user.save()
-            
             profile = user.profile
             profile.role = form.cleaned_data.get('role', 'gestor')
             profile.cpf = form.cleaned_data.get('cpf', '')
             profile.cnpj = form.cleaned_data.get('cnpj', '')
             profile.save()
-            
             messages.success(request, 'Conta criada com sucesso! Você já pode entrar na plataforma.')
             return redirect('users:login')
     else:
         form = UserRegistrationForm()
-        
     return render(request, 'users/register.html', {'form': form})
 
 @login_required
@@ -65,27 +61,20 @@ def is_admin(user):
 @login_required
 @user_passes_test(is_admin)
 def admin_users_list_view(request):
-    """View para o Administrador listar e buscar usuários"""
     query = request.GET.get('q', '')
     role_filter = request.GET.get('role', '')
-    
-    # Excluir superusuários da lista (incluindo o admin_softhouse)
     users_list = User.objects.filter(is_superuser=False).order_by('-date_joined')
-    
     if query:
         users_list = users_list.filter(
             Q(username__icontains=query) | 
             Q(email__icontains=query) |
             Q(first_name__icontains=query)
         )
-    
     if role_filter:
         users_list = users_list.filter(profile__role=role_filter)
-        
-    paginator = Paginator(users_list, 10) # 10 usuários por página
+    paginator = Paginator(users_list, 10) 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
     context = {
         'page_obj': page_obj,
         'query': query,
@@ -97,7 +86,6 @@ def admin_users_list_view(request):
 @login_required
 @user_passes_test(is_admin)
 def admin_user_create_view(request):
-    """View para o Administrador criar um novo usuário com qualquer perfil"""
     especialidades = Especialidade.objects.all()
 
     if request.method == 'POST':
@@ -118,7 +106,6 @@ def admin_user_create_view(request):
 
             profile.save()
 
-            # Log de auditoria
             ActivityLog.objects.create(
                 admin_user=request.user,
                 target_user=user,
@@ -142,25 +129,17 @@ def admin_user_create_view(request):
 @login_required
 @user_passes_test(is_admin)
 def admin_user_edit_view(request, user_id):
-    """View para editar um usuário específico (incluindo Role via Auditoria)"""
     target_user = get_object_or_404(User, id=user_id)
-    
     if target_user.is_superuser:
         messages.error(request, 'Não é possível editar a conta de um Administrador Mestre.')
         return redirect('users:admin_users_list')
-        
     especialidades = Especialidade.objects.all()
-    
     if request.method == 'POST':
-        # Dados básicos
         target_user.first_name = request.POST.get('first_name', target_user.first_name)
         target_user.last_name = request.POST.get('last_name', target_user.last_name)
         target_user.email = request.POST.get('email', target_user.email)
-        
-        # Perfil/Role
         new_role = request.POST.get('role')
         old_role = target_user.profile.role
-        
         if new_role and new_role != old_role:
             target_user.profile.role = new_role
             if new_role == 'admin':
@@ -168,8 +147,6 @@ def admin_user_edit_view(request, user_id):
                 target_user.is_staff = True
             else:
                 target_user.is_superuser = False
-            
-            # Registrar auditoria na mudança de patente
             ActivityLog.objects.create(
                 admin_user=request.user,
                 target_user=target_user,
@@ -179,17 +156,13 @@ def admin_user_edit_view(request, user_id):
                 ip_address=request.META.get('REMOTE_ADDR')
             )
             messages.success(request, f"Nível de conta alterado de {old_role} para {new_role}.")
-            
-        # Especialidade
         esp_id = request.POST.get('especialidade')
         if esp_id:
             target_user.profile.especialidade_id = esp_id
-            
         target_user.save()
         target_user.profile.save()
         messages.success(request, "Usuário atualizado com sucesso.")
         return redirect('users:admin_users_list')
-        
     return render(request, 'users/admin/edit.html', {
         'target_user': target_user,
         'roles': UserProfile.ROLE_CHOICES,
@@ -199,24 +172,17 @@ def admin_user_edit_view(request, user_id):
 @login_required
 @user_passes_test(is_admin)
 def admin_user_delete_view(request, user_id):
-    """View para excluir ou desativar um usuário."""
     target_user = get_object_or_404(User, id=user_id)
-    
-    # Não permitir que o admin exclua a si mesmo
     if target_user == request.user:
         messages.error(request, 'Você não pode excluir sua própria conta.')
         return redirect('users:admin_users_list')
-        
     if target_user.is_superuser:
         messages.error(request, 'Não é possível excluir a conta de um Administrador Mestre.')
         return redirect('users:admin_users_list')
-    
     if request.method == 'POST':
         action = request.POST.get('action', 'deactivate')
         username = target_user.username
-        
         if action == 'delete':
-            # Hard delete
             ActivityLog.objects.create(
                 admin_user=request.user,
                 target_user=None,
@@ -228,7 +194,6 @@ def admin_user_delete_view(request, user_id):
             target_user.delete()
             messages.success(request, f'Usuário "{username}" excluído permanentemente.')
         else:
-            # Soft delete (desativar)
             target_user.is_active = False
             target_user.save()
             ActivityLog.objects.create(
@@ -240,9 +205,7 @@ def admin_user_delete_view(request, user_id):
                 ip_address=request.META.get('REMOTE_ADDR')
             )
             messages.success(request, f'Usuário "{username}" desativado com sucesso.')
-        
         return redirect('users:admin_users_list')
-    
     return render(request, 'users/admin/delete.html', {
         'target_user': target_user,
     })

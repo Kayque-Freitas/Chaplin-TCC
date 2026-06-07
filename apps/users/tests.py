@@ -7,31 +7,23 @@ class UserProfileSignalTests(TestCase):
         self.user = User.objects.create_user(username='test_user', password='password123')
 
     def test_profile_created_on_user_creation(self):
-        """Testa se o UserProfile é criado automaticamente ao rodar o post_save do User."""
         self.assertTrue(hasattr(self.user, 'profile'))
         self.assertEqual(self.user.profile.role, 'colaborador')
 
     def test_promotion_to_admin_grants_superuser(self):
-        """Testa se mudar a role para admin ativa is_superuser e is_staff."""
         self.user.profile.role = 'admin'
         self.user.profile.save()
-        
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_superuser)
         self.assertTrue(self.user.is_staff)
 
     def test_demotion_from_admin_revokes_superuser(self):
-        """Testa se voltar para colaborador remove os privs de admin."""
         self.user.profile.role = 'admin'
         self.user.profile.save()
-        
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_superuser)
-        
-        # Demove para colaborador
         self.user.profile.role = 'colaborador'
         self.user.profile.save()
-        
         self.user.refresh_from_db()
         self.assertFalse(self.user.is_superuser)
         self.assertFalse(self.user.is_staff)

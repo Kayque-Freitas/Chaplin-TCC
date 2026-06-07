@@ -36,7 +36,7 @@
         </div>
 
         <div class="space-y-4">
-            <!-- Soft Delete (Desativar) -->
+            
             <form method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="deactivate">
@@ -52,7 +52,7 @@
                 <div class="relative flex justify-center"><span class="bg-white dark:bg-gray-800 px-3 text-sm text-gray-500">ou</span></div>
             </div>
 
-            <!-- Hard Delete (Excluir permanentemente) -->
+            
             <form method="POST" onsubmit="return confirm('ATENÇÃO: Esta ação é IRREVERSÍVEL. Todos os dados do usuário serão perdidos. Deseja continuar?')">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="delete">

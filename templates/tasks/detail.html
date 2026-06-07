@@ -11,15 +11,15 @@
     
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Main Content -->
+        
         <div class="md:col-span-2">
-            <!-- Descrição -->
+            
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 border border-gray-200 dark:border-gray-700">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Descrição</h2>
                 <p class="text-gray-700 dark:text-gray-300">{{ task.description }}</p>
             </div>
 
-            <!-- Evidências -->
+            
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 border border-gray-200 dark:border-gray-700">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Evidências</h2>
                 {% if evidences %}
@@ -45,7 +45,7 @@
                 {% endif %}
             </div>
 
-            <!-- Lightbox Modal -->
+            
             <div id="lightbox-modal" class="hidden fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4" onclick="closeLightbox(event)">
                 <button onclick="closeLightbox(event)" class="absolute top-4 right-4 text-white hover:text-orange-400 transition z-50" title="Fechar">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -53,7 +53,7 @@
                 <img id="lightbox-img" src="" alt="Evidência ampliada" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl object-contain">
             </div>
 
-            <!-- Mensagens -->
+            
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Comunicação</h2>
                 {% if task_messages %}
@@ -77,7 +77,7 @@
                 </form>
             </div>
 
-            <!-- Ações -->
+            
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mt-6 border border-gray-200 dark:border-gray-700">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Ações</h3>
                 <div class="space-y-2">
@@ -118,9 +118,9 @@
             </div>
         </div>
 
-        <!-- Sidebar -->
+        
         <div class="md:col-span-1 flex flex-col h-full">
-            <!-- Status -->
+            
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 border border-gray-200 dark:border-gray-700">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Status</h3>
                 <span class="px-3 py-1 rounded-full text-sm font-semibold {% if task.status == 'aberta' %}bg-yellow-100 text-yellow-800{% elif task.status == 'alocada' %}bg-blue-100 text-blue-800{% elif task.status == 'concluida' %}bg-green-100 text-green-800{% else %}bg-gray-100 text-gray-800{% endif %}">
@@ -128,7 +128,7 @@
                 </span>
             </div>
 
-            <!-- Prioridade -->
+            
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 border border-gray-200 dark:border-gray-700">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Prioridade</h3>
                 <span class="px-3 py-1 rounded-full text-sm font-semibold {% if task.priority == 'urgente' %}bg-red-100 text-red-800{% elif task.priority == 'alta' %}bg-orange-100 text-orange-800{% elif task.priority == 'normal' %}bg-blue-100 text-blue-800{% else %}bg-green-100 text-green-800{% endif %}">
@@ -136,7 +136,7 @@
                 </span>
             </div>
 
-            <!-- Informações -->
+            
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex-grow mb-6 md:mb-0 border border-gray-200 dark:border-gray-700">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Informações</h3>
                 <div class="space-y-3">

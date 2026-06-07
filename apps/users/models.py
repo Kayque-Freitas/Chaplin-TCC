@@ -32,15 +32,12 @@ class ActivityLog(models.Model):
         verbose_name_plural = "Logs de Atividades"
 
 class UserProfile(models.Model):
-    """Extensão do modelo User do Django com informações adicionais"""
-    
     ROLE_CHOICES = [
         ('admin', 'Administrador'),
         ('gestor', 'Gestor do Prédio'),
         ('lider', 'Líder de Equipe'),
         ('colaborador', 'Colaborador'),
     ]
-    
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='colaborador')
     especialidade = models.ForeignKey(Especialidade, on_delete=models.SET_NULL, null=True, blank=True, related_name='profissionais')
@@ -50,8 +47,6 @@ class UserProfile(models.Model):
     cpf = models.CharField(max_length=14, blank=True, verbose_name="CPF")
     cnpj = models.CharField(max_length=18, blank=True, verbose_name="CNPJ")
     bio = models.TextField(blank=True)
-    
-    # Endereço (ViaCEP)
     cep = models.CharField(max_length=9, blank=True)
     logradouro = models.CharField(max_length=255, blank=True)
     numero = models.CharField(max_length=20, blank=True)
@@ -60,43 +55,34 @@ class UserProfile(models.Model):
     cidade = models.CharField(max_length=100, blank=True)
     estado = models.CharField(max_length=2, blank=True)
 
-    # Removido Autenticação de Dois Fatores (2FA) e E-mail Verify
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
     def __str__(self):
         return f"{self.user.get_full_name() or self.user.username} ({self.get_role_display()})"
-    
     class Meta:
         verbose_name = "Perfil de Usuário"
         verbose_name_plural = "Perfis de Usuários"
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
-    """Cria ou atualiza o perfil do usuário automaticamente."""
     if created:
         role = 'admin' if instance.is_superuser else 'colaborador'
         UserProfile.objects.get_or_create(user=instance, defaults={'role': role})
     else:
-        # Garante que o perfil existe antes de salvar
         profile, _ = UserProfile.objects.get_or_create(user=instance)
         profile.save()
 
 @receiver(post_save, sender=UserProfile)
 def sync_user_role(sender, instance, **kwargs):
-    """Sincroniza a flag de superuser/staff baseada na role do UserProfile."""
     user = instance.user
     changed = False
     is_admin = (instance.role == 'admin')
-    
     if user.is_superuser != is_admin:
         user.is_superuser = is_admin
         changed = True
-    
     if user.is_staff != is_admin:
         user.is_staff = is_admin
         changed = True
-        
     if changed:
         user.save(update_fields=['is_superuser', 'is_staff'])

@@ -3,13 +3,11 @@ from django.contrib.auth.models import User
 from django.utils.html import strip_tags
 
 class UserRegistrationForm(forms.ModelForm):
-    """Formulário público de registro — apenas gestor/admin"""
     username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'maxlength': '30'}))
     email = forms.EmailField(max_length=254, widget=forms.EmailInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'maxlength': '254'}))
     first_name = forms.CharField(max_length=150, widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'maxlength': '150'}))
     password = forms.CharField(min_length=8, widget=forms.PasswordInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'minlength': '8'}))
     password_confirm = forms.CharField(min_length=8, widget=forms.PasswordInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'minlength': '8'}), label="Confirmar Senha")
-    
     ROLE_CHOICES = [
         ('gestor', 'Gestor Predial (Anfitrião)'),
         ('lider', 'Líder de Equipe Técnica'),
@@ -30,7 +28,6 @@ class UserRegistrationForm(forms.ModelForm):
 
         if password and password_confirm and password != password_confirm:
             self.add_error('password_confirm', "As senhas não coincidem.")
-        
         return cleaned_data
 
     def clean_first_name(self):
@@ -38,16 +35,13 @@ class UserRegistrationForm(forms.ModelForm):
 
     def clean_username(self):
         return strip_tags(self.cleaned_data.get("username", "")).strip()
-        
     def clean_cpf(self):
         return strip_tags(self.cleaned_data.get("cpf", "")).strip()
-        
     def clean_cnpj(self):
         return strip_tags(self.cleaned_data.get("cnpj", "")).strip()
 
 
 class AdminUserCreateForm(forms.ModelForm):
-    """Formulário do painel admin — pode criar qualquer perfil"""
     INPUT_CSS = 'w-full px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none dark:text-white'
 
     username = forms.CharField(max_length=30, label='Usuário', widget=forms.TextInput(attrs={'class': INPUT_CSS, 'placeholder': 'Nome de usuário'}))

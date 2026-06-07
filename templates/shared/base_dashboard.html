@@ -11,7 +11,7 @@
     </script>
     <link rel="stylesheet" href="/static/css/styles.css">
 
-    <!-- Apply saved theme BEFORE paint to avoid flash -->
+    
     <script>
         (function() {
             const theme = localStorage.getItem('chaplin-theme');
@@ -23,7 +23,7 @@
 </head>
 <body class="bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
 
-    <!-- Top Navigation -->
+    
     <nav class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 shadow-sm">
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -37,20 +37,20 @@
                 </div>
                 <div class="flex items-center gap-3">
 
-                    <!-- Dark Mode Toggle -->
+                    
                     <button id="theme-toggle" title="Alternar tema"
                         class="w-9 h-9 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
-                        <!-- Sun icon (shown in dark mode) -->
+                        
                         <svg id="icon-sun" class="hidden w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
                         </svg>
-                        <!-- Moon icon (shown in light mode) -->
+                        
                         <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                         </svg>
                     </button>
 
-                    <!-- Notificações (Dropdown Modal) -->
+                    
                     <div class="relative">
                         <button id="notification-bell" type="button"
                             class="relative text-gray-600 dark:text-gray-300 hover:text-orange-500 dark:hover:text-orange-400 transition w-9 h-9 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -60,7 +60,7 @@
                             </svg>
                             <span id="notif-badge" class="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-bold rounded-full hidden items-center justify-center px-1"></span>
                         </button>
-                        <!-- Notifications Dropdown -->
+                        
                         <div id="notif-dropdown" class="hidden absolute right-0 top-12 w-80 max-h-96 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden flex flex-col">
                             <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                                 <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Notificações</h3>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
 
-                    <!-- Perfil -->
+                    
                     <div class="relative flex items-center gap-3">
                         <div class="text-right hidden sm:block">
                             <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ user.first_name|default:user.username }}</p>
@@ -83,7 +83,7 @@
                             {{ user.first_name|first|upper|default:"U" }}
                         </div>
 
-                        <!-- Dropdown Menu -->
+                        
                         <div id="user-dropdown-menu" class="hidden absolute right-0 top-12 w-52 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 py-2 z-50">
                             <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-700 sm:hidden">
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ user.first_name|default:user.username }}</p>
@@ -240,14 +240,14 @@
         });
     </script>
 
-    <!-- Main Container -->
+    
     <div class="flex h-[calc(100vh-64px)]">
-        <!-- Sidebar (sticky, nunca rola com a página) -->
+        
         <aside id="sidebar" class="fixed md:sticky left-0 top-16 md:top-[64px] w-64 h-[calc(100vh-64px)] bg-gray-900 dark:bg-gray-950 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40 flex flex-col border-r border-gray-800 dark:border-gray-800 shrink-0">
             <nav class="flex-1 flex flex-col p-5 overflow-y-auto">
-                <!-- Grupo Principal -->
+                
                 <div class="space-y-2">
-                    <!-- Dashboard -->
+                    
                     <a href="{% url 'tasks:dashboard' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium {% if request.resolver_match.url_name == 'dashboard' %}bg-orange-500 text-white shadow-md{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
                         <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"></path>
@@ -256,7 +256,7 @@
                         <span>Dashboard</span>
                     </a>
 
-                    <!-- Tarefas -->
+                    
                     <a href="{% url 'tasks:list' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium {% if request.resolver_match.url_name == 'list' %}bg-orange-500 text-white shadow-md{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
                         <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
@@ -265,7 +265,7 @@
                         <span>Tarefas</span>
                     </a>
 
-                    <!-- Nova Tarefa (somente gestores, líderes e admins) -->
+                    
                     {% if user.profile.role != 'colaborador' %}
                     <a href="{% url 'tasks:create' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium {% if request.resolver_match.url_name == 'create' %}bg-orange-500 text-white shadow-md{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
                         <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -277,10 +277,10 @@
 
                 </div>
 
-                <!-- Spacer -->
+                
                 <div class="flex-1 min-h-[24px]"></div>
 
-                <!-- Grupo Inferior -->
+                
                 <div class="space-y-2">
                     <div class="border-t border-gray-700/60 dark:border-gray-800 my-2"></div>
 
@@ -293,7 +293,7 @@
                     </a>
                     {% endif %}
 
-                    <!-- Configurações -->
+                    
                     <a href="{% url 'tasks:settings' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium {% if request.resolver_match.url_name == 'settings' %}bg-orange-500 text-white shadow-md{% else %}text-gray-300 hover:bg-gray-800 hover:text-white{% endif %} transition">
                         <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
@@ -301,7 +301,7 @@
                         <span>Configurações</span>
                     </a>
 
-                    <!-- Logout -->
+                    
                     <a href="{% url 'users:logout' %}" class="flex items-center gap-4 px-4 py-3.5 rounded-xl text-[15px] font-medium text-red-400 hover:bg-red-600/90 hover:text-white transition">
                         <svg class="w-[22px] h-[22px] shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
@@ -311,7 +311,7 @@
                 </div>
             </nav>
 
-            <!-- Informações do Usuário (Rodapé da Sidebar) -->
+            
             <div class="p-4 border-t border-gray-700 dark:border-gray-800 bg-gray-800 dark:bg-gray-900 shrink-0">
                 <p class="text-xs text-gray-400">Logado como</p>
                 <p class="text-sm font-semibold text-white">{{ user.username }}</p>
@@ -319,10 +319,10 @@
             </div>
         </aside>
 
-        <!-- Main Content (só este bloco rola) -->
+        
         <main class="flex-1 min-w-0 bg-gray-50 dark:bg-gray-950 overflow-y-auto transition-colors duration-200">
             
-            <!-- Global Messages -->
+            
             {% if messages %}
             <div class="px-4 sm:px-6 lg:px-8 pt-6 pb-2" id="global-messages">
                 <div class="space-y-2">
@@ -348,7 +348,7 @@
         </main>
     </div>
 
-    <!-- Overlay para mobile -->
+    
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 md:hidden hidden z-30"></div>
 
     <script>
@@ -371,7 +371,7 @@
 
     {% block extra_scripts %}{% endblock %}
 
-    <!-- IMask.js -->
+    
     <script src="https://unpkg.com/imask"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {

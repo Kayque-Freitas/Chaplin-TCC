@@ -5,15 +5,15 @@
 
 {% block content %}
 <div class="p-4 sm:p-6 lg:p-8">
-    <!-- Page Header -->
+    
     <div class="mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <p class="text-gray-600 dark:text-gray-400 mt-2">Bem-vindo de volta, {{ user.first_name|default:user.username }}!</p>
     </div>
 
-    <!-- Stats Grid (dados dinâmicos vindos da view) -->
+    
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-        <!-- Total -->
+        
         <a href="{% url 'tasks:list' %}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
@@ -29,7 +29,7 @@
             </div>
         </a>
 
-        <!-- Em Progresso -->
+        
         <a href="{% url 'tasks:list' %}?status=alocada" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
@@ -44,7 +44,7 @@
             </div>
         </a>
 
-        <!-- Concluídas -->
+        
         <a href="{% url 'tasks:list' %}?status=concluida" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
@@ -59,7 +59,7 @@
             </div>
         </a>
 
-        <!-- Finalizadas -->
+        
         <a href="{% url 'tasks:list' %}?status=finalizada" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
@@ -74,7 +74,7 @@
             </div>
         </a>
 
-        <!-- Abertas -->
+        
         <a href="{% url 'tasks:list' %}?status=aberta" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
@@ -90,7 +90,7 @@
         </a>
     </div>
 
-    <!-- Recent Tasks -->
+    
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">Tarefas Recentes</h2>

@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body class="bg-white text-gray-900">
-    <!-- Navegação -->
+    
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
+                
                 <div class="flex-shrink-0">
                     <a href="/" class="text-2xl font-bold text-orange-500">Chaplin</a>
                 </div>
 
-                <!-- Menu Desktop -->
+                
                 <div class="hidden md:flex space-x-8">
                     {% if user.is_authenticated %}
                         <a href="/tasks/dashboard/" class="text-gray-700 hover:text-orange-500 transition">Dashboard</a>
@@ -31,7 +31,7 @@
                     {% endif %}
                 </div>
 
-                <!-- Botão do Menu Mobile -->
+                
                 <button id="mobile-menu-btn" class="md:hidden text-gray-700 hover:text-orange-500">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -39,7 +39,7 @@
                 </button>
             </div>
 
-            <!-- Menu Mobile -->
+            
             <div id="mobile-menu" class="hidden md:hidden pb-4">
                 {% if user.is_authenticated %}
                     <a href="/tasks/dashboard/" class="block px-2 py-2 text-gray-700 hover:text-orange-500">Dashboard</a>
@@ -55,12 +55,12 @@
         </div>
     </nav>
 
-    <!-- Conteúdo -->
+    
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-gray-900 text-white py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
@@ -72,7 +72,7 @@
     <script src="/static/js/main.js"></script>
     {% block extra_js %}{% endblock %}
 
-    <!-- IMask.js -->
+    
     <script src="https://unpkg.com/imask"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {

@@ -8,13 +8,10 @@ class EmailOrUsernameModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         if username is None:
             username = kwargs.get(UserModel.USERNAME_FIELD)
-            
         try:
-            # Check for exactly one match on either username or email
             user = UserModel.objects.filter(
                 Q(username__iexact=username) | Q(email__iexact=username)
             ).distinct().first()
-            
             if user and user.check_password(password) and self.user_can_authenticate(user):
                 return user
         except UserModel.DoesNotExist:

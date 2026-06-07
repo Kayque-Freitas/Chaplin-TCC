@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="p-6 md:p-8 max-w-4xl mx-auto">
-    <!-- Header -->
+    
     <div class="flex items-center gap-4 mb-8">
         <a href="{% url 'users:admin_users_list' %}" class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-lg p-2 transition">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -14,14 +14,14 @@
         </div>
     </div>
 
-    <!-- Form -->
+    
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <form method="POST" id="editUserForm">
             {% csrf_token %}
             <input type="hidden" id="currentRole" value="{{ target_user.profile.role }}">
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <!-- Profile/Access Configuration -->
+                
                 <div class="col-span-1 md:col-span-2 bg-orange-50 dark:bg-orange-900/20 p-6 rounded-lg border border-orange-100 dark:border-orange-800 mb-2">
                     <h3 class="text-lg font-bold text-orange-800 dark:text-orange-400 mb-4 border-b border-orange-200 dark:border-orange-700 pb-2">Nível de Acesso (Papel do Sistema)</h3>
                     <div>
@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <!-- Basic Data -->
+                
                 <div>
                     <label for="first_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome</label>
                     <input type="text" id="first_name" name="first_name" value="{{ target_user.first_name }}" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none dark:bg-gray-700 dark:text-white">
@@ -52,7 +52,7 @@
                     <input type="email" id="email" name="email" value="{{ target_user.email }}" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none dark:bg-gray-700 dark:text-white">
                 </div>
 
-                <!-- Especialidade -->
+                
                 <div class="md:col-span-2">
                     <label for="especialidade" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Especialidade (Opcional)</label>
                     <select id="especialidade" name="especialidade" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none dark:bg-gray-700 dark:text-white">

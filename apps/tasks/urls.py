@@ -16,7 +16,6 @@ urlpatterns = [
     path('<int:pk>/finalize/', views.finalize_task_view, name='finalize'),
     path('<int:pk>/message/', views.add_message_view, name='add_message'),
     path('kanban/', views.kanban_view, name='kanban'),
-    # Notificações
     path('notificacoes/', views.notifications_view, name='notifications'),
     path('notificacoes/<int:pk>/lida/', views.mark_notification_read, name='notification_read'),
     path('notificacoes/count/', views.unread_notifications_count, name='notifications_count'),

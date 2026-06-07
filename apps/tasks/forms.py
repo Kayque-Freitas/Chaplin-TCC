@@ -37,7 +37,6 @@ class TaskForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Set dynamic min date for due_date
         self.fields['due_date'].widget.attrs['min'] = timezone.now().date().isoformat()
 
     def clean_due_date(self):
