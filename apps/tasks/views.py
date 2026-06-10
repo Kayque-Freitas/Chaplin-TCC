@@ -84,6 +84,8 @@ def tasks_list_view(request):
         'current_search': search,
         'can_manage': _is_manager(request.user),
     }
+    if request.GET.get('ajax') == '1':
+        return render(request, 'tasks/_list_table.html', context)
     return render(request, 'tasks/list.html', context)
 
 @login_required
@@ -144,9 +146,23 @@ def assign_task_view(request, pk):
     if not _is_manager(request.user):
         django_messages.error(request, 'Você não tem permissão para alocar tarefas.')
         return redirect('tasks:detail', pk=pk)
+    
     task = get_object_or_404(Task, pk=pk)
+    
+    current_role = _get_role(request.user)
+    if current_role == 'gestor':
+        users = AuthUser.objects.filter(is_active=True, profile__role='lider').order_by('first_name', 'username')
+    elif current_role == 'lider':
+        users = AuthUser.objects.filter(is_active=True, profile__role='colaborador').order_by('first_name', 'username')
+    else:
+        users = AuthUser.objects.filter(is_active=True).exclude(profile__role='admin').order_by('first_name', 'username')
+
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
+        if not users.filter(id=user_id).exists():
+            django_messages.error(request, 'Você não tem permissão para alocar a tarefa para este usuário.')
+            return redirect('tasks:assign', pk=pk)
+            
         task.assigned_to_id = user_id
         task.status = 'alocada'
         task.save()
@@ -156,7 +172,7 @@ def assign_task_view(request, pk):
                     mensagem=f'Você foi alocado para esta tarefa por {request.user.get_full_name() or request.user.username}.',
                     tipo='tarefa_atribuida', task=task)
         return redirect('tasks:detail', pk=task.pk)
-    users = AuthUser.objects.filter(is_active=True).order_by('first_name', 'username')
+        
     return render(request, 'tasks/assign.html', {'task': task, 'users': users})
 
 @login_required
@@ -334,6 +350,8 @@ def kanban_view(request):
         'tarefas_concluidas': all_tasks.filter(status='concluida').select_related('assigned_to', 'created_by'),
         'tarefas_finalizadas': all_tasks.filter(status='finalizada').select_related('assigned_to', 'created_by'),
     }
+    if request.GET.get('ajax') == '1':
+        return render(request, 'tasks/_kanban_board.html', context)
     return render(request, 'tasks/kanban.html', context)
 
 

@@ -157,6 +157,9 @@
 
             // ── Notification Badge ─────────────────────────────────────
             const badge = document.getElementById('notif-badge');
+            let lastNotifCount = 0;
+            const notificationSound = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
+
             function updateBadge() {
                 fetch('/tasks/notificacoes/count/')
                     .then(r => r.json())
@@ -165,13 +168,25 @@
                             badge.textContent = data.count > 99 ? '99+' : data.count;
                             badge.style.display = 'flex';
                             badge.classList.remove('hidden');
+                            
+                            // Tocar som se a quantidade de notificações aumentou (e não é a carga inicial)
+                            if (data.count > lastNotifCount && lastNotifCount !== 0) {
+                                notificationSound.play().catch(e => console.log('Autoplay prevent:', e));
+                            }
+                            
+                            lastNotifCount = data.count;
                         } else {
                             badge.style.display = 'none';
+                            lastNotifCount = 0;
                         }
                     })
                     .catch(() => {});
             }
-            if (badge) updateBadge();
+            if (badge) {
+                updateBadge();
+                // Verificar novas notificações a cada 15 segundos
+                setInterval(updateBadge, 15000);
+            }
 
             // ── Notification Dropdown ──────────────────────────────────
             const bellBtn = document.getElementById('notification-bell');

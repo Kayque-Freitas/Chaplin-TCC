@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+import os
 
 class Especialidade(models.Model):
     nome = models.CharField(max_length=100, unique=True)
@@ -86,3 +87,9 @@ def sync_user_role(sender, instance, **kwargs):
         changed = True
     if changed:
         user.save(update_fields=['is_superuser', 'is_staff'])
+
+@receiver(post_delete, sender=UserProfile)
+def auto_delete_avatar_on_delete(sender, instance, **kwargs):
+    if instance.avatar:
+        if os.path.isfile(instance.avatar.path):
+            os.remove(instance.avatar.path)
