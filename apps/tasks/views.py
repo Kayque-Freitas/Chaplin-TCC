@@ -37,7 +37,9 @@ def dashboard_view(request):
     if user_profile.role == 'gestor':
         tasks = Task.objects.filter(created_by=request.user)
     elif user_profile.role == 'lider':
-        tasks = Task.objects.filter(status__in=['aberta', 'alocada'])
+        tasks = Task.objects.filter(
+            Q(assigned_to=request.user) | Q(assigned_leader=request.user)
+        ).distinct()
     elif user_profile.role == 'colaborador':
         tasks = Task.objects.filter(assigned_to=request.user)
     else:
@@ -61,6 +63,10 @@ def tasks_list_view(request):
     user_profile = getattr(request.user, 'profile', None)
     if user_profile and user_profile.role == 'gestor':
         tasks = Task.objects.filter(created_by=request.user)
+    elif user_profile and user_profile.role == 'lider':
+        tasks = Task.objects.filter(
+            Q(assigned_to=request.user) | Q(assigned_leader=request.user)
+        ).distinct()
     elif user_profile and user_profile.role == 'colaborador':
         tasks = Task.objects.filter(assigned_to=request.user)
     else:
@@ -99,6 +105,11 @@ def create_task_view(request):
             task = form.save(commit=False)
             task.created_by = request.user
             task.save()
+            
+            photo = form.cleaned_data.get('photo')
+            if photo:
+                TaskEvidence.objects.create(task=task, photo=photo, description='Foto adicionada na abertura da tarefa.')
+                
             for user in AuthUser.objects.filter(profile__role__in=['gestor', 'admin']).exclude(pk=request.user.pk):
                 _notify(user, f'Nova tarefa criada: {task.title}',
                         mensagem=f'Criada por {request.user.get_full_name() or request.user.username}.',
@@ -113,7 +124,14 @@ def create_task_view(request):
 def task_detail_view(request, pk):
     task = get_object_or_404(Task, pk=pk)
     role = _get_role(request.user)
+    # Controle de acesso por perfil
     if role == 'colaborador' and task.assigned_to_id != request.user.id:
+        django_messages.error(request, 'Você não tem acesso a esta tarefa.')
+        return redirect('tasks:list')
+    elif role == 'gestor' and task.created_by_id != request.user.id:
+        django_messages.error(request, 'Você não tem acesso a esta tarefa.')
+        return redirect('tasks:list')
+    elif role == 'lider' and task.assigned_to_id != request.user.id and task.assigned_leader_id != request.user.id:
         django_messages.error(request, 'Você não tem acesso a esta tarefa.')
         return redirect('tasks:list')
     task_messages = task.messages.all()
@@ -132,6 +150,9 @@ def edit_task_view(request, pk):
         django_messages.error(request, 'Você não tem permissão para editar tarefas.')
         return redirect('tasks:detail', pk=pk)
     task = get_object_or_404(Task, pk=pk)
+    if task.status == 'finalizada':
+        django_messages.error(request, 'Tarefas finalizadas não podem ser editadas.')
+        return redirect('tasks:detail', pk=pk)
     if request.method == 'POST':
         form = TaskForm(request.POST, request.FILES, instance=task)
         if form.is_valid():
@@ -148,10 +169,15 @@ def assign_task_view(request, pk):
         return redirect('tasks:detail', pk=pk)
     
     task = get_object_or_404(Task, pk=pk)
+
+    if task.status in ('concluida', 'finalizada'):
+        django_messages.error(request, 'Não é possível alocar tarefas concluídas ou finalizadas.')
+        return redirect('tasks:detail', pk=pk)
     
     current_role = _get_role(request.user)
     if current_role == 'gestor':
-        users = AuthUser.objects.filter(is_active=True, profile__role='lider').order_by('first_name', 'username')
+        # Gestor pode alocar para Líderes ou Colaboradores
+        users = AuthUser.objects.filter(is_active=True, profile__role__in=['lider', 'colaborador']).order_by('first_name', 'username')
     elif current_role == 'lider':
         users = AuthUser.objects.filter(is_active=True, profile__role='colaborador').order_by('first_name', 'username')
     else:
@@ -162,6 +188,19 @@ def assign_task_view(request, pk):
         if not users.filter(id=user_id).exists():
             django_messages.error(request, 'Você não tem permissão para alocar a tarefa para este usuário.')
             return redirect('tasks:assign', pk=pk)
+        
+        target_user = AuthUser.objects.get(id=user_id)
+        target_role = _get_role(target_user)
+
+        # Se o Líder está re-alocando para um Colaborador, salvar o Líder como assigned_leader
+        if current_role == 'lider' and target_role == 'colaborador':
+            task.assigned_leader = request.user
+        # Se o Gestor aloca diretamente para um Colaborador, não há líder intermediário
+        elif current_role == 'gestor' and target_role == 'colaborador':
+            task.assigned_leader = None
+        # Se o Gestor aloca para um Líder, o líder fica em assigned_to (e depois ele re-aloca)
+        elif current_role == 'gestor' and target_role == 'lider':
+            task.assigned_leader = None
             
         task.assigned_to_id = user_id
         task.status = 'alocada'
@@ -181,6 +220,9 @@ def complete_task_view(request, pk):
     if not _is_manager(request.user) and task.assigned_to_id != request.user.id:
         django_messages.error(request, 'Você não tem permissão para concluir esta tarefa.')
         return redirect('tasks:list')
+    if task.status in ('concluida', 'finalizada'):
+        django_messages.error(request, 'Esta tarefa já foi concluída.')
+        return redirect('tasks:detail', pk=pk)
     if request.method == 'POST':
         description = request.POST.get('description', '')
         photo = request.FILES.get('photo')
@@ -194,8 +236,15 @@ def complete_task_view(request, pk):
         task.status = 'concluida'
         task.completed_at = timezone.now()
         task.save()
+        # Notificar o Gestor (criador da tarefa)
         if task.created_by and task.created_by_id != request.user.id:
             _notify(task.created_by,
+                    f'Tarefa concluída: {task.title}',
+                    mensagem=f'Concluída por {request.user.get_full_name() or request.user.username}.',
+                    tipo='tarefa_concluida', task=task)
+        # Notificar o Líder intermediário (se existir)
+        if task.assigned_leader and task.assigned_leader_id != request.user.id:
+            _notify(task.assigned_leader,
                     f'Tarefa concluída: {task.title}',
                     mensagem=f'Concluída por {request.user.get_full_name() or request.user.username}.',
                     tipo='tarefa_concluida', task=task)
@@ -214,6 +263,9 @@ def add_message_view(request, pk):
                 recipients.add(task.assigned_to)
             if task.created_by and task.created_by_id != request.user.id:
                 recipients.add(task.created_by)
+            # Incluir o Líder intermediário nas notificações de mensagem
+            if task.assigned_leader and task.assigned_leader_id != request.user.id:
+                recipients.add(task.assigned_leader)
             for recipient in recipients:
                 _notify(recipient,
                         f'Nova mensagem em: {task.title}',
@@ -249,8 +301,21 @@ def finalize_task_view(request, pk):
     if request.method == 'POST':
         task.status = 'finalizada'
         task.save()
+        # Notificar o Colaborador (executor)
         if task.assigned_to and task.assigned_to_id != request.user.id:
             _notify(task.assigned_to,
+                    f'Tarefa finalizada: {task.title}',
+                    mensagem=f'Aprovada por {request.user.get_full_name() or request.user.username}.',
+                    tipo='tarefa_finalizada', task=task)
+        # Notificar o Líder intermediário (se existir)
+        if task.assigned_leader and task.assigned_leader_id != request.user.id:
+            _notify(task.assigned_leader,
+                    f'Tarefa finalizada: {task.title}',
+                    mensagem=f'Aprovada por {request.user.get_full_name() or request.user.username}.',
+                    tipo='tarefa_finalizada', task=task)
+        # Notificar o Gestor (criador) se não for ele mesmo finalizando
+        if task.created_by and task.created_by_id != request.user.id:
+            _notify(task.created_by,
                     f'Tarefa finalizada: {task.title}',
                     mensagem=f'Aprovada por {request.user.get_full_name() or request.user.username}.',
                     tipo='tarefa_finalizada', task=task)
@@ -339,6 +404,10 @@ def kanban_view(request):
 
     if user_profile.role == 'gestor':
         all_tasks = Task.objects.filter(created_by=request.user)
+    elif user_profile.role == 'lider':
+        all_tasks = Task.objects.filter(
+            Q(assigned_to=request.user) | Q(assigned_leader=request.user)
+        ).distinct()
     elif user_profile.role == 'colaborador':
         all_tasks = Task.objects.filter(assigned_to=request.user)
     else:

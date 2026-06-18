@@ -23,6 +23,7 @@ class Task(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='aberta')
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='tasks_created')
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='tasks_assigned')
+    assigned_leader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='tasks_as_leader', verbose_name='Líder Responsável')
     due_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

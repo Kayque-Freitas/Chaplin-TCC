@@ -17,6 +17,15 @@ class TaskForm(forms.ModelForm):
         error_messages={'invalid': 'Formato de data inválido. Use DD/MM/AAAA ou escolha no calendário.'}
     )
 
+    photo = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500',
+            'accept': 'image/*'
+        }),
+        error_messages={'invalid': 'Formato de imagem inválido.'}
+    )
+
     class Meta:
         model = Task
         fields = ['title', 'description', 'priority', 'location', 'due_date',

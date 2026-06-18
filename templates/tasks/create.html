@@ -15,7 +15,7 @@
         <p class="text-gray-600 dark:text-gray-400 mt-2">Preencha os detalhes da nova tarefa abaixo</p>
     </div>
 
-    <form method="POST" action="{% url 'tasks:create' %}" class="space-y-6">
+    <form method="POST" action="{% url 'tasks:create' %}" enctype="multipart/form-data" class="space-y-6">
         {% csrf_token %}
 
         {% if form.errors %}
@@ -37,6 +37,13 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Descrição</label>
                 {{ form.description }}
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Foto do Ambiente (Opcional)</label>
+                {{ form.photo }}
+                <p class="text-xs text-gray-400 mt-1">Anexe uma imagem para mostrar o estado atual do ambiente.</p>
+                {% if form.photo.errors %}<p class="text-red-500 text-xs mt-1">{{ form.photo.errors.0 }}</p>{% endif %}
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
