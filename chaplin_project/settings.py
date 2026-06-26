@@ -141,8 +141,8 @@ SESSION_COOKIE_AGE = 1209600
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    'http://10.67.234.191:8000',
-    'http://10.67.234.54:8000',
+    'http://10.67.234.212:8000'
+
 ]
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
