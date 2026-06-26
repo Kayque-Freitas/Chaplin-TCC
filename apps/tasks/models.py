@@ -55,6 +55,30 @@ class Task(models.Model):
         if self.cep:
             partes.append(self.cep)
         return ', '.join(partes) if partes else None
+    def clean(self):
+        super().clean()
+        if self.pk:
+            old_task = Task.objects.get(pk=self.pk)
+            valid_transitions = {
+                'aberta': ['aberta', 'alocada'],
+                'alocada': ['alocada', 'concluida', 'aberta'],
+                'concluida': ['concluida', 'finalizada', 'alocada'],
+                'finalizada': ['finalizada']
+            }
+            if self.status not in valid_transitions.get(old_task.status, []):
+                from django.core.exceptions import ValidationError
+                raise ValidationError({'status': f"Transição de status inválida de {old_task.get_status_display()} para {self.get_status_display()}."})
+            
+            if self.status in ['concluida', 'finalizada'] and not self.completed_at:
+                from django.utils import timezone
+                self.completed_at = timezone.now()
+            elif self.status not in ['concluida', 'finalizada']:
+                self.completed_at = None
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.title} - {self.get_status_display()}"
     class Meta:
@@ -65,7 +89,7 @@ class Task(models.Model):
 
 class TaskEvidence(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='evidences')
-    photo = models.ImageField(upload_to='evidences/', blank=True, null=True)
+    photo = models.ImageField(upload_to='evidences/')
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):

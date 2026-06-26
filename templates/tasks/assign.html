@@ -20,7 +20,7 @@
                         <option value="" disabled >Selecione um usuário...</option>
                         {% for u in users %}
                             <option value="{{ u.id }}" {% if task.assigned_to_id == u.id %}selected{% endif %}>
-                                {{ u.get_full_name|default:u.username }} ({{ u.profile.get_role_display|default:'Colaborador' }})
+                                {{ u.get_full_name|default:u.username }} ({{ u.profile.get_role_display|default:'Colaborador' }}{% if u.profile.especialidade %} - {{ u.profile.especialidade.nome }}{% endif %})
                             </option>
                         {% endfor %}
                     </select>
