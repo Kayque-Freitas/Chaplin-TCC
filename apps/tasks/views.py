@@ -381,6 +381,8 @@ def settings_view(request):
         user.save()
         user_profile.phone = strip_tags(request.POST.get('phone', user_profile.phone))
         user_profile.bio = strip_tags(request.POST.get('bio', user_profile.bio))
+        user_profile.cpf = strip_tags(request.POST.get('cpf', user_profile.cpf))
+        user_profile.cnpj = strip_tags(request.POST.get('cnpj', user_profile.cnpj))
         user_profile.cep = strip_tags(request.POST.get('cep', user_profile.cep))
         user_profile.logradouro = strip_tags(request.POST.get('logradouro', user_profile.logradouro))
         user_profile.numero = strip_tags(request.POST.get('numero', user_profile.numero))

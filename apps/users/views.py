@@ -99,6 +99,8 @@ def admin_user_create_view(request):
             profile = user.profile
             profile.role = form.cleaned_data.get('role', 'colaborador')
             profile.phone = form.cleaned_data.get('phone', '')
+            profile.cpf = form.cleaned_data.get('cpf', '')
+            profile.cnpj = form.cleaned_data.get('cnpj', '')
 
             esp_id = request.POST.get('especialidade')
             if esp_id:
@@ -138,6 +140,9 @@ def admin_user_edit_view(request, user_id):
         target_user.first_name = request.POST.get('first_name', target_user.first_name)
         target_user.last_name = request.POST.get('last_name', target_user.last_name)
         target_user.email = request.POST.get('email', target_user.email)
+        target_user.profile.phone = request.POST.get('phone', target_user.profile.phone)
+        target_user.profile.cpf = request.POST.get('cpf', target_user.profile.cpf)
+        target_user.profile.cnpj = request.POST.get('cnpj', target_user.profile.cnpj)
         new_role = request.POST.get('role')
         old_role = target_user.profile.role
         if new_role and new_role != old_role:

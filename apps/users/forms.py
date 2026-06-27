@@ -58,6 +58,8 @@ class AdminUserCreateForm(forms.ModelForm):
     ]
     role = forms.ChoiceField(choices=ROLE_CHOICES, label='Nível de Acesso', widget=forms.Select(attrs={'class': INPUT_CSS}))
     phone = forms.CharField(max_length=20, required=False, label='Telefone', widget=forms.TextInput(attrs={'class': INPUT_CSS + ' mask-phone', 'placeholder': '(11) 99999-9999'}))
+    cpf = forms.CharField(max_length=14, required=False, label='CPF', widget=forms.TextInput(attrs={'class': INPUT_CSS + ' mask-cpf', 'placeholder': '000.000.000-00'}))
+    cnpj = forms.CharField(max_length=18, required=False, label='CNPJ', widget=forms.TextInput(attrs={'class': INPUT_CSS + ' mask-cnpj', 'placeholder': '00.000.000/0000-00'}))
 
     class Meta:
         model = User
@@ -82,3 +84,9 @@ class AdminUserCreateForm(forms.ModelForm):
 
     def clean_phone(self):
         return strip_tags(self.cleaned_data.get("phone", "")).strip()
+
+    def clean_cpf(self):
+        return strip_tags(self.cleaned_data.get("cpf", "")).strip()
+
+    def clean_cnpj(self):
+        return strip_tags(self.cleaned_data.get("cnpj", "")).strip()

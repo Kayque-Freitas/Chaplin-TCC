@@ -11,7 +11,7 @@ class TaskForm(forms.ModelForm):
             format='%Y-%m-%d',
             attrs={
                 'type': 'date', 
-                'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500'
+                'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500'
             }
         ),
         error_messages={'invalid': 'Formato de data inválido. Use DD/MM/AAAA ou escolha no calendário.'}
@@ -20,7 +20,7 @@ class TaskForm(forms.ModelForm):
     photo = forms.ImageField(
         required=False,
         widget=forms.FileInput(attrs={
-            'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500',
+            'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500',
             'accept': 'image/*'
         }),
         error_messages={'invalid': 'Formato de imagem inválido.'}
@@ -31,17 +31,17 @@ class TaskForm(forms.ModelForm):
         fields = ['title', 'description', 'priority', 'location', 'due_date',
                   'cep', 'logradouro', 'numero', 'complemento', 'bairro', 'cidade', 'estado']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'placeholder': 'Título da tarefa'}),
+            'title': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'placeholder': 'Título da tarefa'}),
             'description': forms.Textarea(attrs={'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'rows': 4}),
-            'priority': forms.Select(attrs={'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500'}),
-            'location': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'placeholder': 'Ex: Sala 302, Corredor B...'}),
-            'cep': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500 mask-cep', 'placeholder': '00000-000', 'maxlength': '9', 'id': 'task_cep'}),
-            'logradouro': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'readonly': 'readonly', 'id': 'task_logradouro'}),
-            'numero': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'placeholder': 'Número', 'id': 'task_numero'}),
-            'complemento': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'placeholder': 'Apto, sala, bloco...', 'id': 'task_complemento'}),
-            'bairro': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'readonly': 'readonly', 'id': 'task_bairro'}),
-            'cidade': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'readonly': 'readonly', 'id': 'task_cidade'}),
-            'estado': forms.TextInput(attrs={'class': 'w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'readonly': 'readonly', 'id': 'task_estado', 'maxlength': '2'}),
+            'priority': forms.Select(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500'}),
+            'location': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'placeholder': 'Ex: Sala 302, Corredor B...'}),
+            'cep': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500 mask-cep', 'placeholder': '00000-000', 'maxlength': '9', 'id': 'task_cep'}),
+            'logradouro': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'readonly': 'readonly', 'id': 'task_logradouro'}),
+            'numero': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'placeholder': 'Número', 'id': 'task_numero'}),
+            'complemento': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'placeholder': 'Apto, sala, bloco...', 'id': 'task_complemento'}),
+            'bairro': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'readonly': 'readonly', 'id': 'task_bairro'}),
+            'cidade': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'readonly': 'readonly', 'id': 'task_cidade'}),
+            'estado': forms.TextInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'readonly': 'readonly', 'id': 'task_estado', 'maxlength': '2'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -77,8 +77,8 @@ class TaskEvidenceForm(forms.ModelForm):
         model = TaskEvidence
         fields = ['photo', 'description']
         widgets = {
-            'photo': forms.FileInput(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg'}),
-            'description': forms.Textarea(attrs={'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg', 'rows': 3}),
+            'photo': forms.FileInput(attrs={'class': 'w-full h-[42px] px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500'}),
+            'description': forms.Textarea(attrs={'class': 'w-full px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-orange-500', 'rows': 3}),
         }
 
     def clean_description(self):

@@ -1,6 +1,6 @@
 # 🧠 Memória do Sistema: Chaplin-TCC
 
-> **Data de Atualização**: 25/06/2026
+> **Data de Atualização**: 26/06/2026
 > **Objetivo**: Registro de segurança compilando absolutamente tudo o que foi feito, alterado e diagnosticado no sistema até o momento. Serve como ponto de restauração de contexto caso a sessão seja interrompida.
 
 ---
@@ -10,8 +10,29 @@
 - As dependências foram instaladas com sucesso a partir do `requirements.txt`.
 - O servidor de desenvolvimento foi rodado com sucesso em `http://localhost:8000`.
 - **Testes**: Executamos a suíte de testes do Django e **7/7 testes passaram** sem falhas, confirmando que a base lógica de modelos está íntegra.
+- **[26/06/2026]**: Servidor de desenvolvimento reiniciado e estado da memória validado.
 
 ## 🛠️ 2. Alterações de Código Realizadas (Changelog)
+
+### `Banco de Dados (db.sqlite3)`
+- **Fix do Nome de Usuário**: O `username` "bruno.ferreira" foi renomeado para "misael.jesus" para condizer com o nome da pessoa configurado na conta ("Misael De Jesus"), garantindo consistência no login.
+- **Fix das Imagens Quebradas**: Os caminhos das imagens (`photo`) na tabela `TaskEvidence` apontavam para nomes de arquivos temporários gerados por script (ex: `task_6_corredor_escuro_...png`), mas os arquivos reais em `media/evidences/` tinham outros nomes (ex: `lampada_queimada_corredor.png`). Foi criado e executado um script (`fix_images.py`) para atualizar os caminhos no banco de dados e sincronizá-los com os arquivos reais, corrigindo as imagens quebradas nas evidências das tarefas.
+
+### `apps/users/forms.py` & `apps/users/views.py`
+- **Fix de Omissão de Campos**: O `AdminUserCreateForm` não continha declaração para CPF e CNPJ, impedindo que o admin gerenciasse esses dados. Os campos foram adicionados no form com as classes `mask-cpf` e `mask-cnpj`.
+- **Fix de Views**: As views `admin_user_create_view` e `admin_user_edit_view` foram alteradas para resgatar corretamente CPF, CNPJ e Telefone no método POST e salvá-los no modelo `UserProfile`.
+
+### `apps/tasks/views.py`
+- **Fix do Perfil**: A função `settings_view` foi atualizada para gravar no banco de dados o CPF e o CNPJ alterados pelo próprio usuário no menu de configurações.
+
+### `apps/users/templates/users/admin/` & `templates/tasks/settings.html`
+- **Fix de Interface e Máscaras**: Os templates `create.html` e `edit.html` (Admin) e `settings.html` (Perfil) sofreram adição de blocos HTML cruciais para exibir os inputs de Telefone, CPF e CNPJ. A classe `mask-phone` foi devidamente atrelada ao input de telefone em `settings.html`, e os campos de documentação agora respeitam a lógica do `IMask` nativo do projeto.
+
+### `apps/tasks/forms.py`
+- **Fix de Alinhamento e UI**: Adicionado uma altura fixa unificada (`h-[42px]`) em todas as classes Tailwind de widgets (`TextInput`, `DateInput`, `Select`, `FileInput`) do `TaskForm` e `TaskEvidenceForm`. Isso corrige o desalinhamento visual quando inputs diferentes são colocados lado a lado no layout responsivo. O `TaskEvidenceForm` também recebeu suporte completo às classes de Dark Mode.
+
+### `templates/shared/base_dashboard.html`
+- **Fix de Incongruência no Sidebar**: O campo que renderizava o rodapé do menu lateral foi atualizado de `{{ user.username }}` para `{{ user.first_name|default:user.username }}`. Isso garante que a aplicação sempre priorize exibir o nome do usuário amigável, assim como acontece no cabeçalho superior.
 
 ### `chaplin_project/settings.py`
 - Limpeza de um erro de sintaxe solto (a string solta `default_` na linha 159 foi removida para impedir erro 500 no carregamento das configurações de e-mail).
