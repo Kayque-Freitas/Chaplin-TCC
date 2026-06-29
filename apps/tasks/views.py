@@ -407,6 +407,11 @@ def settings_view(request):
         user_profile.bairro = strip_tags(request.POST.get('bairro', user_profile.bairro))
         user_profile.cidade = strip_tags(request.POST.get('cidade', user_profile.cidade))
         user_profile.estado = strip_tags(request.POST.get('estado', user_profile.estado))
+        
+        avatar = request.FILES.get('avatar')
+        if avatar:
+            user_profile.avatar = avatar
+            
         user_profile.save()
         return redirect('tasks:settings')
     context = {
