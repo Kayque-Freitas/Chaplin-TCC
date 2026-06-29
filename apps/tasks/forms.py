@@ -51,6 +51,9 @@ class TaskForm(forms.ModelForm):
     def clean_due_date(self):
         due_date = self.cleaned_data.get('due_date')
         if due_date and due_date < timezone.now().date():
+            # Permitir data no passado se for edição e a data não foi alterada
+            if self.instance.pk and self.instance.due_date == due_date:
+                return due_date
             raise forms.ValidationError("A data de vencimento não pode estar no passado.")
         return due_date
 

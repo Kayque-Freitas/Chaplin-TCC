@@ -15,7 +15,7 @@
         <p class="text-gray-600 dark:text-gray-400 mt-2">#{{ task.pk }} — {{ task.title }}</p>
     </div>
 
-    <form method="POST" action="{% url 'tasks:edit' task.pk %}" class="space-y-6">
+    <form method="POST" action="{% url 'tasks:edit' task.pk %}" enctype="multipart/form-data" class="space-y-6">
         {% csrf_token %}
 
         {% if form.errors %}
@@ -48,6 +48,12 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Data de Vencimento</label>
                     {{ form.due_date }}
                 </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Evidência (Nova Foto)</label>
+                <input type="file" name="photo" id="id_photo" accept="image/*" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-gray-800 dark:text-white bg-white">
+                <p class="text-xs text-gray-500 mt-1">Ao enviar uma nova foto, a evidência anterior será substituída (ou criada se não houver).</p>
             </div>
         </div>
 

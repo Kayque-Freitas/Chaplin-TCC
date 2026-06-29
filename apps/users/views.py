@@ -26,6 +26,9 @@ def login_view(request):
 
 
 
+from django.views.decorators.http import require_POST
+
+@require_POST
 def logout_view(request):
     logout(request)
     return redirect('core:index')
@@ -92,6 +95,10 @@ def admin_user_create_view(request):
         form = AdminUserCreateForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
+            user.first_name = strip_tags(user.first_name)
+            user.last_name = strip_tags(user.last_name)
+            user.email = strip_tags(user.email)
+            user.username = strip_tags(user.username)
             user.set_password(form.cleaned_data['password'])
             user.is_active = True
             user.save()
@@ -137,9 +144,9 @@ def admin_user_edit_view(request, user_id):
         return redirect('users:admin_users_list')
     especialidades = Especialidade.objects.all()
     if request.method == 'POST':
-        target_user.first_name = request.POST.get('first_name', target_user.first_name)
-        target_user.last_name = request.POST.get('last_name', target_user.last_name)
-        target_user.email = request.POST.get('email', target_user.email)
+        target_user.first_name = strip_tags(request.POST.get('first_name', target_user.first_name))
+        target_user.last_name = strip_tags(request.POST.get('last_name', target_user.last_name))
+        target_user.email = strip_tags(request.POST.get('email', target_user.email))
         target_user.profile.phone = request.POST.get('phone', target_user.profile.phone)
         target_user.profile.cpf = request.POST.get('cpf', target_user.profile.cpf)
         target_user.profile.cnpj = request.POST.get('cnpj', target_user.profile.cnpj)

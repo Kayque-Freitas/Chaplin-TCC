@@ -156,7 +156,15 @@ def edit_task_view(request, pk):
     if request.method == 'POST':
         form = TaskForm(request.POST, request.FILES, instance=task)
         if form.is_valid():
-            form.save()
+            saved_task = form.save()
+            photo = request.FILES.get('photo')
+            if photo:
+                evidence = saved_task.evidences.first()
+                if evidence:
+                    evidence.photo = photo
+                    evidence.save()
+                else:
+                    TaskEvidence.objects.create(task=saved_task, photo=photo, description='Foto adicionada via edição.')
             return redirect('tasks:detail', pk=task.pk)
     else:
         form = TaskForm(instance=task)
@@ -223,9 +231,15 @@ def complete_task_view(request, pk):
     if task.status in ('concluida', 'finalizada'):
         django_messages.error(request, 'Esta tarefa já foi concluída.')
         return redirect('tasks:detail', pk=pk)
+    if task.status == 'aberta':
+        django_messages.error(request, 'A tarefa precisa estar alocada antes de ser concluída.')
+        return redirect('tasks:detail', pk=pk)
     if request.method == 'POST':
         description = request.POST.get('description', '')
         photo = request.FILES.get('photo')
+        if not photo:
+            django_messages.error(request, 'É obrigatório enviar uma foto de evidência para concluir a tarefa.')
+            return redirect('tasks:complete', pk=pk)
         evidence = TaskEvidence(
             task=task,
             description=description
@@ -332,7 +346,10 @@ def notifications_view(request):
     return render(request, 'tasks/notifications.html', {'notifications': notifications})
 
 
+from django.views.decorators.http import require_POST
+
 @login_required
+@require_POST
 def mark_notification_read(request, pk):
     notif = get_object_or_404(Notification, pk=pk, recipient=request.user)
     notif.lida = True

@@ -24,13 +24,15 @@ class TaskRBACTests(TestCase):
             title="Lâmpada Quebrada",
             description="Corredor",
             created_by=self.gestor,
-            assigned_to=self.colab1
+            assigned_to=self.colab1,
+            status='alocada'
         )
         self.task2 = Task.objects.create(
             title="Vazamento Pia",
             description="Banheiro",
             created_by=self.gestor,
-            assigned_to=self.colab2
+            assigned_to=self.colab2,
+            status='alocada'
         )
 
     def test_colaborador_only_sees_own_task(self):
@@ -69,9 +71,13 @@ class TaskRBACTests(TestCase):
         self.assertRedirects(res, reverse('tasks:list'))
         self.assertFalse(Task.objects.filter(title='Hack!').exists())
     def test_task_completion_lifecycle(self):
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        photo = SimpleUploadedFile("test_image.jpg", b"file_content", content_type="image/jpeg")
+
         self.client.login(username='colab1', password='pass')
         res = self.client.post(reverse('tasks:complete', args=[self.task1.id]), {
-            'description': 'Feito!'
+            'description': 'Feito!',
+            'photo': photo
         })
         self.task1.refresh_from_db()
         self.assertEqual(self.task1.status, 'concluida')
