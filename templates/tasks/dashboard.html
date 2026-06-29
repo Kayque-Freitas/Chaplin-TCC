@@ -12,7 +12,7 @@
     </div>
 
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 {% if user.profile.role != 'colaborador' %}lg:grid-cols-5{% else %}lg:grid-cols-4{% endif %} gap-6 mb-8">
         
         <a href="{% url 'tasks:list' %}" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
@@ -74,7 +74,7 @@
             </div>
         </a>
 
-        
+        {% if user.profile.role != 'colaborador' %}
         <a href="{% url 'tasks:list' %}?status=aberta" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow block cursor-pointer">
             <div class="flex items-center justify-between">
                 <div>
@@ -88,6 +88,7 @@
                 </div>
             </div>
         </a>
+        {% endif %}
     </div>
 
     
