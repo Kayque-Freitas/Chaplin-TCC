@@ -65,7 +65,7 @@
                 </div>
 
                 
-                <div class="md:col-span-2">
+                <div class="md:col-span-2" id="especialidade-container">
                     <label for="especialidade" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Especialidade (Opcional)</label>
                     <select id="especialidade" name="especialidade" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none dark:bg-gray-700 dark:text-white">
                         <option value="">Sem especialidade específica</option>
@@ -114,5 +114,21 @@
             form.submit();
         }
     });
+
+    // Handle Especialidade visibility based on Role
+    const roleSelect = document.getElementById('role');
+    const espContainer = document.getElementById('especialidade-container');
+    
+    function toggleEspecialidade() {
+        if (roleSelect.value === 'colaborador') {
+            espContainer.style.display = 'block';
+        } else {
+            espContainer.style.display = 'none';
+            document.getElementById('especialidade').value = ""; // Clear selection if hidden
+        }
+    }
+    
+    roleSelect.addEventListener('change', toggleEspecialidade);
+    toggleEspecialidade(); // run on load
 </script>
 {% endblock %}

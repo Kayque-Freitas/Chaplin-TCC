@@ -73,7 +73,7 @@
                     <label for="{{ form.cnpj.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">CNPJ (Opcional)</label>
                     {{ form.cnpj }}
                 </div>
-                <div>
+                <div id="especialidade-container">
                     <label for="especialidade" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Especialidade (Opcional)</label>
                     <select id="especialidade" name="especialidade" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none dark:bg-gray-700 dark:text-white">
                         <option value="">Sem especialidade</option>
@@ -105,4 +105,27 @@
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const roleSelect = document.getElementById('{{ form.role.id_for_label }}');
+        const espContainer = document.getElementById('especialidade-container');
+        
+        function toggleEspecialidade() {
+            if (roleSelect && roleSelect.value === 'colaborador') {
+                espContainer.style.display = 'block';
+            } else {
+                espContainer.style.display = 'none';
+                document.getElementById('especialidade').value = "";
+            }
+        }
+        
+        if (roleSelect) {
+            roleSelect.addEventListener('change', toggleEspecialidade);
+            toggleEspecialidade(); // run on load
+        }
+    });
+</script>
 {% endblock %}

@@ -184,8 +184,8 @@ def assign_task_view(request, pk):
     
     current_role = _get_role(request.user)
     if current_role == 'gestor':
-        # Gestor pode alocar para Líderes ou Colaboradores
-        users = AuthUser.objects.filter(is_active=True, profile__role__in=['lider', 'colaborador']).order_by('first_name', 'username')
+        # Gestor SÓ pode alocar para Líderes
+        users = AuthUser.objects.filter(is_active=True, profile__role='lider').order_by('first_name', 'username')
     elif current_role == 'lider':
         users = AuthUser.objects.filter(is_active=True, profile__role='colaborador').order_by('first_name', 'username')
     else:
@@ -200,12 +200,9 @@ def assign_task_view(request, pk):
         target_user = AuthUser.objects.get(id=user_id)
         target_role = _get_role(target_user)
 
-        # Se o Líder está re-alocando para um Colaborador, salvar o Líder como assigned_leader
+        # Se o Líder está alocando para um Colaborador, salvar o Líder como assigned_leader
         if current_role == 'lider' and target_role == 'colaborador':
             task.assigned_leader = request.user
-        # Se o Gestor aloca diretamente para um Colaborador, não há líder intermediário
-        elif current_role == 'gestor' and target_role == 'colaborador':
-            task.assigned_leader = None
         # Se o Gestor aloca para um Líder, o líder fica em assigned_to (e depois ele re-aloca)
         elif current_role == 'gestor' and target_role == 'lider':
             task.assigned_leader = None

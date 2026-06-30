@@ -221,3 +221,16 @@ def admin_user_delete_view(request, user_id):
     return render(request, 'users/admin/delete.html', {
         'target_user': target_user,
     })
+
+@require_POST
+def demo_fast_switch(request):
+    role = request.POST.get('role')
+    if role == 'admin':
+        user = User.objects.filter(is_superuser=True).first()
+    else:
+        profile = UserProfile.objects.filter(role=role).first()
+        user = profile.user if profile else None
+        
+    if user:
+        login(request, user)
+    return redirect('tasks:dashboard')
