@@ -96,19 +96,15 @@ def tasks_list_view(request):
 
 @login_required
 def create_task_view(request):
-    if not _is_manager(request.user):
-        django_messages.error(request, 'Você não tem permissão para criar tarefas.')
+    role = _get_role(request.user)
+    if role not in ('admin', 'gestor'):
+        django_messages.error(request, 'Apenas Gestores e Administradores podem criar tarefas.')
         return redirect('tasks:list')
     if request.method == 'POST':
         form = TaskForm(request.POST, request.FILES)
         if form.is_valid():
             task = form.save(commit=False)
             task.created_by = request.user
-            
-            # Se for um líder criando, ele automaticamente assume a supervisão da tarefa
-            if _get_role(request.user) == 'lider':
-                task.assigned_leader = request.user
-                
             task.save()
             
             photo = form.cleaned_data.get('photo')
