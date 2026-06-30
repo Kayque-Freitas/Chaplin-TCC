@@ -35,7 +35,7 @@ def dashboard_view(request):
         UserProfile.objects.create(user=request.user, role='admin' if request.user.is_superuser else 'colaborador')
     user_profile = request.user.profile
     if user_profile.role == 'gestor':
-        tasks = Task.objects.filter(created_by=request.user)
+        tasks = Task.objects.all()
     elif user_profile.role == 'lider':
         tasks = Task.objects.filter(
             Q(assigned_to=request.user) | Q(assigned_leader=request.user)
@@ -62,7 +62,7 @@ def tasks_list_view(request):
     responsavel = request.GET.get('responsavel', '')
     user_profile = getattr(request.user, 'profile', None)
     if user_profile and user_profile.role == 'gestor':
-        tasks = Task.objects.filter(created_by=request.user)
+        tasks = Task.objects.all()
     elif user_profile and user_profile.role == 'lider':
         tasks = Task.objects.filter(
             Q(assigned_to=request.user) | Q(assigned_leader=request.user)
@@ -104,6 +104,11 @@ def create_task_view(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.created_by = request.user
+            
+            # Se for um líder criando, ele automaticamente assume a supervisão da tarefa
+            if _get_role(request.user) == 'lider':
+                task.assigned_leader = request.user
+                
             task.save()
             
             photo = form.cleaned_data.get('photo')
