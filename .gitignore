@@ -36,6 +36,7 @@ local_settings.py
 
 # Environment
 venv/
+.venv/
 ENV/
 
 # OS
@@ -48,3 +49,4 @@ Thumbs.db
 *.swp
 
 .env
+# db.sqlite3 mantido no repo para contas pre-configuradas

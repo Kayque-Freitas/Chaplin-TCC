@@ -1,6 +1,3 @@
-// Chaplin - Main JavaScript
-
-// Mobile Menu Toggle
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -22,7 +19,6 @@ if (sidebarToggle) {
     });
 }
 
-// Close mobile menu when clicking on a link
 const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
 mobileMenuLinks.forEach(link => {
     link.addEventListener('click', () => {
@@ -32,7 +28,6 @@ mobileMenuLinks.forEach(link => {
     });
 });
 
-// Close sidebar when clicking on a link (mobile)
 const sidebarLinks = document.querySelectorAll('#sidebar a');
 sidebarLinks.forEach(link => {
     link.addEventListener('click', () => {
@@ -42,7 +37,6 @@ sidebarLinks.forEach(link => {
     });
 });
 
-// Form Validation
 const forms = document.querySelectorAll('form');
 forms.forEach(form => {
     form.addEventListener('submit', (e) => {
@@ -65,7 +59,6 @@ forms.forEach(form => {
     });
 });
 
-// Remove error styling when user starts typing
 const inputs = document.querySelectorAll('input, textarea, select');
 inputs.forEach(input => {
     input.addEventListener('input', () => {
@@ -73,7 +66,6 @@ inputs.forEach(input => {
     });
 });
 
-// Notification System
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `fixed top-4 right-4 p-4 rounded-lg text-white z-50 animate-fade-in`;
@@ -95,7 +87,6 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// Smooth Scroll for Anchor Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -112,7 +103,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Checkbox Toggle for Tasks
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function () {
@@ -127,29 +117,22 @@ checkboxes.forEach(checkbox => {
     });
 });
 
-// Responsive Sidebar
 window.addEventListener('resize', () => {
     if (window.innerWidth >= 768 && sidebar) {
         sidebar.classList.remove('-translate-x-full');
     }
 });
 
-// Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Chaplin - Application Loaded');
 
-    // Add fade-in animation to cards
     const cards = document.querySelectorAll('.card, .bg-white');
     cards.forEach((card, index) => {
         card.style.animation = `fadeIn 0.3s ease-out ${index * 0.1}s both`;
     });
 });
 
-// Prevent form submission for demo removed since the app is integrated with backend
-
-// Add keyboard shortcuts
 document.addEventListener('keydown', (e) => {
-    // Ctrl/Cmd + K to focus search
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         const searchInput = document.querySelector('input[placeholder*="Buscar"]');
@@ -158,13 +141,11 @@ document.addEventListener('keydown', (e) => {
         }
     }
 
-    // Escape to close sidebar
     if (e.key === 'Escape' && sidebar) {
         sidebar.classList.add('-translate-x-full');
     }
 });
 
-// Fade In Animation
 const style = document.createElement('style');
 style.textContent = `
     @keyframes fadeIn {

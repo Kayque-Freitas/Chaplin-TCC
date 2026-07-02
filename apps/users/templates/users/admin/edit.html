@@ -115,7 +115,6 @@
         }
     });
 
-    // Handle Especialidade visibility based on Role
     const roleSelect = document.getElementById('role');
     const espContainer = document.getElementById('especialidade-container');
     
@@ -124,11 +123,11 @@
             espContainer.style.display = 'block';
         } else {
             espContainer.style.display = 'none';
-            document.getElementById('especialidade').value = ""; // Clear selection if hidden
+            document.getElementById('especialidade').value = "";
         }
     }
     
     roleSelect.addEventListener('change', toggleEspecialidade);
-    toggleEspecialidade(); // run on load
+    toggleEspecialidade();
 </script>
 {% endblock %}
